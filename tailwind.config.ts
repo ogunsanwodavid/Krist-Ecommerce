@@ -7,10 +7,19 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: { sm: "400px", md: "700px", lg: "1200px" },
+    fontFamily: {
+      jost: "Jost, sans-serif",
+    },
+    listStyleType: {
+      square: "square",
+      disc: "disc",
+    },
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        black: "#131118",
+        grey: "#A4A1AA",
+        errorRed: "#E54D51",
       },
     },
   },
