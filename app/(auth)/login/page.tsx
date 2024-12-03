@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-import { useFormState } from "react-dom";
+import { useActionState, useState } from "react";
 
 import Link from "next/link";
 
@@ -29,9 +27,7 @@ export default function Login() {
   }
 
   //State of login form
-  const [state, action] = useFormState(login, undefined);
-
-  console.log(state?.currentState);
+  const [state, action] = useActionState(login, undefined);
 
   //Error states of login form
   const emailInputError = state?.errors?.email?.at(0);
@@ -104,7 +100,7 @@ export default function Login() {
             <input
               type="checkbox"
               id="rememberMe"
-              defaultValue={state?.currentState?.rememberMe || ""} // Retain input value
+              value={state?.currentState?.rememberMe} // Retain input value
               name="rememberMe"
               className="hidden peer"
             />

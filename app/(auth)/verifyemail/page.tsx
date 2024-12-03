@@ -33,12 +33,21 @@ export default function VerifyEmail() {
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    // Check if the pressed key is "Backspace" and if the current OTP input is empty
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       const target = e.target as HTMLInputElement;
-      const previousElement = target.previousSibling as HTMLInputElement | null;
-      if (previousElement) {
-        previousElement.focus();
+
+      // Use previousElementSibling to get the previous input element
+      const previousElement =
+        target.previousElementSibling as HTMLInputElement | null;
+
+      // Focus on the previous input element if it exists and is an input element
+      if (previousElement && previousElement.tagName === "INPUT") {
+        (previousElement as HTMLInputElement).focus();
       }
     }
   };

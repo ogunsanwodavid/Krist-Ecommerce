@@ -4,7 +4,9 @@ export async function login(state: LoginFormState, formData: FormData) {
   // Extract form fields
   const email = formData.get("email");
   const password = formData.get("password");
-  const rememberMe = formData.get("rememberMe") === "";
+  const rememberMe = formData.get("rememberMe") === "on";
+
+  console.log(rememberMe);
 
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
