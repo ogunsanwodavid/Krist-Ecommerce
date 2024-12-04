@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useState } from "react";
 
 import Link from "next/link";
 
@@ -26,12 +26,45 @@ export default function Login() {
     setShowPassword((prev: boolean) => !prev);
   }
 
-  //State of login form
-  const [state, action] = useActionState(login, undefined);
+  //TYpe of the error state of the login form
+  type LoginFormErrors = {
+    email?: string[];
+    password?: string[];
+    rememberMe?: string[];
+  } | null;
+
+  //States of the input and error state
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [errors, setErrors] = useState<LoginFormErrors>(null); // To store validation errors
 
   //Error states of login form
-  const emailInputError = state?.errors?.email?.at(0);
-  const passwordInputError = state?.errors?.password?.at(0);
+  const emailInputError = errors?.email?.at(0);
+  const passwordInputError = errors?.password?.at(0);
+
+  //Function to submit login form
+  const handleSubmit = async (e: React.FormEvent) => {
+    //Prevet default
+    e.preventDefault();
+
+    // Collect form data
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("rememberMe", String(rememberMe));
+
+    // Call the login function
+    const result = await login(formData);
+
+    //Set errors is it exists else set to null
+    if (result?.errors) {
+      setErrors(result.errors); // Set validation errors
+    } else {
+      setErrors(null);
+      console.log("Login successful!");
+    }
+  };
 
   return (
     <AuthPage imageUrl={loginImage}>
@@ -46,15 +79,16 @@ export default function Login() {
       </div>
 
       {/**** Form */}
-      <form action={action} className="w-full flex flex-col gap-y-4">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-y-4">
         {/***** Email address input */}
         <FormInput label="Email Address" error={emailInputError}>
           <input
             type="text"
             id="email"
             name="email"
-            autoComplete="off"
-            defaultValue={state?.currentState?.email || ""} // Retain input value
+            //autoComplete="off"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
               emailInputError && "!border-errorRed"
             }`}
@@ -73,7 +107,8 @@ export default function Login() {
               name="password"
               id="password"
               autoComplete="off"
-              defaultValue={state?.currentState?.password || ""} // Retain input value
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey"
             />
 
@@ -102,7 +137,8 @@ export default function Login() {
             <input
               type="checkbox"
               id="rememberMe"
-              defaultValue={state?.currentState?.rememberMe} // Retain input value
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
               name="rememberMe"
               className="hidden peer"
             />
