@@ -13,6 +13,8 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
 
 import signupImage from "@/public/signup.png";
+import { toast } from "react-toastify";
+import { redirect } from "next/navigation";
 
 export default function SignUp() {
   //State of display password inputs contents
@@ -54,8 +56,14 @@ export default function SignUp() {
   const passwordInputError = errors?.password?.at(0);
   const confirmPasswordInputError = errors?.confirmPassword?.at(0);
 
+  //Loading state of signup
+  const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
+
   //Function to submit signup form
   const handleSubmit = async (e: React.FormEvent) => {
+    //Set Loading state true
+    setIsSigningUp(true);
+
     //Prevet default
     e.preventDefault();
 
@@ -75,8 +83,25 @@ export default function SignUp() {
       setErrors(result.errors); // Set validation errors
     } else {
       setErrors(null);
-      console.log("Login successful!");
     }
+
+    //Check for error from server
+    if (result?.error) {
+      //Toast error
+      toast.error(result.error);
+    }
+
+    //Check if request is successful
+    if (result.success) {
+      //Toast success
+      toast.success("User successfully created");
+
+      //Redirect to login page
+      redirect("/login");
+    }
+
+    //Set Loading state false
+    setIsSigningUp(false);
   };
 
   return (
@@ -222,7 +247,12 @@ export default function SignUp() {
         </section>
 
         {/***** Submit button */}
-        <FormButton disabled={!agreeToTerms}>Signup</FormButton>
+        <FormButton
+          loading={isSigningUp}
+          disabled={!agreeToTerms || isSigningUp}
+        >
+          Signup
+        </FormButton>
       </form>
     </AuthPage>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import ToastProvider from "./components/ToastProvider";
+
 import "./globals.css";
 
 import { Jost } from "next/font/google";
@@ -34,7 +36,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/x-icon" href="/small-dark-logo.ico" />
       </head>
-      <body className={`${jost.className}`}>{children}</body>
+      <body className={`${jost.className}`}>
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }

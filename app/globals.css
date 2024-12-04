@@ -3,7 +3,58 @@
 @tailwind utilities;
 
 input,
+select,
+textarea,
+button {
+  outline: 0;
+}
+
+a,
 button,
-input:focused {
-  outline: 0 !important;
+img,
+select {
+  cursor: pointer;
+}
+
+/**** Style for react toastify toasts ***/
+:root {
+  --toastify-font-family: "Jost", sans-serif !important;
+}
+
+.Toastify__progress-bar--wrp {
+  height: 0 !important;
+}
+
+.Toastify__toast {
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 15px !important;
+  align-items: center !important;
+}
+
+.Toastify__close-button {
+  display: none;
+}
+
+.Toastify__toast-body {
+  padding: 4px;
+  gap: 5px;
+}
+
+.Toastify__toast-theme--dark {
+  background-color: #111725 !important;
+}
+
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container {
+    top: 0;
+    left: 0;
+    transform: none;
+    margin-top: 1rem;
+    padding: 0 20px;
+  }
+
+  .Toastify__toast {
+    max-width: 320px !important;
+    margin: 0.5rem auto;
+  }
 }
