@@ -4,7 +4,7 @@ export async function login(state: LoginFormState, formData: FormData) {
   // Extract form fields
   const email = formData.get("email");
   const password = formData.get("password");
-  const rememberMe = formData.get("rememberMe") === "on";
+  const rememberMe = formData.get("rememberMe");
 
   console.log(rememberMe);
 

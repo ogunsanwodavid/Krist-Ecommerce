@@ -44,6 +44,7 @@ export default function ForgotPassword() {
         <FormInput label="Email Address" error="">
           <input
             type="text"
+            autoComplete="off"
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
           />
         </FormInput>

@@ -17,8 +17,8 @@ export default function VerifyEmail() {
 
   //State of OTP
   const [otp, setOtp] = useState<string[]>(new Array(6).fill("")); // Initialize an array with 6 empty strings
-  const otpString = otp.join("");
-  console.log(otpString);
+  //const otpString = otp.join("");
+  // console.log(otpString);
 
   const handleChange = (element: HTMLInputElement, index: number) => {
     if (!isNaN(Number(element.value))) {

@@ -53,6 +53,7 @@ export default function Login() {
             type="text"
             id="email"
             name="email"
+            autoComplete="off"
             defaultValue={state?.currentState?.email || ""} // Retain input value
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
               emailInputError && "!border-errorRed"
@@ -71,6 +72,7 @@ export default function Login() {
               type={showPassword ? "text" : "password"}
               name="password"
               id="password"
+              autoComplete="off"
               defaultValue={state?.currentState?.password || ""} // Retain input value
               className="w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey"
             />
@@ -100,7 +102,7 @@ export default function Login() {
             <input
               type="checkbox"
               id="rememberMe"
-              value={state?.currentState?.rememberMe} // Retain input value
+              defaultValue={state?.currentState?.rememberMe} // Retain input value
               name="rememberMe"
               className="hidden peer"
             />

@@ -35,7 +35,8 @@ export default function RootLayout({
         <link
           rel="icon"
           type="image/svg+xml"
-          href="../public/small-dark-logo.svg"
+          href="/small-dark-logo.svg"
+          sizes="32x32"
         />
       </head>
       <body className={`${jost.className}`}>{children}</body>

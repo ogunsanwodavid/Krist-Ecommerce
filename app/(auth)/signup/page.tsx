@@ -42,6 +42,7 @@ export default function SignUp() {
         <FormInput label="First Name" error="">
           <input
             type="text"
+            autoComplete="off"
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
           />
         </FormInput>
@@ -50,6 +51,7 @@ export default function SignUp() {
         <FormInput label="Last Name" error="">
           <input
             type="text"
+            autoComplete="off"
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
           />
         </FormInput>
@@ -58,6 +60,7 @@ export default function SignUp() {
         <FormInput label="Email Address" error="">
           <input
             type="text"
+            autoComplete="off"
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
           />
         </FormInput>
@@ -67,6 +70,7 @@ export default function SignUp() {
           <main className="flex items-center h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-3 k gap-x-1">
             <input
               type={showPassword ? "text" : "password"}
+              autoComplete="off"
               className={`w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey `}
             />
 
@@ -85,6 +89,7 @@ export default function SignUp() {
           <main className="flex items-center h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-3 k gap-x-1">
             <input
               type={showConfirmPassword ? "text" : "password"}
+              autoComplete="off"
               className={`w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey `}
             />
 
