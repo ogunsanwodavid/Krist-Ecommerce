@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
+import { verifyEmail } from "../actions/auth";
+
 import AuthPage from "../components/AuthPage";
 
 import FormButton from "@/app/components/ui/FormButton";
@@ -13,13 +15,14 @@ import verifyEmailImage from "@/public/verifyemail.png";
 import { BsChevronLeft } from "react-icons/bs";
 
 export default function VerifyEmail() {
+  //Router function
   const router = useRouter();
 
   //State of OTP
   const [otp, setOtp] = useState<string[]>(new Array(6).fill("")); // Initialize an array with 6 empty strings
-  //const otpString = otp.join("");
-  // console.log(otpString);
+  const otpString = otp.join("");
 
+  //Function to handle input change on small input boxes
   const handleChange = (element: HTMLInputElement, index: number) => {
     if (!isNaN(Number(element.value))) {
       const newOtp = [...otp];
@@ -34,6 +37,7 @@ export default function VerifyEmail() {
     }
   };
 
+  //Function to handle keydown change on small input boxes
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
@@ -50,6 +54,24 @@ export default function VerifyEmail() {
       if (previousElement && previousElement.tagName === "INPUT") {
         (previousElement as HTMLInputElement).focus();
       }
+    }
+  };
+
+  //Function to submit verify email form
+  const handleSubmit = async (e: React.FormEvent) => {
+    //Prevet default
+    e.preventDefault();
+
+    // Collect form data
+    const formData = new FormData();
+    formData.append("otp", otpString);
+
+    // Call the login function
+    const result = await verifyEmail(formData);
+
+    //Set errors is it exists else set to null
+    if (!result?.errors) {
+      console.log("Login successful!");
     }
   };
 
@@ -72,13 +94,16 @@ export default function VerifyEmail() {
           Enter OTP
         </h2>
         <h3 className="font-regular text-grey text-center opacity-60 text-base md:text-[18px] lg:text-left">
-          We have share a code to your registered email address
+          We have shared a code to your registered email address
         </h3>
       </div>
 
       {/**** Form */}
-      <form className="w-full flex flex-col gap-y-4 mt-2" action="">
-        <section className="w-max mx-auto space-x-3 lg:w-max-none lg:mx-0">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full flex flex-col gap-y-4 mt-2"
+      >
+        <section className="w-max mx-auto flex justify-center items-center flex-wrap space-x-3 lg:w-max-none lg:mx-0">
           {otp.map((data, index) => (
             <input
               key={index}
@@ -98,7 +123,8 @@ export default function VerifyEmail() {
           ))}
         </section>
 
-        <FormButton>Verify</FormButton>
+        {/***** Submit button */}
+        <FormButton disabled={!(otpString.length === 6)}>Verify</FormButton>
       </form>
     </AuthPage>
   );

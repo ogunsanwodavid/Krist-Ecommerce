@@ -22,7 +22,7 @@ export default function AuthPage({ imageUrl, children }: AuthPageProps) {
       </section>
 
       {/**** Main section */}
-      <main className="w-full min-h-full flex justify-center items=center p-3 lg:justify-start lg:p-[30px]">
+      <main className="w-full min-h-full flex justify-center items-center p-3 lg:justify-start lg:p-[30px] lg:!min-h-0 lg:h-screen">
         <section className="w-full max-w-[450px] flex flex-col gap-y-3 justify-center items-center lg:items-start">
           {/*** Logo */}
           <Image

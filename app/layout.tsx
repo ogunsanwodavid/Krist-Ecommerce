@@ -32,12 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="icon"
-          type="image/svg+xml"
-          href="/small-dark-logo.svg"
-          sizes="32x32"
-        />
+        <link rel="icon" type="image/x-icon" href="/small-dark-logo.ico" />
       </head>
       <body className={`${jost.className}`}>{children}</body>
     </html>

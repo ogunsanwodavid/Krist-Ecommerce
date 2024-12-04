@@ -1,13 +1,18 @@
 "use client";
 
+import { useState } from "react";
+
+import { signup } from "../actions/auth";
+
 import AuthPage from "../components/AuthPage";
 
 import FormInput from "@/app/components/ui/FormInput";
 import FormButton from "@/app/components/ui/FormButton";
 
-import signupImage from "@/public/signup.png";
-import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FaCheck } from "react-icons/fa";
+
+import signupImage from "@/public/signup.png";
 
 export default function SignUp() {
   //State of display password inputs contents
@@ -24,6 +29,56 @@ export default function SignUp() {
     setShowConfirmPassword((prev: boolean) => !prev);
   }
 
+  //Type of the error state of the signup form
+  type SignupFormErrors = {
+    firstName?: string[];
+    lastName?: string[];
+    email?: string[];
+    password?: string[];
+    confirmPassword?: string[];
+  } | null;
+
+  //States of the input and error state
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [agreeToTerms, setAgreeToTerms] = useState<boolean>(false);
+  const [errors, setErrors] = useState<SignupFormErrors>(null); // To store validation errors
+
+  //Error states of signup form
+  const firstNameInputError = errors?.firstName?.at(0);
+  const lastNameInputError = errors?.lastName?.at(0);
+  const emailInputError = errors?.email?.at(0);
+  const passwordInputError = errors?.password?.at(0);
+  const confirmPasswordInputError = errors?.confirmPassword?.at(0);
+
+  //Function to submit signup form
+  const handleSubmit = async (e: React.FormEvent) => {
+    //Prevet default
+    e.preventDefault();
+
+    // Collect form data
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("confirmPassword", confirmPassword);
+
+    // Call the login function
+    const result = await signup(formData);
+
+    //Set errors is it exists else set to null
+    if (result?.errors) {
+      setErrors(result.errors); // Set validation errors
+    } else {
+      setErrors(null);
+      console.log("Login successful!");
+    }
+  };
+
   return (
     <AuthPage imageUrl={signupImage}>
       {/*** Headings */}
@@ -37,41 +92,71 @@ export default function SignUp() {
       </div>
 
       {/**** Form */}
-      <form className="w-full flex flex-col gap-y-2" action="">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full flex flex-col gap-y-2"
+        action=""
+      >
         {/**** First Name input */}
-        <FormInput label="First Name" error="">
+        <FormInput label="First Name" error={firstNameInputError}>
           <input
             type="text"
+            name="firstName"
+            id="firstName"
             autoComplete="off"
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+              firstNameInputError && "!border-errorRed"
+            }`}
           />
         </FormInput>
 
         {/**** Last Name input */}
-        <FormInput label="Last Name" error="">
+        <FormInput label="Last Name" error={lastNameInputError}>
           <input
             type="text"
+            name="lastName"
+            id="lastName"
             autoComplete="off"
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+              lastNameInputError && "!border-errorRed"
+            }`}
           />
         </FormInput>
 
         {/**** Email Address input */}
-        <FormInput label="Email Address" error="">
+        <FormInput label="Email Address" error={emailInputError}>
           <input
             type="text"
-            autoComplete="off"
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey `}
+            name="email"
+            id="email"
+            //autoComplete="off"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+              emailInputError && "!border-errorRed"
+            }`}
           />
         </FormInput>
 
         {/**** Password input */}
-        <FormInput label="Password" error="">
-          <main className="flex items-center h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-3 k gap-x-1">
+        <FormInput label="Password" error={passwordInputError}>
+          <main
+            className={`flex items-center h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-3 k gap-x-1 ${
+              passwordInputError && "!border-errorRed"
+            }`}
+          >
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
               autoComplete="off"
-              className={`w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey `}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey"
             />
 
             <div className="w-max" onClick={togglePasswordVisibility}>
@@ -85,12 +170,20 @@ export default function SignUp() {
         </FormInput>
 
         {/**** Confirm Password input */}
-        <FormInput label="Confirm Password" error="">
-          <main className="flex items-center h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-3 k gap-x-1">
+        <FormInput label="Confirm Password" error={confirmPasswordInputError}>
+          <main
+            className={`flex items-center h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-3 k gap-x-1 ${
+              confirmPasswordInputError && "!border-errorRed"
+            }`}
+          >
             <input
               type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              id="confirmPassword"
               autoComplete="off"
-              className={`w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey `}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full outline-none text-base text-black placeholder:text-base placeholder:text-grey"
             />
 
             <div className="w-max" onClick={toggleConfirmPasswordVisibility}>
@@ -103,7 +196,33 @@ export default function SignUp() {
           </main>
         </FormInput>
 
-        <FormButton>Signup</FormButton>
+        {/*** Agree to Terms checkbox */}
+        <section className="flex items-center justify-between mt-1">
+          <label className="flex items-center gap-x-2" htmlFor="agreeToTerms">
+            {/*** Hidden input */}
+            <input
+              type="checkbox"
+              name="agreeToTerms"
+              id="agreeToTerms"
+              checked={agreeToTerms}
+              onChange={(e) => setAgreeToTerms(e.target.checked)}
+              className="hidden peer"
+            />
+
+            {/* Custom Checkbox */}
+            <span className="flex items-center justify-center h-4 w-4 border-2 border-black rounded-sm peer-checked:bg-black">
+              <FaCheck className="text-white text-[0.6rem]" />
+            </span>
+
+            <span className="flex gap-x-1 md:text-lg">
+              <span>I agree to the</span>
+              <span className="font-semibold">Terms and Conditions</span>
+            </span>
+          </label>
+        </section>
+
+        {/***** Submit button */}
+        <FormButton disabled={!agreeToTerms}>Signup</FormButton>
       </form>
     </AuthPage>
   );

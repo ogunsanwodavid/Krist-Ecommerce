@@ -160,6 +160,7 @@ export default function Login() {
           </Link>
         </section>
 
+        {/***** Submit button */}
         <FormButton>Login</FormButton>
       </form>
     </AuthPage>
