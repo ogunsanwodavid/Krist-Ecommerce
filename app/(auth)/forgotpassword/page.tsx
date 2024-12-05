@@ -48,7 +48,6 @@ export default function ForgotPassword() {
       setErrors(result.errors); // Set validation errors
     } else {
       setErrors(null);
-      console.log("Login successful!");
     }
   };
 
