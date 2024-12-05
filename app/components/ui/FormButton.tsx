@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 
-import { Oval } from "react-loader-spinner";
+import { CircularProgress } from "@mui/material";
 
 interface FormButtonProps {
   disabled?: boolean;
@@ -21,20 +21,7 @@ export default function FormButton({
       disabled={disabled}
       onClick={onClick}
     >
-      {loading ? (
-        <Oval
-          visible={true}
-          height="30"
-          width="30"
-          color="#fff"
-          secondaryColor="rgba(255,255,255,0.5)"
-          ariaLabel="oval-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      ) : (
-        children
-      )}
+      {loading ? <CircularProgress color="inherit" size={25} /> : children}
     </button>
   );
 }

@@ -57,7 +57,7 @@ export default function SignUp() {
   const confirmPasswordInputError = errors?.confirmPassword?.at(0);
 
   //Loading state of signup
-  const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
+  const [isSigningUp, setIsSigningUp] = useState<boolean>(true);
 
   //Function to submit signup form
   const handleSubmit = async (e: React.FormEvent) => {
