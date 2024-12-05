@@ -1,0 +1,85 @@
+import { useEffect, useState } from "react";
+
+import { usePathname } from "next/navigation";
+
+import Image from "next/image";
+import Link from "next/link";
+
+import MobileNav from "./MobileNav";
+
+import MainButton from "./ui/MainButton";
+
+import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
+
+import { HiShoppingCart } from "react-icons/hi2";
+
+import darkLogo from "@/public/dark-logo.svg";
+import defaultProfilePic from "@/public/dave.jpeg";
+
+export default function Navbar() {
+  // Get the current pathname
+  const pathname = usePathname();
+
+  //State of the mobile navbar
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
+
+  // Effect to handle route changes
+  useEffect(() => {
+    // Close mobile nav on route change
+    setIsMobileNavOpen(false);
+  }, [pathname]); // Dependency array includes pathname
+
+  //Function to open or close mobile navbar
+  function handleMenuBtnClick() {
+    setIsMobileNavOpen((prev) => !prev);
+  }
+
+  return (
+    <div className="relative w-full z-10">
+      <main className="relative w-full max-w-[1100px] mx-auto px-3 py-4 flex items-center justify-between z-10">
+        {/**** Logo */}
+        <Image
+          src={darkLogo}
+          className="h-7 w-auto md:h-8"
+          alt="dark Krist logo"
+        />
+
+        {/**** Icons */}
+        <section className="w-max flex items-center gap-x-3">
+          {/*** Menu button */}
+          <div
+            className="w-max flex items-center justify-center p-[2px] rounded-[4px] bg-gray-50 border-[1px] border-gray-800 lg:hidden"
+            onClick={handleMenuBtnClick}
+          >
+            {!isMobileNavOpen ? (
+              <HiOutlineMenuAlt3 className="text-black text-2xl md:text-3xl" />
+            ) : (
+              <HiX className="text-black text-2xl md:text-3xl" />
+            )}
+          </div>
+        </section>
+
+        {/***** Right aligned contents*/}
+        <section className="hidden items-center gap-x-5 lg:flex">
+          {/*** Cart icon */}
+          <HiShoppingCart className="text-black text-2xl" />
+
+          {/*** User avatar */}
+          <Image
+            src={defaultProfilePic}
+            className="h-[40px] w-[40px] object-cover rounded-full border-[1.5px] border-grey"
+            alt="Default profile picture"
+          />
+
+          {/*** Login button */}
+          <Link href="/login">
+            <MainButton>Login</MainButton>
+          </Link>
+        </section>
+
+        {/**** Mobile Nav */}
+        <MobileNav isOpen={isMobileNavOpen} />
+      </main>
+    </div>
+  );
+}

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
-import ToastProvider from "./components/ToastProvider";
-
 import "./globals.css";
 
 import { Jost } from "next/font/google";
+
+import LayoutContent from "./components/LayoutContent";
 
 //Jost google font
 const jost = Jost({
@@ -37,7 +37,7 @@ export default function RootLayout({
         <link rel="icon" type="image/x-icon" href="/small-dark-logo.ico" />
       </head>
       <body className={`${jost.className}`}>
-        <ToastProvider>{children}</ToastProvider>
+        <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );

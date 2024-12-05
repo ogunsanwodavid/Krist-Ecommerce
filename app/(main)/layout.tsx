@@ -5,5 +5,5 @@ export default function MainAppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div>MainApp {children}</div>;
+  return <div>{children}</div>;
 }

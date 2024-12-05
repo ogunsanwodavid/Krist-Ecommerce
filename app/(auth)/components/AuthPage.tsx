@@ -27,7 +27,7 @@ export default function AuthPage({ imageUrl, children }: AuthPageProps) {
           {/*** Logo */}
           <Image
             src={darkLogo}
-            className="h-8 md:h-9 lg:absolute lg:left-[40px] lg:top-[40px]"
+            className="h-8 w-auto md:h-9 lg:absolute lg:left-[40px] lg:top-[40px]"
             alt="dark Krist logo"
           />
 
