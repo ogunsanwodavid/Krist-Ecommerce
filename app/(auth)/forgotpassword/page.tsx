@@ -77,11 +77,7 @@ export default function ForgotPassword() {
       </div>
 
       {/**** Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-y-4"
-        action=""
-      >
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-y-4">
         {/***** Email address input */}
         <FormInput label="Email Address" error={emailInputError}>
           <input

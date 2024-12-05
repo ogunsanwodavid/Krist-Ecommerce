@@ -117,11 +117,7 @@ export default function SignUp() {
       </div>
 
       {/**** Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-y-2"
-        action=""
-      >
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-y-2">
         {/**** First Name input */}
         <FormInput label="First Name" error={firstNameInputError}>
           <input

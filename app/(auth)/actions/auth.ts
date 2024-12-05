@@ -4,8 +4,10 @@ import {
   SignupFormSchema,
   VerifyEmailFormSchema,
 } from "@/app/(auth)/lib/definitions";
+
 import { supabase } from "@/app/lib/supabase";
 
+//Login function
 export async function login(formData: FormData) {
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
@@ -24,6 +26,7 @@ export async function login(formData: FormData) {
   // Call the provider or db to create a user...
 }
 
+//Signup functionm
 export async function signup(formData: FormData) {
   const firstName = String(formData.get("firstName"));
   const lastName = String(formData.get("lastName"));
@@ -78,6 +81,7 @@ export async function signup(formData: FormData) {
   return { success: true };
 }
 
+//Request password reset function
 export async function requestPasswordReset(formData: FormData) {
   // Validate form fields
   const validatedFields = ForgotPasswordFormSchema.safeParse({
@@ -94,6 +98,7 @@ export async function requestPasswordReset(formData: FormData) {
   // Call the provider or db to create a user...
 }
 
+//Email verification function
 export async function verifyEmail(formData: FormData) {
   // Validate form fields
   const validatedFields = VerifyEmailFormSchema.safeParse({
