@@ -10,8 +10,7 @@ import MobileNav from "./MobileNav";
 import MainButton from "./ui/MainButton";
 
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
-
-import { HiShoppingCart } from "react-icons/hi2";
+import { PiHeart, PiShoppingCartSimple } from "react-icons/pi";
 
 import darkLogo from "@/public/dark-logo.svg";
 import defaultProfilePic from "@/public/dave.jpeg";
@@ -63,8 +62,11 @@ export default function Navbar() {
 
         {/***** Right aligned contents*/}
         <section className="hidden items-center gap-x-5 lg:flex">
+          {/**** Wishlist icon */}
+          <PiHeart className="text-black text-2xl" />
+
           {/*** Cart icon */}
-          <HiShoppingCart className="text-black text-2xl" />
+          <PiShoppingCartSimple className="text-black text-2xl" />
 
           {/*** User avatar */}
           <Image
@@ -76,6 +78,13 @@ export default function Navbar() {
           {/*** Login button */}
           <Link href="/login">
             <MainButton>Login</MainButton>
+          </Link>
+
+          {/*** Login button */}
+          <Link href="/signup">
+            <MainButton className="bg-white border-[1.5px] border-black !text-black">
+              Signup
+            </MainButton>
           </Link>
         </section>
 

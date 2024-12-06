@@ -9,8 +9,9 @@ import {
   HiMiniShoppingBag,
   HiUserGroup,
   HiUser,
-  HiShoppingCart,
 } from "react-icons/hi2";
+
+import { PiShoppingCartSimpleFill } from "react-icons/pi";
 
 import MainButton from "./ui/MainButton";
 
@@ -48,7 +49,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
       </section>
 
       {/*** Navigation */}
-      <nav className="w-full space-y-6 bg-gray-50 p-6 font-semibold">
+      <nav className="w-full space-y-6 bg-gray-50 p-4 font-semibold">
         {/*** Home */}
         <Link href="/" className="flex items-center gap-x-4">
           <HiMiniHome className="text-black text-xl" />
@@ -65,7 +66,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
 
         {/*** Cart */}
         <Link href="/cart" className="flex items-center gap-x-4">
-          <HiShoppingCart className="text-black text-xl" />
+          <PiShoppingCartSimpleFill className="text-black text-xl" />
 
           <p>Cart</p>
         </Link>
@@ -98,10 +99,20 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
           <p>My Profile</p>
         </Link>
 
-        {/*** Login button */}
-        <Link href="/login" className="flex items-center">
-          <MainButton className="w-full">Login</MainButton>
-        </Link>
+        {/*** Buttons */}
+        <section className="space-y-2">
+          {/*** Login button */}
+          <Link href="/login" className="flex items-center">
+            <MainButton className="w-full">Login</MainButton>
+          </Link>
+
+          {/*** Signup button */}
+          <Link href="/signup" className="flex items-center">
+            <MainButton className="w-full bg-white border-[1.5px] border-black !text-black">
+              Signup
+            </MainButton>
+          </Link>
+        </section>
       </nav>
     </div>
   );

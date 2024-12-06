@@ -102,7 +102,7 @@ export default function Footer() {
 
         {/*** Bottom section */}
         <div
-          className=" pt-5 mt-8 border-t-[1px] border-grey grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-[auto_auto_135px] lg:gap-10
+          className=" pt-5 mt-8 border-t-[1px] border-grey grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-[auto_auto_max-content] lg:gap-10
         "
         >
           {/** Accepted cards */}
