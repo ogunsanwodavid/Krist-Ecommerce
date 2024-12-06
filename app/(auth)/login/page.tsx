@@ -26,7 +26,7 @@ export default function Login() {
     setShowPassword((prev: boolean) => !prev);
   }
 
-  //TYpe of the error state of the login form
+  //Type of the error state of the login form
   type LoginFormErrors = {
     email?: string[];
     password?: string[];

@@ -36,13 +36,15 @@ export default function Navbar() {
 
   return (
     <div className="relative w-full z-10">
-      <main className="relative w-full max-w-[1100px] mx-auto px-3 py-4 flex items-center justify-between z-10">
-        {/**** Logo */}
-        <Image
-          src={darkLogo}
-          className="h-7 w-auto md:h-8"
-          alt="dark Krist logo"
-        />
+      <main className="relative w-full max-w-[1200px] mx-auto px-3 py-4 flex items-center justify-between z-10">
+        {/**** Dark Logo */}
+        <Link href="/">
+          <Image
+            src={darkLogo}
+            className="h-7 w-auto md:h-8"
+            alt="dark Krist logo"
+          />
+        </Link>
 
         {/**** Icons */}
         <section className="w-max flex items-center gap-x-3">
