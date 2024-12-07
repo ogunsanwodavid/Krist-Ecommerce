@@ -45,6 +45,15 @@ export default function Navbar() {
           />
         </Link>
 
+        {/**** Desktop nav */}
+        <nav className="hidden items-center justify-center gap-x-10 md:text-lg lg:flex">
+          <Link href="/">Home</Link>
+          <Link href="/shop">Shop</Link>
+          <Link href="/our-story">Our Story</Link>
+          <Link href="/blog">Blog</Link>
+          <Link href="/contact-us">Contact Us</Link>
+        </nav>
+
         {/**** Icons */}
         <section className="w-max flex items-center gap-x-3">
           {/*** Menu button */}
@@ -60,7 +69,7 @@ export default function Navbar() {
           </div>
         </section>
 
-        {/***** Right aligned contents*/}
+        {/***** Right aligned contents on desktop */}
         <section className="hidden items-center gap-x-5 lg:flex">
           {/**** Wishlist icon */}
           <PiHeart className="text-black text-2xl" />
