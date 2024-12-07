@@ -1,3 +1,10 @@
+import HeroSection from "./components/HeroSection";
+
 export default function Home() {
-  return <div>X gon give it to ya</div>;
+  return (
+    <div>
+      {/*** Hero Section */}
+      <HeroSection />
+    </div>
+  );
 }

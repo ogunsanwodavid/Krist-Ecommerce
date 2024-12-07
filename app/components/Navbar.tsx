@@ -34,7 +34,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="relative w-full z-10">
+    <div className="relative w-full z-30">
       <main className="relative w-full max-w-[1200px] mx-auto px-3 py-4 flex items-center justify-between z-10">
         {/**** Dark Logo */}
         <Link href="/">
