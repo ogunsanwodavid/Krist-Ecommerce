@@ -11,8 +11,10 @@
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@gsap/react": "^2.1.1",
     "@mui/material": "^6.1.10",
     "@supabase/supabase-js": "^2.46.2",
+    "gsap": "^3.12.5",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
