@@ -21,60 +21,40 @@ export default function HeroSection() {
 
   useGSAP(
     () => {
-      const timeline = gsap.timeline({ defaults: { duration: 0.7 } });
+      const timeline = gsap.timeline({
+        defaults: { duration: 0.7, ease: "power2.inOut" },
+        scrollTrigger: {
+          trigger: heroSectionContainer.current,
+          start: "top bottom",
+          end: "top center",
+          scrub: true,
+        },
+      });
 
-      // gsap code here...
+      // Adding animations to the timeline
       timeline
         .from(".hero-heading-1", {
           opacity: 0,
           y: "100%",
-          ease: "power2.inOut",
-          scrollTrigger: {
-            trigger: heroSectionContainer.current,
-            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
-            end: "top center", // End when the top of the text hits the center of the viewport
-            scrub: true, // Smooth scrubbing, takes effect when scrolling
-          },
         })
         .from(".hero-heading-2", {
           opacity: 0,
           y: "100%",
-          ease: "power2.inOut",
           stagger: 0.3,
-          scrollTrigger: {
-            trigger: heroSectionContainer.current,
-            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
-            end: "top center", // End when the top of the text hits the center of the viewport
-            scrub: true, // Smooth scrubbing, takes effect when scrolling
-          },
         })
         .from(".hero-text-1", {
           opacity: 0,
           y: "100%",
-          ease: "power2.inOut",
           stagger: 0.3,
-          scrollTrigger: {
-            trigger: heroSectionContainer.current,
-            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
-            end: "top center", // End when the top of the text hits the center of the viewport
-            scrub: true, // Smooth scrubbing, takes effect when scrolling
-          },
         })
         .from(".hero-button", {
           opacity: 0,
           y: "100%",
-          ease: "power2.inOut",
           stagger: 0.3,
-          scrollTrigger: {
-            trigger: heroSectionContainer.current,
-            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
-            end: "top center", // End when the top of the text hits the center of the viewport
-            scrub: true, // Smooth scrubbing, takes effect when scrolling
-          },
-        }); // <-- automatically reverted
+        });
     },
     { scope: heroSectionContainer }
-  ); // <-- scope is for selector text (optional)
+  );
 
   return (
     <div
