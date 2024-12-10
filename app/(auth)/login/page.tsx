@@ -153,7 +153,7 @@ export default function Login() {
 
           {/**** Forgot Password */}
           <Link
-            href="/forgotpassword"
+            href="/forgot-password"
             className="text-[14px] text-black lg:text-base"
           >
             Forgot Password?
