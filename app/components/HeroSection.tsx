@@ -21,47 +21,79 @@ export default function HeroSection() {
 
   useGSAP(
     () => {
-      const timeline = gsap.timeline({ defaults: { duration: 0.6 } });
+      const timeline = gsap.timeline({ defaults: { duration: 0.7 } });
 
       // gsap code here...
       timeline
-        .from(".heading-1", {
+        .from(".hero-heading-1", {
+          opacity: 0,
           y: "100%",
-          // opacity: 0.4,
-          ease: "elastic.in",
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: heroSectionContainer.current,
+            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
+            end: "top center", // End when the top of the text hits the center of the viewport
+            scrub: true, // Smooth scrubbing, takes effect when scrolling
+          },
         })
-        .from(".heading-2", {
+        .from(".hero-heading-2", {
+          opacity: 0,
           y: "100%",
-          // opacity: 0.4,
-          stagger: 0.2,
-          ease: "elastic.in",
+          ease: "power2.inOut",
+          stagger: 0.3,
+          scrollTrigger: {
+            trigger: heroSectionContainer.current,
+            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
+            end: "top center", // End when the top of the text hits the center of the viewport
+            scrub: true, // Smooth scrubbing, takes effect when scrolling
+          },
         })
-        .from(".text-1", {
+        .from(".hero-text-1", {
+          opacity: 0,
           y: "100%",
-          // opacity: 0.4,
-          stagger: 0.2,
-          ease: "elastic.in",
+          ease: "power2.inOut",
+          stagger: 0.3,
+          scrollTrigger: {
+            trigger: heroSectionContainer.current,
+            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
+            end: "top center", // End when the top of the text hits the center of the viewport
+            scrub: true, // Smooth scrubbing, takes effect when scrolling
+          },
+        })
+        .from(".hero-button", {
+          opacity: 0,
+          y: "100%",
+          ease: "power2.inOut",
+          stagger: 0.3,
+          scrollTrigger: {
+            trigger: heroSectionContainer.current,
+            start: "top bottom", // Start when the top of the text hits the bottom of the viewport
+            end: "top center", // End when the top of the text hits the center of the viewport
+            scrub: true, // Smooth scrubbing, takes effect when scrolling
+          },
         }); // <-- automatically reverted
     },
     { scope: heroSectionContainer }
   ); // <-- scope is for selector text (optional)
 
   return (
-    <div className="relative w-full bg-gray-200 overflow-hidden">
+    <div
+      ref={heroSectionContainer}
+      className="relative w-full bg-gray-200 overflow-hidden"
+    >
       {/*** Hero texts */}
-      <section
-        ref={heroSectionContainer}
-        className="relative  flex flex-col items-center justify-center gap-y-2 px-5 py-20 z-20 bg-[rgba(255,255,255,0.25)]"
-      >
-        <h3 className="heading-1 text-2xl text-center">Classic Exclusive</h3>
-        <h2 className="heading-2 text-3xl font-semibold text-center">
+      <section className="relative  flex flex-col items-center justify-center gap-y-2 px-5 py-20 z-20 bg-[rgba(255,255,255,0.25)]">
+        <h3 className="hero-heading-1 text-2xl text-center opacity-100 duration-500">
+          Classic Exclusive
+        </h3>
+        <h2 className="hero-heading-2 text-3xl font-semibold text-center">
           Men&apos;s Collection
         </h2>
-        <p className="text-1 text-center text-lg">UP TO 40% OFF</p>
+        <p className="hero-text-1 text-center text-lg">UP TO 40% OFF</p>
 
         {/**** Shop now button */}
         <Link href="/shop">
-          <MainButton className="button-1 gap-x-2">
+          <MainButton className="hero-button gap-x-2">
             Shop Now <HiArrowRight className="text-white text-sm" />
           </MainButton>
         </Link>
