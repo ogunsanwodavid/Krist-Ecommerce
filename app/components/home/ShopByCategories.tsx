@@ -226,7 +226,6 @@ export default function ShopByCategories() {
         {/*** Main list of categories */}
         <main className="w-full">
           <Swiper
-            //loop={true}
             spaceBetween={20}
             slidesPerView="auto"
             modules={[Navigation, Scrollbar]}
