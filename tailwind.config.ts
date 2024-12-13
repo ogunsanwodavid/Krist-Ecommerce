@@ -7,7 +7,7 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    screens: { sm: "400px", md: "700px", lg: "1200px" },
+    screens: { sm: "400px", md: "700px", xlg: "950px", lg: "1200px" },
     fontFamily: {
       jost: "Jost, sans-serif",
     },

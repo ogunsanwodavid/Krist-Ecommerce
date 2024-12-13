@@ -36,7 +36,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/x-icon" href="/small-dark-logo.ico" />
       </head>
-      <body className={`${jost.className}`}>
+      <body className={`${jost.className} font-jost`}>
         <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
