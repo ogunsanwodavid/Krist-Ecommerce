@@ -173,11 +173,11 @@ export default function ShopByCategories() {
     }
   };
 
-  function handleSlideReachBeginning(swiper) {
+  function handleSlideReachBeginning() {
     setIsFirstSlideActive(true);
   }
 
-  function handleSlideReachEnd(swiper) {
+  function handleSlideReachEnd() {
     setIsLastSlideActive(true);
   }
 
