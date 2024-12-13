@@ -5,6 +5,8 @@ import "./globals.css";
 import { Jost } from "next/font/google";
 
 import LayoutContent from "./components/LayoutContent";
+import ReduxProvider from "./providers/ReduxProvider";
+import QueryProvider from "./providers/QueryProvider";
 
 //Jost google font
 const jost = Jost({
@@ -37,7 +39,11 @@ export default function RootLayout({
         <link rel="icon" type="image/x-icon" href="/small-dark-logo.ico" />
       </head>
       <body className={`${jost.className} font-jost`}>
-        <LayoutContent>{children}</LayoutContent>
+        <ReduxProvider>
+          <QueryProvider>
+            <LayoutContent>{children}</LayoutContent>
+          </QueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

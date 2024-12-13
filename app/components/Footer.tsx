@@ -27,7 +27,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-black">
-      <main className="relative w-full max-w-[1200px] mx-auto px-3 pt-5 py-12 text-white md:pt-12 md:text-lg">
+      <main className="relative w-full max-w-[1200px] mx-auto px-3 pt-5 py-12 text-white md:pt-12 md:text-lg md:px-8">
         {/**** Top section */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-7 lg:grid-cols-[auto_200px_200px_auto] lg:gap-10">
           {/**** Logo and Contact info */}
