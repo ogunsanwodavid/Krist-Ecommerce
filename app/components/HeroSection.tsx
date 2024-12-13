@@ -93,7 +93,7 @@ export default function HeroSection() {
 
         {/**** Bestsellers tag */}
         <section className="hidden absolute left-[30%] bottom-0 w-full md:block">
-          <p className="font-extrabold text-[100px] leading-[100px] text-gray-100 uppercase lg:text-[150px] lg:leading-[150px]">
+          <p className="font-bold text-[100px] leading-[100px] text-gray-100 uppercase lg:text-[150px] lg:leading-[150px]">
             BESTSELLERS
           </p>
         </section>
