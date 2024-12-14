@@ -84,7 +84,7 @@ export default function HeroSection() {
     <div className="w-full  bg-gray-200 ">
       <div
         ref={heroSectionContainer}
-        className="relative w-full max-w-[1200px] mx-auto overflow-hidden md:flex md:justify-around md:gap-y-10 md:px-8"
+        className="relative w-full max-w-[1200px] mx-auto overflow-hidden md:flex md:justify-around md:gap-y-10 md:px-8 lg:px-0"
       >
         {/*** Hero texts */}
         <section className="relative  flex flex-col items-center justify-center gap-y-2 px-5 py-20 z-20 bg-[rgba(255,255,255,0.25)] md:bg-transparent md:w-max md:items-start md:gap-y-3 xlg:gap-y-4">

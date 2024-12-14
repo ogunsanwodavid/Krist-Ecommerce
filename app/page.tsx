@@ -1,3 +1,4 @@
+import BestSeller from "./components/home/BestSeller";
 import HeroSection from "./components/home/HeroSection";
 import ShopByCategories from "./components/home/ShopByCategories";
 
@@ -9,6 +10,9 @@ export default function Home() {
 
       {/*** Shop By Categories */}
       <ShopByCategories />
+
+      {/*** Our BestSeller */}
+      <BestSeller />
     </div>
   );
 }

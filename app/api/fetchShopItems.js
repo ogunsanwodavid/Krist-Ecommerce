@@ -8,7 +8,5 @@ export default async function fetchShopItems() {
     toast.error("Failed to fetch shop items");
   }
 
-  console.log(data);
-
   return data;
 }

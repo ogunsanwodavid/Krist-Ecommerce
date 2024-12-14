@@ -184,7 +184,7 @@ export default function ShopByCategories() {
   return (
     <div className="w-full">
       {/**** Inner container */}
-      <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-8 md:py-14 md:space-y-7">
+      <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-8 md:py-14 md:space-y-7 lg:px-0">
         {/*** Header */}
         <header className="w-full flex gap-x-4 items-center justify-between">
           <h2 className="text-black text-xl md:text-3xl">Shop by Categories</h2>
@@ -244,7 +244,7 @@ export default function ShopByCategories() {
           >
             {shoppingCategories.map((category, index) => {
               return (
-                <SwiperSlide className="w-full max-w-[280px]" key={index}>
+                <SwiperSlide className="w-full max-w-[285px]" key={index}>
                   <div
                     className="relative w-full h-[350px] bg-gray-200 rounded-[16px] p-3 flex flex-col overflow-hidden"
                     ref={categoryBoxesRefs.current[index]}
