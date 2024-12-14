@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
 
 import fetchShopItems from "../api/fetchShopItems";
 
@@ -13,8 +13,8 @@ export default function useFetchShopItems() {
 
   const { isLoading, data } = useQuery({
     queryKey: ["shopItems"],
-    queryFn: fetchShopItems /* 
-    onSuccess: (data) => {
+    queryFn: fetchShopItems,
+    /* onSuccess: (data) => {
       // Dispatch action to set items in Redux state
       dispatch(setItems(data));
       console.log(data);
@@ -22,13 +22,13 @@ export default function useFetchShopItems() {
     onError: (error) => {
       // Optionally handle error state here
       toast.error(error.message || "Failed to fetch shop items");
-    }, */,
+    }, */
   });
 
   useEffect(() => {
     if (!isLoading && data) {
       dispatch(setItems(data));
-      //console.log(data);
+      console.log(data);
     }
   }, [isLoading, dispatch, data]);
 

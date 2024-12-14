@@ -5,19 +5,12 @@ import { CircularProgress } from "@mui/material";
 import useFetchShopItems from "@/app/actions/useFetchShopItems";
 
 import { ReduxStoreState } from "@/app/redux/store";
-import { useEffect } from "react";
 import { useAppSelector } from "@/app/hooks/redux";
 
 export default function BestSeller() {
   const { isLoading: isFetchingShopItems } = useFetchShopItems();
 
   const shopItems = useAppSelector((state: ReduxStoreState) => state.shop);
-
-  useEffect(() => {
-    if (!isFetchingShopItems) {
-      console.log(shopItems);
-    }
-  }, [isFetchingShopItems, shopItems]);
 
   return (
     <div className="w-full">
