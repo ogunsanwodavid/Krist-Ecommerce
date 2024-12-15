@@ -40,7 +40,7 @@ export default function DealsOfTheMonth() {
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
           start: "top center", // Adjust as necessary
-          end: "top top", // Adjust as necessary
+          end: "top center", // Adjust as necessary
         },
       });
 
@@ -53,7 +53,7 @@ export default function DealsOfTheMonth() {
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
           start: "top center", // Adjust as necessary
-          end: "top top", // Adjust as necessary
+          end: "top center", // Adjust as necessary
         },
       });
 
@@ -66,7 +66,7 @@ export default function DealsOfTheMonth() {
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
           start: "top center", // Adjust as necessary
-          end: "top top", // Adjust as necessary
+          end: "top center", // Adjust as necessary
         },
       });
 
@@ -79,7 +79,7 @@ export default function DealsOfTheMonth() {
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
           start: "top center", // Adjust as necessary
-          end: "top top", // Adjust as necessary
+          end: "top center", // Adjust as necessary
         },
       });
 

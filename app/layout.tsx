@@ -35,9 +35,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" type="image/x-icon" href="/small-dark-logo.ico" />
-      </head>
       <body className={`${jost.className}`} suppressHydrationWarning>
         <ReduxProvider>
           <QueryProvider>
