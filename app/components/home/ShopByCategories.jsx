@@ -67,7 +67,7 @@ export default function ShopByCategories() {
   ); // Empty dependency array ensures this runs only once
 
   //Ref for each category box
-  const categoryBoxesRefs = useRef<React.RefObject<HTMLDivElement>[]>([]);
+  const categoryBoxesRefs = useRef([]);
 
   // Initialize refs on render
   if (categoryBoxesRefs.current.length !== shoppingCategories.length) {
