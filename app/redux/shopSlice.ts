@@ -6,7 +6,7 @@ const shopSlice = createSlice({
   initialState: [],
   reducers: {
     setItems(state, action) {
-      state = action.payload;
+      return action.payload;
     },
   },
 });

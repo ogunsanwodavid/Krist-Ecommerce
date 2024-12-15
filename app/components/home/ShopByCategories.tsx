@@ -78,36 +78,38 @@ export default function ShopByCategories() {
 
   // GSAP animation for each box
   useEffect(() => {
-    const animations = categoryBoxesRefs.current.map((ref) => {
-      if (!ref.current) return null;
+    const animations = categoryBoxesRefs.current
+      .map((ref) => {
+        if (!ref.current) return null;
 
-      const tagAnim = gsap.from(ref.current.querySelector(".tag"), {
-        x: "100%",
-        duration: 1.5,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top bottom",
-          end: "top center",
-          //scrub: true,
-        },
-      });
+        const tagAnim = gsap.from(ref.current.querySelector(".tag"), {
+          x: "100%",
+          duration: 1.5,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top center",
+            end: "top center",
+            //scrub: true,
+          },
+        });
 
-      const buttonAnim = gsap.from(ref.current.querySelector(".button"), {
-        opacity: 0,
-        y: "100%",
-        duration: 1,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "bottom bottom",
-          end: "bottom bottom",
-          //scrub: true,
-        },
-      });
+        const buttonAnim = gsap.from(ref.current.querySelector(".button"), {
+          opacity: 0,
+          y: "100%",
+          duration: 1,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "bottom bottom",
+            end: "bottom bottom",
+            //scrub: true,
+          },
+        });
 
-      return [tagAnim, buttonAnim];
-    });
+        return [tagAnim, buttonAnim];
+      })
+      .filter(Boolean);
 
     return () => {
       // Cleanup ScrollTrigger and animations
@@ -116,61 +118,20 @@ export default function ShopByCategories() {
         animArray?.forEach((anim) => anim?.kill())
       );
     };
-  }, [shoppingCategories]);
-
-  //GSAP animation for each box
-  /*   useGSAP(() => {
-    categoryBoxesRefs.current.forEach((ref: RefObject<HTMLDivElement>) => {
-      //Tag Animation
-      gsap.from(ref.current.querySelector(".tag"), {
-        x: "100%",
-        duration: 1.5,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top bottom",
-          end: "top center",
-          scrub: true,
-        },
-      });
-
-      //Button Animation
-      gsap.from(ref.current.querySelector(".button"), {
-        opacity: "0",
-        y: "100%",
-        duration: 1,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top bottom",
-          end: "top center",
-          scrub: true,
-        },
-      });
-    });
-  }); */
+  }, [shoppingCategories, categoryBoxesRefs]);
 
   //Refs for the swiper navigators
   const prevSwiperBtn = useRef(null);
   const nextSwiperBtn = useRef(null);
 
   //State to know if first and last slides are active
-  const [isFirstSlideActive, setIsFirstSlideActive] = useState<boolean>(true);
-  const [isLastSlideActive, setIsLastSlideActive] = useState<boolean>(false);
+  const [isFirstSlideActive, setIsFirstSlideActive] = useState(true);
+  const [isLastSlideActive, setIsLastSlideActive] = useState(false);
 
-  //Function to handle slide change
+  // Function to handle slide change
   const handleSlideChange = (swiper) => {
-    if (swiper.isBeginning) {
-      setIsFirstSlideActive(true);
-    } else {
-      setIsFirstSlideActive(false);
-    }
-
-    if (swiper.isEnd) {
-      setIsLastSlideActive(true);
-    } else {
-      setIsLastSlideActive(false);
-    }
+    setIsFirstSlideActive(swiper.isBeginning);
+    setIsLastSlideActive(swiper.isEnd);
   };
 
   function handleSlideReachBeginning() {
@@ -187,7 +148,9 @@ export default function ShopByCategories() {
       <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-8 md:py-14 md:space-y-7 lg:px-0">
         {/*** Header */}
         <header className="w-full flex gap-x-4 items-center justify-between">
-          <h2 className="text-black text-xl md:text-3xl">Shop by Categories</h2>
+          <h2 className="text-black text-[23px] md:text-3xl">
+            Shop by Categories
+          </h2>
 
           {/*** Swiper navigtion */}
           <section className="flex gap-x-2 md:gap-x-4">
@@ -224,9 +187,10 @@ export default function ShopByCategories() {
         </header>
 
         {/*** Main list of categories */}
+
         <main className="w-full">
           <Swiper
-            spaceBetween={20}
+            spaceBetween={30}
             slidesPerView="auto"
             modules={[Navigation, Scrollbar]}
             scrollbar={{ draggable: true }}
@@ -244,9 +208,9 @@ export default function ShopByCategories() {
           >
             {shoppingCategories.map((category, index) => {
               return (
-                <SwiperSlide className="w-full max-w-[285px]" key={index}>
+                <SwiperSlide className="w-full max-w-[277.5px]" key={index}>
                   <div
-                    className="relative w-full h-[350px] bg-gray-200 rounded-[16px] p-3 flex flex-col overflow-hidden"
+                    className="relative w-full h-[350px] bg-gray-200  p-3 flex flex-col overflow-hidden"
                     ref={categoryBoxesRefs.current[index]}
                   >
                     {/** Category tag */}
@@ -262,7 +226,7 @@ export default function ShopByCategories() {
                     />
 
                     {/**** Category button*/}
-                    <button className="button w-full h-[40px] max-w-[230px] mx-auto mt-auto bg-white text-black font-medium flex items-center justify-center rounded-[7px] z-10 md:text-lg">
+                    <button className="button w-full h-[44px] max-w-[230px] mx-auto mt-auto bg-gray-100 text-black font-medium flex items-center justify-center rounded-[7px] z-10 ">
                       {category.category}
                     </button>
                   </div>

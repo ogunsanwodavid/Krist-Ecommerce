@@ -15,8 +15,6 @@ import { HiArrowRight } from "react-icons/hi2";
 import heroImage from "@/public/hero-image-2.png";
 
 export default function HeroSection() {
-  //gsap.registerPlugin(useGSAP);
-
   const heroSectionContainer = useRef(null);
 
   useGSAP(

@@ -8,6 +8,7 @@ export interface ShopItem {
   colorsAvailable: string[];
   createdAt: string;
   description: string;
+  discount: number;
   image: string;
   inStock: boolean;
   numberOfReviews: number;

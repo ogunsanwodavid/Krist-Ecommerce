@@ -31,7 +31,8 @@
     ".next/types/**/*.ts",
     "app/providers/QueryProvider.ts",
     "app/providers/ReduxProvider.js",
-    "app/actions/useFetchShopItems.tsx"
+    "app/actions/useFetchShopItems.tsx",
+    "app/components/home/ShopByCategories.tsx"
   ],
   "exclude": ["node_modules"]
 }
