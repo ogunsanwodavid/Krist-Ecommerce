@@ -1,2 +1,2 @@
-const x = 66;
+const x = 67;
 console.log(x);
