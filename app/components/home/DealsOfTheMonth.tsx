@@ -40,8 +40,10 @@ export default function DealsOfTheMonth() {
         immediateRender: false,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
-          start: "top center", // Adjust as necessary
-          end: "top center", // Adjust as necessary
+          /* start: "top center", // Adjust as necessary
+          end: "top center", // Adjust as necessary */
+          start: "bottom bottom", // Adjust as necessary
+          end: "top top", // Adjust as necessary
         },
       });
 
@@ -54,8 +56,10 @@ export default function DealsOfTheMonth() {
         delay: 0.7,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
-          start: "top center", // Adjust as necessary
-          end: "top center", // Adjust as necessary
+          /* start: "top center", // Adjust as necessary
+          end: "top center", // Adjust as necessary */
+          start: "bottom bottom", // Adjust as necessary
+          end: "top top", // Adjust as necessary
         },
       });
 
@@ -68,8 +72,10 @@ export default function DealsOfTheMonth() {
         delay: 1.4,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
-          start: "top center", // Adjust as necessary
-          end: "top center", // Adjust as necessary
+          /* start: "top center", // Adjust as necessary
+          end: "top center", // Adjust as necessary */
+          start: "bottom bottom", // Adjust as necessary
+          end: "top top", // Adjust as necessary
         },
       });
 
@@ -82,8 +88,10 @@ export default function DealsOfTheMonth() {
         delay: 2.1,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
-          start: "top center", // Adjust as necessary
-          end: "top center", // Adjust as necessary
+          /* start: "top center", // Adjust as necessary
+          end: "top center", // Adjust as necessary */
+          start: "bottom bottom", // Adjust as necessary
+          end: "top top", // Adjust as necessary
         },
       });
 
