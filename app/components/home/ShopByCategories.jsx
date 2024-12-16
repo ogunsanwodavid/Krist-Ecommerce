@@ -145,7 +145,7 @@ export default function ShopByCategories() {
   return (
     <div className="w-full">
       {/**** Inner container */}
-      <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-8 md:py-14 md:space-y-7 lg:px-0">
+      <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-8 md:pt-20 md:pb-10 md:space-y-7 lg:px-0">
         {/*** Header */}
         <header className="w-full flex gap-x-4 items-center justify-between">
           <h2 className="text-black text-[23px] md:text-3xl">

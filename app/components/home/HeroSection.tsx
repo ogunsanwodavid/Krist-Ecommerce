@@ -79,7 +79,7 @@ export default function HeroSection() {
   );
 
   return (
-    <div className="w-full  bg-gray-200 ">
+    <div className="w-full  bg-gray-100 ">
       <div
         ref={heroSectionContainer}
         className="relative w-full max-w-[1200px] mx-auto overflow-hidden md:flex md:justify-around md:gap-y-10 md:px-8 lg:px-0"

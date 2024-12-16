@@ -37,6 +37,7 @@ export default function DealsOfTheMonth() {
         opacity: 0,
         y: "100%",
         duration: 0.5,
+        immediateRender: false,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
           start: "top center", // Adjust as necessary
@@ -49,6 +50,7 @@ export default function DealsOfTheMonth() {
         opacity: 0,
         y: "100%",
         duration: 0.5,
+        immediateRender: false,
         delay: 0.7,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
@@ -62,6 +64,7 @@ export default function DealsOfTheMonth() {
         opacity: 0,
         y: "100%",
         duration: 0.5,
+        immediateRender: false,
         delay: 1.4,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
@@ -75,6 +78,7 @@ export default function DealsOfTheMonth() {
         opacity: 0,
         y: "100%",
         duration: 0.5,
+        immediateRender: false,
         delay: 2.1,
         scrollTrigger: {
           trigger: dealsOfTheMonthContainer.current,
@@ -140,7 +144,7 @@ export default function DealsOfTheMonth() {
     <div className="w-full">
       {/**** Inner container */}
       <div
-        className="unx w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-6 md:py-10 md:space-y-7 lg:px-0 lg:flex lg:items-center lg:gap-x-12"
+        className="unx w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-6 md:py-20 md:space-y-7 lg:px-0 lg:flex lg:items-center lg:gap-x-12"
         ref={dealsOfTheMonthContainer}
       >
         {/*** Texts section */}
