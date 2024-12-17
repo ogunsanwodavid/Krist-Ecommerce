@@ -26,9 +26,10 @@ import { CircularProgress } from "@mui/material";
 import { GrAppsRounded, GrSort } from "react-icons/gr";
 
 import failedToLoadImg from "@/public/failedToLoad.svg";
+import Link from "next/link";
+import MainButton from "@/app/components/ui/MainButton";
 
 export default function Shop() {
-  console.log("shop mounted");
   //Search params function
   const searchParams = useSearchParams();
 
@@ -47,8 +48,20 @@ export default function Shop() {
   //Randomize shop items on every page mount
   const randomizedShopItemsRef = useRef<ShopItemModel[]>([]); //shuffleArray(shopItems);
 
+  //Filtered shop items after randomized
+  //Thats why its initialized to randomized shop items
+  const [filteredShopItems, setFilteredShopItems] = useState<ShopItemModel[]>(
+    randomizedShopItemsRef.current
+  );
+
   //Current page showing shop items, set to 1 on load
   const currentPage = parseInt(searchParams.get("page")!) || 1;
+
+  //Total pages possibled to be rendered for the filtered shop items
+  const totalPages = Math.ceil(filteredShopItems.length / itemsPerPage);
+
+  //Check if current page param exceeds totalPages
+  const exceedsTotalPages = currentPage > totalPages;
 
   //Currently displayed shop items
   const [currentDisplayedShopItems, setCurrentDisplayedShopItems] = useState<
@@ -57,33 +70,32 @@ export default function Shop() {
 
   //One-indexed index of the first and last items of a page
   const firstItemIndex = (currentPage - 1) * itemsPerPage + 1;
-  const lastItemIndex = Math.min(currentPage * itemsPerPage, shopItems.length);
+  const lastItemIndex = Math.min(
+    currentPage * itemsPerPage,
+    filteredShopItems.length
+  );
 
-  //THis effect randomizes shop items and update the items for current page displayed
+  // This effect runs only on mount to shuffle items once
   useEffect(() => {
-    //Function to update items for the current page
-    const updateCurrentDisplayedShopItems = () => {
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-
-      setCurrentDisplayedShopItems(
-        randomizedShopItemsRef.current.slice(startIndex, endIndex)
-      );
-    };
-
-    //Randomize shop items if they exist
-    if (randomizedShopItemsRef.current.length === 0) {
+    if (randomizedShopItemsRef.current.length === 0 && shopItems.length) {
       randomizedShopItemsRef.current = shuffleArray(shopItems);
+      setFilteredShopItems(randomizedShopItemsRef.current);
     }
+  }, [shopItems]); // Only run once when shopItems change
 
-    //Update current displayed items
-    updateCurrentDisplayedShopItems();
-  }, [shopItems, currentPage]);
+  // This effect updates the displayed items on page change
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
 
-  //State of the categories and filter sidebar
+    setCurrentDisplayedShopItems(filteredShopItems.slice(startIndex, endIndex));
+  }, [currentPage, filteredShopItems]); // Runs on page or filteredShopItems change
+
+  //State of the categories and filters sidebar showcase
   const [isCategoriesAndFiltersOpen, setIsCategoriesAndFiltersOpen] =
     useState<boolean>(false);
 
+  //Handles the state of categories and filters
   const handleSetIsCategoriesAndFiltersOpen = useCallback((val: boolean) => {
     setIsCategoriesAndFiltersOpen(val);
   }, []);
@@ -107,6 +119,27 @@ export default function Shop() {
       </div>
     );
 
+  //Show error if current page exceeds total pages possible
+  if (exceedsTotalPages) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
+        <Image
+          src={failedToLoadImg}
+          className="w-full max-w-[200px] md:max-w-[300px]"
+          alt="Failed to load error image"
+        />
+
+        <p className="text-base text-center md:text-lg">
+          No results found for your filters on this page
+        </p>
+
+        <Link href="/shop">
+          <MainButton>Back to Shop</MainButton>
+        </Link>
+      </div>
+    );
+  }
+
   //Show error if there's no shop item yet
   if (!currentDisplayedShopItems.length)
     return (
@@ -116,7 +149,11 @@ export default function Shop() {
           className="w-full max-w-[200px] md:max-w-[300px]"
           alt="Failed to load error image"
         />
-        <p className="text-base md:text-lg">Failed to load shop products</p>
+        <p className="text-base text-center md:text-lg">
+          {shopItems.length === 0
+            ? "Failed to load shop products"
+            : "No shop items found"}
+        </p>
       </div>
     );
 
@@ -125,10 +162,14 @@ export default function Shop() {
       {/**** Inner container */}
       <div className="relative w-full max-w-[1200px] mx-auto px-3 py-8 md:px-6 md:py-10 lg:px-0 lg:flex">
         {/*** Shop categories and filters section */}
-        <ShopCategoriesAndFilters
-          isOpen={isCategoriesAndFiltersOpen}
-          setIsOpen={handleSetIsCategoriesAndFiltersOpen}
-        />
+        {
+          <ShopCategoriesAndFilters
+            isOpen={isCategoriesAndFiltersOpen}
+            setIsOpen={handleSetIsCategoriesAndFiltersOpen}
+            randomizedShopItems={randomizedShopItemsRef.current}
+            setFilteredShopItems={setFilteredShopItems}
+          />
+        }
 
         {/*** Main section of shop */}
         <main className="w-full space-y-4 md:space-y-7">
@@ -146,8 +187,8 @@ export default function Shop() {
 
             {/*** Pagination info showcase */}
             <span className="text-sm md:text-base">
-              Showing {firstItemIndex} - {lastItemIndex} of {shopItems.length}{" "}
-              results
+              Showing {firstItemIndex} - {lastItemIndex} of{" "}
+              {filteredShopItems.length} results
             </span>
           </section>
 
@@ -160,7 +201,7 @@ export default function Shop() {
 
           {/*** Pagination buttons */}
           <PaginationButtons
-            items={randomizedShopItemsRef.current}
+            items={filteredShopItems}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
           />

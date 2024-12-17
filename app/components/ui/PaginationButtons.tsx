@@ -12,6 +12,7 @@ export default function PaginationButtons<T>({
   itemsPerPage,
   currentPage,
 }: PaginationButtonsProps<T>) {
+  //Router function
   const router = useRouter();
 
   //Search params function
