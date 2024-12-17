@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 
@@ -73,6 +73,20 @@ export default function Shop() {
     updateCurrentDisplayedShopItems();
   }, [shopItems, currentPage]);
 
+  const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <Suspense
+        fallback={
+          <div className="w-full h-full flex-grow flex items-center justify-center py-6 text-black lg:py-12">
+            <CircularProgress color="inherit" size={40} />
+          </div>
+        }
+      >
+        {children}
+      </Suspense>
+    );
+  };
+
   //Show loading spinner if fetching shop items
   if (isFetchingShopItems)
     return (
@@ -95,39 +109,41 @@ export default function Shop() {
     );
 
   return (
-    <div className="w-full">
-      {/**** Inner container */}
-      <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-6 md:py-10 md:space-y-7 lg:px-0">
-        {/*** Pagination infomation */}
-        <section className="w-full flex items-center flex-wrap gap-3 md:gap-6">
-          {/*** Icons */}
-          <div className="flex items-center gap-x-3">
-            <GrAppsRounded className="text-xl text-black inline-block md:text-[22px]" />
+    <SuspenseWrapper>
+      <div className="w-full">
+        {/**** Inner container */}
+        <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-6 md:py-10 md:space-y-7 lg:px-0">
+          {/*** Pagination infomation */}
+          <section className="w-full flex items-center flex-wrap gap-3 md:gap-6">
+            {/*** Icons */}
+            <div className="flex items-center gap-x-3">
+              <GrAppsRounded className="text-xl text-black inline-block md:text-[22px]" />
 
-            <GrSort className="text-lg text-black inline-block md:text-lg" />
-          </div>
+              <GrSort className="text-lg text-black inline-block md:text-lg" />
+            </div>
 
-          {/*** Pagination info showcase */}
-          <span className="text-sm md:text-base">
-            Showing {firstItemIndex} - {lastItemIndex} of {shopItems.length}{" "}
-            results
-          </span>
-        </section>
+            {/*** Pagination info showcase */}
+            <span className="text-sm md:text-base">
+              Showing {firstItemIndex} - {lastItemIndex} of {shopItems.length}{" "}
+              results
+            </span>
+          </section>
 
-        {/*** Main list of RANDOMIZED shop products*/}
-        <main className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
-          {currentDisplayedShopItems.map((item) => {
-            return <ShopItem shopItem={item} key={item.id} />;
-          })}
-        </main>
+          {/*** Main list of RANDOMIZED shop products*/}
+          <main className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
+            {currentDisplayedShopItems.map((item) => {
+              return <ShopItem shopItem={item} key={item.id} />;
+            })}
+          </main>
 
-        {/*** Pagination buttons */}
-        <PaginationButtons
-          items={randomizedShopItemsRef.current}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-        />
+          {/*** Pagination buttons */}
+          <PaginationButtons
+            items={randomizedShopItemsRef.current}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
-    </div>
+    </SuspenseWrapper>
   );
 }
