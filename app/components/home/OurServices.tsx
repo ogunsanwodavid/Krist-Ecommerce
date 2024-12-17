@@ -9,8 +9,15 @@ export default function OurServices() {
     <div className="w-full">
       {/**** Inner container */}
       <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-6 md:py-20 md:space-y-7 lg:px-0">
+        {/*** Header */}
+        <header className="w-full flex items-center justify-center">
+          <h2 className="text-black text-[23px] text-center md:text-3xl">
+            Our Services
+          </h2>
+        </header>
+
         {/*** Main list of our services */}
-        <main className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
+        <main className="flex justify-center flex-wrap gap-[30px] gap-y-[50px] cursor-pointer">
           {/*** Free Shipping */}
           <section className="w-full max-w-[277.5px] flex flex-col items-center gap-4 text-black md:items-start">
             <BsBoxSeam className="text-4xl" />
