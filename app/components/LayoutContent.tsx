@@ -23,7 +23,7 @@ export default function LayoutContent({
   const isAuthPage = authRoutes.includes(pathname);
 
   return (
-    <>
+    <main className="flex flex-col min-h-screen">
       {/*** Render Navbar if it is not an auth page */}
       {!isAuthPage && <Navbar />}
 
@@ -32,6 +32,6 @@ export default function LayoutContent({
 
       {/*** Render Footer if it is not an auth page */}
       {!isAuthPage && <Footer />}
-    </>
+    </main>
   );
 }

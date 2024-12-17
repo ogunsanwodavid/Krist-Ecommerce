@@ -5,5 +5,5 @@ export default function MainAppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div>{children}</div>;
+  return <div className="h-full flex-grow flex flex-col">{children}</div>;
 }

@@ -12,7 +12,7 @@ import ShopItem from "../ui/ShopItem";
 
 import { CircularProgress } from "@mui/material";
 
-import failedBestSellerLoadImg from "@/public/failedBestSellerLoad.svg";
+import failedBestSellerLoadImg from "@/public/failedToLoad.svg";
 
 const BestSeller = memo(
   ({ isFetchingShopItems }: { isFetchingShopItems: boolean }) => {
