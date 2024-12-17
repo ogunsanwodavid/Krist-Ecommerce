@@ -1,8 +1,8 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
 
@@ -14,6 +14,8 @@ import { ShopItem as ShopItemModel } from "@/app/models/shop";
 
 import useFetchShopItems from "@/app/actions/useFetchShopItems";
 
+import ShopCategoriesAndFilters from "./components/ShopCategoriesAndFilters";
+
 import ShopItem from "@/app/components/ui/ShopItem";
 import PaginationButtons from "@/app/components/ui/PaginationButtons";
 
@@ -21,12 +23,17 @@ import { shuffleArray } from "@/app/utils/helpers";
 
 import { CircularProgress } from "@mui/material";
 
-import failedToLoadImg from "@/public/failedToLoad.svg";
 import { GrAppsRounded, GrSort } from "react-icons/gr";
 
+import failedToLoadImg from "@/public/failedToLoad.svg";
+
 export default function Shop() {
+  console.log("shop mounted");
   //Search params function
   const searchParams = useSearchParams();
+
+  // Get the current pathname
+  const pathname = usePathname();
 
   //Fetch shop items
   const { isLoading: isFetchingShopItems } = useFetchShopItems();
@@ -73,19 +80,24 @@ export default function Shop() {
     updateCurrentDisplayedShopItems();
   }, [shopItems, currentPage]);
 
-  const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <Suspense
-        fallback={
-          <div className="w-full h-full flex-grow flex items-center justify-center py-6 text-black lg:py-12">
-            <CircularProgress color="inherit" size={40} />
-          </div>
-        }
-      >
-        {children}
-      </Suspense>
-    );
-  };
+  //State of the categories and filter sidebar
+  const [isCategoriesAndFiltersOpen, setIsCategoriesAndFiltersOpen] =
+    useState<boolean>(false);
+
+  const handleSetIsCategoriesAndFiltersOpen = useCallback((val: boolean) => {
+    setIsCategoriesAndFiltersOpen(val);
+  }, []);
+
+  // Effect to handle route changes
+  useEffect(() => {
+    // Close mobile nav on route change
+    setIsCategoriesAndFiltersOpen(false);
+  }, [pathname]); // Dependency array includes pathname
+
+  //Function to open or close mobile navbar
+  function toggleCategoriesAndFilters() {
+    setIsCategoriesAndFiltersOpen((prev) => !prev);
+  }
 
   //Show loading spinner if fetching shop items
   if (isFetchingShopItems)
@@ -109,15 +121,25 @@ export default function Shop() {
     );
 
   return (
-    <SuspenseWrapper>
-      <div className="w-full">
-        {/**** Inner container */}
-        <div className="w-full max-w-[1200px] mx-auto px-3 py-8 space-y-4 md:px-6 md:py-10 md:space-y-7 lg:px-0">
+    <div className="w-full">
+      {/**** Inner container */}
+      <div className="relative w-full max-w-[1200px] mx-auto px-3 py-8 md:px-6 md:py-10 lg:px-0 lg:flex">
+        {/*** Shop categories and filters section */}
+        <ShopCategoriesAndFilters
+          isOpen={isCategoriesAndFiltersOpen}
+          setIsOpen={handleSetIsCategoriesAndFiltersOpen}
+        />
+
+        {/*** Main section of shop */}
+        <main className="w-full space-y-4 md:space-y-7">
           {/*** Pagination infomation */}
           <section className="w-full flex items-center flex-wrap gap-3 md:gap-6">
             {/*** Icons */}
             <div className="flex items-center gap-x-3">
-              <GrAppsRounded className="text-xl text-black inline-block md:text-[22px]" />
+              <GrAppsRounded
+                className="text-xl text-black inline-block md:text-[22px]"
+                onClick={toggleCategoriesAndFilters}
+              />
 
               <GrSort className="text-lg text-black inline-block md:text-lg" />
             </div>
@@ -129,12 +151,12 @@ export default function Shop() {
             </span>
           </section>
 
-          {/*** Main list of RANDOMIZED shop products*/}
-          <main className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
+          {/*** Currently displayed shop items */}
+          <section className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
             {currentDisplayedShopItems.map((item) => {
               return <ShopItem shopItem={item} key={item.id} />;
             })}
-          </main>
+          </section>
 
           {/*** Pagination buttons */}
           <PaginationButtons
@@ -142,8 +164,8 @@ export default function Shop() {
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
           />
-        </div>
+        </main>
       </div>
-    </SuspenseWrapper>
+    </div>
   );
 }

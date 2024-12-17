@@ -34,8 +34,8 @@ export default function Navbar() {
   }
 
   return (
-    <div className="w-full z-30 bg-white sticky top-0 shadow-md">
-      <main className="relative w-full max-w-[1200px] mx-auto px-3 py-4 flex items-center justify-between z-10 md:px-8 lg:px-0">
+    <div className="w-full z-50 bg-white sticky top-0 shadow-md">
+      <main className="w-full max-w-[1200px] mx-auto px-3 py-4 flex items-center justify-between z-10 md:px-8 lg:px-0">
         {/**** Dark Logo */}
         <Link href="/">
           <Image
