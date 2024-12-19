@@ -120,7 +120,7 @@ export default function Shop() {
     );
 
   //Show error if current page exceeds total pages possible
-  if (exceedsTotalPages) {
+  /*  if (exceedsTotalPages) {
     return (
       <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
         <Image
@@ -138,10 +138,10 @@ export default function Shop() {
         </Link>
       </div>
     );
-  }
+  } */
 
   //Show error if there's no shop item yet
-  if (!currentDisplayedShopItems.length)
+  if (!currentDisplayedShopItems.length && !exceedsTotalPages)
     return (
       <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
         <Image
@@ -174,37 +174,59 @@ export default function Shop() {
         {/*** Main section of shop */}
         <main className="w-full space-y-4 md:space-y-7">
           {/*** Pagination infomation */}
-          <section className="w-full flex items-center flex-wrap gap-3 md:gap-6">
-            {/*** Icons */}
-            <div className="flex items-center gap-x-3">
-              <GrAppsRounded
-                className="text-xl text-black inline-block md:text-[22px]"
-                onClick={toggleCategoriesAndFilters}
-              />
+          {!exceedsTotalPages && (
+            <section className="w-full flex items-center flex-wrap gap-3 md:gap-6">
+              {/*** Icons */}
+              <div className="flex items-center gap-x-3">
+                <GrAppsRounded
+                  className="text-xl text-black inline-block md:text-[22px]"
+                  onClick={toggleCategoriesAndFilters}
+                />
 
-              <GrSort className="text-lg text-black inline-block md:text-lg" />
-            </div>
+                <GrSort className="text-lg text-black inline-block md:text-lg" />
+              </div>
 
-            {/*** Pagination info showcase */}
-            <span className="text-sm md:text-base">
-              Showing {firstItemIndex} - {lastItemIndex} of{" "}
-              {filteredShopItems.length} results
-            </span>
-          </section>
+              {/*** Pagination info showcase */}
+              <span className="text-sm md:text-base">
+                Showing {firstItemIndex} - {lastItemIndex} of{" "}
+                {filteredShopItems.length} results
+              </span>
+            </section>
+          )}
 
           {/*** Currently displayed shop items */}
-          <section className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
-            {currentDisplayedShopItems.map((item) => {
-              return <ShopItem shopItem={item} key={item.id} />;
-            })}
-          </section>
+          {exceedsTotalPages ? (
+            <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
+              <Image
+                src={failedToLoadImg}
+                className="w-full max-w-[200px] md:max-w-[300px]"
+                alt="Failed to load error image"
+              />
+
+              <p className="text-base text-center md:text-lg">
+                No results found for your filters on this page
+              </p>
+
+              <Link href="/shop">
+                <MainButton>Back to Shop</MainButton>
+              </Link>
+            </div>
+          ) : (
+            <section className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
+              {currentDisplayedShopItems.map((item) => {
+                return <ShopItem shopItem={item} key={item.id} />;
+              })}
+            </section>
+          )}
 
           {/*** Pagination buttons */}
-          <PaginationButtons
-            items={filteredShopItems}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-          />
+          {!exceedsTotalPages && (
+            <PaginationButtons
+              items={filteredShopItems}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+            />
+          )}
         </main>
       </div>
     </div>

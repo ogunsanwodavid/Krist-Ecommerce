@@ -4,7 +4,7 @@ import { ShopItem as ShopItemModel } from "@/app/models/shop";
 
 import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
 
-import { formatCurrencyDollar } from "@/app/utils/helpers";
+import FormatCurrencyNaira from "./FormatCurrencyNaira";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -123,16 +123,25 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
         </h5>
 
         {/*** Price */}
-        {/*** SHow discounted price only when available */}
+        {/*** Show discounted price only when available */}
         <div className="w-full text-sm whitespace-nowrap text-ellipsis overflow-hidden flex gap-x-2 md:text-base">
-          <p className="font-medium">
-            {shopItem.discount > 0
-              ? formatCurrencyDollar(shopItem.price - shopItem.discount)
-              : formatCurrencyDollar(shopItem.price)}
-          </p>
-          <p className="text-gray-400 line-through">
-            {shopItem.discount > 0 && formatCurrencyDollar(shopItem.price)}
-          </p>
+          <div className="font-medium">
+            {/* {shopItem.discount > 0
+              ? FormatCurrencyNaira(shopItem.price - shopItem.discount)
+              : FormatCurrencyNaira(shopItem.price)} */}
+            {shopItem.discount > 0 ? (
+              <FormatCurrencyNaira
+                amount={shopItem.price - shopItem.discount}
+              />
+            ) : (
+              <FormatCurrencyNaira amount={shopItem.price} />
+            )}
+          </div>
+          <div className="text-gray-400 line-through">
+            {shopItem.discount > 0 && (
+              <FormatCurrencyNaira amount={shopItem.price} />
+            )}
+          </div>
         </div>
       </section>
     </div>
