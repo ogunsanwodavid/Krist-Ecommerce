@@ -4,8 +4,8 @@ import { useState } from "react";
 interface ShopPriceRangeFilterProps {
   min: number;
   max: number;
-  handleMinChange: (min: string | undefined) => void;
-  handleMaxChange: (max: string | undefined) => void;
+  handleLowerValueChange: (min: string | undefined) => void;
+  handleHigherValueChange: (max: string | undefined) => void;
 }
 
 function valuetext(value: number) {
@@ -17,11 +17,11 @@ const customBoxShadow =
 
 const CustomSlider = styled(Slider)(({ theme }) => ({
   color: "#131118",
-  height: 5,
+  height: 3,
   padding: "15px 0",
   "& .MuiSlider-thumb": {
-    height: 15,
-    width: 15,
+    height: 12,
+    width: 12,
     backgroundColor: "#131118",
     boxShadow: "0 0 2px 0px rgba(0, 0, 0, 0.1)",
     "&:focus, &:hover, &.Mui-active": {
@@ -70,24 +70,28 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
 export default function ShopPriceRangeFilter({
   min,
   max,
-  handleMinChange,
-  handleMaxChange,
+  handleLowerValueChange,
+  handleHigherValueChange,
 }: ShopPriceRangeFilterProps) {
   const [value, setValue] = useState<number[] | number>([min, max]);
 
   const handleChange = (
-    event: React.SyntheticEvent | Event,
+    _: React.SyntheticEvent | Event,
     newValue: number | number[]
   ) => {
     setValue(newValue);
 
     // Safely handle newValue if it's an array
     if (Array.isArray(newValue)) {
-      handleMinChange(newValue.length ? newValue[0].toString() : undefined);
-      handleMaxChange(newValue.length ? newValue[1].toString() : undefined);
+      handleLowerValueChange(
+        newValue.length ? newValue[0].toString() : undefined
+      );
+      handleHigherValueChange(
+        newValue.length ? newValue[1].toString() : undefined
+      );
     } else {
-      handleMinChange(undefined);
-      handleMaxChange(undefined);
+      handleLowerValueChange(undefined);
+      handleHigherValueChange(undefined);
     }
   };
 
