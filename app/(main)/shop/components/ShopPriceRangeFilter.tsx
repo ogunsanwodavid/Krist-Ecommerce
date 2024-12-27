@@ -4,6 +4,8 @@ import { useState } from "react";
 interface ShopPriceRangeFilterProps {
   min: number;
   max: number;
+  initialLowerValue: number | null;
+  initialHigherValue: number | null;
   handleLowerValueChange: (min: string | undefined) => void;
   handleHigherValueChange: (max: string | undefined) => void;
 }
@@ -70,16 +72,40 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
 export default function ShopPriceRangeFilter({
   min,
   max,
+  initialLowerValue,
+  initialHigherValue,
   handleLowerValueChange,
   handleHigherValueChange,
 }: ShopPriceRangeFilterProps) {
-  const [value, setValue] = useState<number[] | number>([min, max]);
+  const rangeMinDistance = 500;
+
+  const [value, setValue] = useState<number[] | number>([
+    Number(initialLowerValue) || min || 300,
+    Number(initialHigherValue) || max || 400,
+  ]);
+
+  //console.log(initialLowerValue, initialHigherValue);
 
   const handleChange = (
     _: React.SyntheticEvent | Event,
-    newValue: number | number[]
+    newValue: number | number[],
+    activeThumb: number
   ) => {
-    setValue(newValue);
+    //setValue(newValue);
+
+    if (Array.isArray(newValue) && Array.isArray(value)) {
+      if (activeThumb === 0) {
+        setValue([
+          Math.min(newValue[0], value[1] - rangeMinDistance),
+          value[1],
+        ]);
+      } else {
+        setValue([
+          value[0],
+          Math.max(newValue[1], value[0] + rangeMinDistance),
+        ]);
+      }
+    }
 
     // Safely handle newValue if it's an array
     if (Array.isArray(newValue)) {

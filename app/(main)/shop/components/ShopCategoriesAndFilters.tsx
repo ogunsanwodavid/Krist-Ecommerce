@@ -1,6 +1,6 @@
 import { ShopItem as ShopItemModel } from "@/app/models/shop";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa6";
 import { PiCaretDownBold, PiCaretUpBold } from "react-icons/pi";
@@ -10,7 +10,7 @@ interface ShopCategoriesAndFiltersProps {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
   randomizedShopItems: ShopItemModel[];
-  filteredShopItems: ShopItemModel[];
+  filteredShopItems?: ShopItemModel[];
   setFilteredShopItems: (array: ShopItemModel[]) => void;
 }
 
@@ -18,7 +18,7 @@ export default function ShopCategoriesAndFilters({
   isOpen,
   setIsOpen,
   randomizedShopItems,
-  filteredShopItems,
+  //filteredShopItems,
   setFilteredShopItems,
 }: ShopCategoriesAndFiltersProps) {
   //Router function
@@ -83,7 +83,10 @@ export default function ShopCategoriesAndFilters({
     return { maxPriceRange, minPriceRange };
   }
 
-  const { maxPriceRange, minPriceRange } = calculatePriceRange();
+  const { maxPriceRange, minPriceRange } = useMemo(
+    () => calculatePriceRange(),
+    [calculatePriceRange]
+  );
 
   // Function to handle category selection change
   const handleCategoryChange = (category: string) => {
@@ -112,11 +115,11 @@ export default function ShopCategoriesAndFilters({
       setSelectedCategories(urlCategories.split(","));
     }
 
-    /*  const urlMinPrice = searchParams.get("minPrice");
+    const urlMinPrice = searchParams.get("minPrice");
     const urlMaxPrice = searchParams.get("maxPrice");
 
     setMinPrice(urlMinPrice ? parseFloat(urlMinPrice) : null);
-    setMaxPrice(urlMaxPrice ? parseFloat(urlMaxPrice) : null); */
+    setMaxPrice(urlMaxPrice ? parseFloat(urlMaxPrice) : null);
   }, [searchParams]);
 
   // Function to apply filters
@@ -130,33 +133,31 @@ export default function ShopCategoriesAndFilters({
       );
     }
 
-    /* // Filter by price range
+    // Filter by price range
     if (minPrice !== null) {
       filtered = filtered.filter((item) => item.price >= minPrice);
     }
     if (maxPrice !== null) {
       filtered = filtered.filter((item) => item.price <= maxPrice);
-    } */
-
-    if (selectedCategories.length > 0) {
-      setFilteredShopItems(filtered);
     }
+
+    //console.log(filtered);
+
+    //if (selectedCategories.length > 0) {
+    setFilteredShopItems(filtered);
+    //}
   }, [
     randomizedShopItems,
     selectedCategories,
-    // minPrice,
-    //maxPrice,
+    minPrice,
+    maxPrice,
     setFilteredShopItems,
   ]);
 
   // Trigger filter updates when filters change
   useEffect(() => {
     applyFilters();
-  }, [
-    selectedCategories,
-    // minPrice, maxPrice,
-    applyFilters,
-  ]);
+  }, [selectedCategories, minPrice, maxPrice, applyFilters]);
 
   /*   // Function to update URL params for categories
   const updateURLParams = useCallback(() => {
@@ -181,20 +182,17 @@ export default function ShopCategoriesAndFilters({
       );
 
     // Check if minPrice or maxPrice have changed
-    /* const currentMinPrice = params.get("minPrice");
+    const currentMinPrice = params.get("minPrice");
     const currentMaxPrice = params.get("maxPrice");
     const minPriceChanged =
       (currentMinPrice !== null && parseFloat(currentMinPrice) !== minPrice) ||
       (currentMinPrice === null && minPrice !== null);
     const maxPriceChanged =
       (currentMaxPrice !== null && parseFloat(currentMaxPrice) !== maxPrice) ||
-      (currentMaxPrice === null && maxPrice !== null); */
+      (currentMaxPrice === null && maxPrice !== null);
 
     // Remove the page param if any filter has changed
-    if (
-      categoriesChanged
-      // || minPriceChanged || maxPriceChanged
-    ) {
+    if (categoriesChanged || minPriceChanged || maxPriceChanged) {
       params.delete("page");
     }
 
@@ -205,7 +203,7 @@ export default function ShopCategoriesAndFilters({
       params.delete("categories");
     }
 
-    /*  // Update minPrice and maxPrice
+    // Update minPrice and maxPrice
     if (minPrice !== null) {
       params.set("minPrice", minPrice.toString());
     } else {
@@ -215,75 +213,16 @@ export default function ShopCategoriesAndFilters({
       params.set("maxPrice", maxPrice.toString());
     } else {
       params.delete("maxPrice");
-    } */
+    }
 
     // Update the router with the new parameters
     router.push(`?${params.toString()}`);
-  }, [
-    router,
-    selectedCategories,
-    //minPrice, maxPrice,
-    searchParams,
-  ]);
+  }, [router, selectedCategories, minPrice, maxPrice, searchParams]);
 
   // Trigger URL params update whenever filters change
   useEffect(() => {
     updateURLParams();
-  }, [
-    selectedCategories,
-    // minPrice, maxPrice,
-    updateURLParams,
-  ]);
-
-  async function applyPriceFilters() {
-    let sourceItems = [...filteredShopItems];
-
-    if (selectedCategories.length === 0 && filteredShopItems.length === 0) {
-      sourceItems = [...randomizedShopItems];
-    }
-
-    // Create a new URLSearchParams instance to avoid mutation issues
-    const params = new URLSearchParams(searchParams);
-
-    // Update minPrice and maxPrice in URL parameters
-    if (minPrice !== null) {
-      params.set("minPrice", minPrice.toString());
-    } else {
-      params.delete("minPrice");
-    }
-
-    if (maxPrice !== null) {
-      params.set("maxPrice", maxPrice.toString());
-    } else {
-      params.delete("maxPrice");
-    }
-
-    // Push updated params to the router
-    await router.push(`?${params.toString()}`);
-
-    // Extract minPrice and maxPrice from URL parameters after the router update
-    const urlMinPrice = await params.get("minPrice");
-    const urlMaxPrice = await params.get("maxPrice");
-
-    const parsedMinPrice = urlMinPrice ? parseFloat(urlMinPrice) : null;
-    const parsedMaxPrice = urlMaxPrice ? parseFloat(urlMaxPrice) : null;
-
-    /* setMinPrice(parsedMinPrice);
-    setMaxPrice(parsedMaxPrice); */
-
-    // Filter shop items based on the updated price range
-    const filtered = sourceItems.filter((item) => {
-      const meetsMinPrice =
-        parsedMinPrice !== null ? item.price >= parsedMinPrice : true;
-      const meetsMaxPrice =
-        parsedMaxPrice !== null ? item.price <= parsedMaxPrice : true;
-      return meetsMinPrice && meetsMaxPrice;
-    });
-
-    console.log(filtered);
-
-    setFilteredShopItems(filtered);
-  }
+  }, [selectedCategories, minPrice, maxPrice, updateURLParams]);
 
   return (
     <div
@@ -364,21 +303,16 @@ export default function ShopCategoriesAndFilters({
               )}
             </header>
 
-            <button
-              className="border-black border-2"
-              onClick={applyPriceFilters}
-            >
-              Apply
-            </button>
-
             <main
               className={`space-y-4 lg:space-y-5 ${
                 !isFilterByPriceOpen && "hidden"
               }`}
             >
               <ShopPriceRangeFilter
-                min={0}
-                max={5000000}
+                min={minPriceRange}
+                max={maxPriceRange}
+                initialLowerValue={minPrice}
+                initialHigherValue={maxPrice}
                 handleLowerValueChange={handleMinPriceChange}
                 handleHigherValueChange={handleMaxPriceChange}
               />
