@@ -326,7 +326,7 @@ export default function ShopCategoriesAndFilters({
               {/*** Range showcase */}
               <div className="inline-flex flex-wrap gap-x-2 items-center text-[16px] md:text-[18px]">
                 Price:
-                <span>
+                <span className="text-[14px] md:text-base">
                   <span className="font-roboto">₦</span>
                   {formatToCurrency(minPriceRange)} -{" "}
                   <span className="font-roboto">₦</span>
