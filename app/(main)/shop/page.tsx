@@ -165,7 +165,10 @@ export default function Shop() {
                 onClick={toggleCategoriesAndFilters}
               />
 
-              <GrSort className="text-lg text-black inline-block md:text-lg" />
+              <GrSort
+                className="text-lg text-black inline-block md:text-lg"
+                onClick={toggleCategoriesAndFilters}
+              />
             </div>
 
             {/*** Pagination info showcase */}

@@ -56,6 +56,23 @@ export default function ShopCategoriesAndFilters({
     "shoes",
   ];
 
+  //Product Sizes
+  const productSizes = [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL",
+    "XXXL",
+    "EU 31",
+    "EU 35",
+    "EU 37",
+    "EU 38",
+    "EU 39",
+    "EU 40",
+  ];
+
   // State to keep track of shop items filters
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [minPrice, setMinPrice] = useState<number | null>(
@@ -68,6 +85,7 @@ export default function ShopCategoriesAndFilters({
       ? parseFloat(searchParams.get("maxPrice")!)
       : null
   ); //Set maxPrice if it exists in the URL params
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
 
   //Calculate price range for filtering
   const [minPriceRange, maxPriceRange] = useMemo(() => {
@@ -124,6 +142,13 @@ export default function ShopCategoriesAndFilters({
     setMaxPrice(value ? parseFloat(value) : null);
   };
 
+  // Function to handle category selection change
+  const handleSizeChange = (size: string) => {
+    setSelectedSizes((prev) =>
+      prev.includes(size) ? prev.filter((c) => c !== size) : [...prev, size]
+    );
+  };
+
   // Sync filter states with URL params
   useEffect(() => {
     const urlCategories = searchParams.get("categories");
@@ -137,6 +162,12 @@ export default function ShopCategoriesAndFilters({
 
     setMinPrice(urlMinPrice ? parseFloat(urlMinPrice) : null);
     setMaxPrice(urlMaxPrice ? parseFloat(urlMaxPrice) : null);
+
+    const urlSizes = searchParams.get("sizes");
+
+    if (urlSizes) {
+      setSelectedSizes(urlSizes.split(","));
+    }
   }, [searchParams]);
 
   // Function to apply filters
@@ -158,6 +189,13 @@ export default function ShopCategoriesAndFilters({
       filtered = filtered.filter((item) => item.price <= maxPrice);
     }
 
+    // Filter by sizes
+    if (selectedSizes.length > 0) {
+      filtered = filtered.filter((item) =>
+        item.sizesAvailable?.some((size) => selectedSizes.includes(size))
+      );
+    }
+
     // Check if there are results and update the error state
     if (filtered.length === 0) {
       setFilterError(true);
@@ -175,6 +213,7 @@ export default function ShopCategoriesAndFilters({
     selectedCategories,
     minPrice,
     maxPrice,
+    selectedSizes,
     setFilteredShopItems,
     setFilterError,
   ]);
@@ -182,7 +221,7 @@ export default function ShopCategoriesAndFilters({
   // Trigger filter updates when filters change
   useEffect(() => {
     applyFilters();
-  }, [selectedCategories, minPrice, maxPrice, applyFilters]);
+  }, [selectedCategories, minPrice, maxPrice, applyFilters, selectedSizes]);
 
   //Update URL Parameters
   const updateURLParams = useCallback(() => {
@@ -206,8 +245,19 @@ export default function ShopCategoriesAndFilters({
       (currentMaxPrice !== null && parseFloat(currentMaxPrice) !== maxPrice) ||
       (currentMaxPrice === null && maxPrice !== null);
 
+    // Check if sizes have changed
+    const currentSizes = params.get("sizes")?.split(",") || [];
+    const sizesChanged =
+      currentSizes.length !== selectedSizes.length ||
+      !currentSizes.every((size) => selectedSizes.includes(size));
+
     // Remove the page param if any filter has changed
-    if (categoriesChanged || minPriceChanged || maxPriceChanged) {
+    if (
+      categoriesChanged ||
+      minPriceChanged ||
+      maxPriceChanged ||
+      sizesChanged
+    ) {
       params.delete("page");
     }
 
@@ -230,20 +280,34 @@ export default function ShopCategoriesAndFilters({
       params.delete("maxPrice");
     }
 
+    // Update sizes
+    if (selectedSizes.length > 0) {
+      params.set("sizes", selectedSizes.join(","));
+    } else {
+      params.delete("sizes");
+    }
+
     // Update the router with the new parameters
     router.push(`?${params.toString()}`);
-  }, [router, selectedCategories, minPrice, maxPrice, searchParams]);
+  }, [
+    router,
+    selectedCategories,
+    minPrice,
+    maxPrice,
+    searchParams,
+    selectedSizes,
+  ]);
 
   // Trigger URL params update whenever filters change
   useEffect(() => {
     updateURLParams();
-  }, [selectedCategories, minPrice, maxPrice, updateURLParams]);
+  }, [selectedCategories, minPrice, maxPrice, updateURLParams, selectedSizes]);
 
   return (
     <div
       className={`${
         !isOpen ? "!w-0" : "w-full"
-      } fixed left-0 top-[61px] h-full max-w-[277.5px] bg-white z-30 shadow-md transition-all duration-300 ease-in-out overflow-hidden flex flex-col md:top-[67px] lg:top-0 lg:h-max lg:block lg:!relative lg:!w-[277.5px] lg:mr-[30px] lg:flex-shrink-0`}
+      } fixed left-0 top-[61px] h-[calc(100%_-_61px)] max-w-[277.5px] bg-white z-30 shadow-md border-t-[1.5px] border-t-[rgba(0,0,0,0.1)] transition-all duration-300 ease-in-out overflow-x-hidden overflow-y-auto flex flex-col md:top-[67px] lg:top-0 lg:h-max lg:block lg:!relative lg:!w-[277.5px] lg:mr-[30px] lg:flex-shrink-0 z-5`}
     >
       {/*** Inner container */}
       <div className="w-full p-4 space-y-3 text-black">
@@ -328,9 +392,13 @@ export default function ShopCategoriesAndFilters({
                 Price:
                 <span className="text-[14px] md:text-base">
                   <span className="font-roboto">₦</span>
-                  {formatToCurrency(minPriceRange)} -{" "}
-                  <span className="font-roboto">₦</span>
-                  {formatToCurrency(maxPriceRange)}
+                  {formatToCurrency(
+                    minPrice ? Number(minPrice) : minPriceRange
+                  )}{" "}
+                  - <span className="font-roboto">₦</span>
+                  {formatToCurrency(
+                    maxPrice ? Number(maxPrice) : maxPriceRange
+                  )}
                 </span>
               </div>
 
@@ -339,6 +407,7 @@ export default function ShopCategoriesAndFilters({
                 <ShopPriceRangeSlider
                   min={minPriceRange}
                   max={maxPriceRange}
+                  minDistance={200000}
                   initialLowerValue={minPrice}
                   initialHigherValue={maxPrice}
                   handleLowerValueChange={handleMinPriceChange}
@@ -366,10 +435,41 @@ export default function ShopCategoriesAndFilters({
             </header>
 
             <main
-              className={`space-y-1 lg:space-y-3 ${
-                !isFilterByPriceOpen && "hidden"
+              className={`space-y-4 lg:space-y-5 ${
+                !isFilterBySizeOpen && "hidden"
               }`}
-            ></main>
+            >
+              {productSizes.map((size) => {
+                // Count the number of items with at least one matching size
+                const itemsWithMatchingSizeCount = randomizedShopItems.filter(
+                  (item) =>
+                    item.sizesAvailable?.some((itemSize) => size === itemSize)
+                ).length;
+
+                return (
+                  <div className="w-full flex justify-between" key={size}>
+                    <label className="flex items-center gap-x-3">
+                      {/*** Hidden input */}
+                      <input
+                        type="checkbox"
+                        checked={selectedSizes.includes(size)}
+                        onChange={() => handleSizeChange(size)}
+                        className="hidden peer"
+                      />
+
+                      {/* Custom Checkbox */}
+                      <span className="flex items-center justify-center h-4 w-4 border-2 border-black rounded-sm peer-checked:bg-black lg:w-5 lg:h-5">
+                        <FaCheck className="text-white text-[0.6rem] lg:text-[0.8rem]" />
+                      </span>
+
+                      <span className="uppercase md:text-lg">{size}</span>
+                    </label>
+
+                    <p>({itemsWithMatchingSizeCount})</p>
+                  </div>
+                );
+              })}
+            </main>
           </section>
         </main>
       </div>

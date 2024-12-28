@@ -5,6 +5,7 @@ import { Slider, styled } from "@mui/material";
 interface ShopPriceRangeFilterProps {
   min: number;
   max: number;
+  minDistance?: number;
   initialLowerValue: number | null;
   initialHigherValue: number | null;
   handleLowerValueChange: (min: string | undefined) => void;
@@ -74,13 +75,14 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
 export default function ShopPriceRangeSlider({
   min,
   max,
+  minDistance,
   initialLowerValue,
   initialHigherValue,
   handleLowerValueChange,
   handleHigherValueChange,
 }: ShopPriceRangeFilterProps) {
   //Minimum distance between lower and higher value in the slider
-  const rangeMinDistance = 200000;
+  const rangeMinDistance = Number(minDistance);
 
   //Min and max values of the slider
   const [value, setValue] = useState<number[] | number>([
