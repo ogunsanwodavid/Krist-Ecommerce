@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import "./styles/toastify.css";
 
 @tailwind base;
 @tailwind components;
@@ -20,47 +21,4 @@ button,
 img,
 select {
   cursor: pointer;
-}
-
-/**** Style for react toastify toasts ***/
-:root {
-  --toastify-font-family: "Jost", sans-serif !important;
-}
-
-.Toastify__progress-bar--wrp {
-  height: 0 !important;
-}
-
-.Toastify__toast {
-  border: 2px solid rgba(255, 255, 255, 0.4) !important;
-  border-radius: 15px !important;
-  align-items: center !important;
-}
-
-.Toastify__close-button {
-  display: none;
-}
-
-.Toastify__toast-body {
-  padding: 4px;
-  gap: 5px;
-}
-
-.Toastify__toast-theme--dark {
-  background-color: #131118 !important;
-}
-
-@media only screen and (max-width: 480px) {
-  .Toastify__toast-container {
-    top: 0;
-    left: 0;
-    transform: none;
-    margin-top: 1rem;
-    padding: 0 20px;
-  }
-
-  .Toastify__toast {
-    max-width: 320px !important;
-    margin: 0.5rem auto;
-  }
 }

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { useAppSelector } from "@/app/hooks/redux";
 
@@ -18,6 +19,7 @@ import ShopCategoriesAndFilters from "./components/ShopCategoriesAndFilters";
 
 import ShopItem from "@/app/components/ui/ShopItem";
 import PaginationButtons from "@/app/components/ui/PaginationButtons";
+import MainButton from "@/app/components/ui/MainButton";
 
 import { shuffleArray } from "@/app/utils/helpers";
 
@@ -26,8 +28,6 @@ import { CircularProgress } from "@mui/material";
 import { GrAppsRounded, GrSort } from "react-icons/gr";
 
 import failedToLoadImg from "@/public/failedToLoad.svg";
-import Link from "next/link";
-import MainButton from "@/app/components/ui/MainButton";
 
 export default function Shop() {
   //Search params function
@@ -95,6 +95,9 @@ export default function Shop() {
   const [isCategoriesAndFiltersOpen, setIsCategoriesAndFiltersOpen] =
     useState<boolean>(false);
 
+  //State of the filtering error
+  const [filterError, setFilterError] = useState(false);
+
   //Handles the state of categories and filters
   const handleSetIsCategoriesAndFiltersOpen = useCallback((val: boolean) => {
     setIsCategoriesAndFiltersOpen(val);
@@ -146,8 +149,8 @@ export default function Shop() {
             isOpen={isCategoriesAndFiltersOpen}
             setIsOpen={handleSetIsCategoriesAndFiltersOpen}
             randomizedShopItems={randomizedShopItemsRef.current}
-            filteredShopItems={filteredShopItems}
             setFilteredShopItems={setFilteredShopItems}
+            setFilterError={setFilterError}
           />
         }
 
@@ -166,7 +169,7 @@ export default function Shop() {
             </div>
 
             {/*** Pagination info showcase */}
-            {!exceedsTotalPages && (
+            {!exceedsTotalPages && !filterError && (
               <span className="text-sm md:text-base">
                 Showing {firstItemIndex} - {lastItemIndex} of{" "}
                 {filteredShopItems.length} results
@@ -175,7 +178,7 @@ export default function Shop() {
           </section>
 
           {/*** Currently displayed shop items */}
-          {exceedsTotalPages ? (
+          {exceedsTotalPages || filterError ? (
             <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
               <Image
                 src={failedToLoadImg}
@@ -200,7 +203,7 @@ export default function Shop() {
           )}
 
           {/*** Pagination buttons */}
-          {!exceedsTotalPages && (
+          {!exceedsTotalPages && !filterError && (
             <PaginationButtons
               items={filteredShopItems}
               itemsPerPage={itemsPerPage}

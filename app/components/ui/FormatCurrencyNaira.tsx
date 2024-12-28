@@ -1,6 +1,14 @@
 import { TbCurrencyNaira } from "react-icons/tb";
 
-export default function FormatCurrencyNaira({ amount }: { amount: number }) {
+export default function FormatCurrencyNaira({
+  amount,
+  iconStyles,
+  textStyles,
+}: {
+  amount: number;
+  iconStyles?: string;
+  textStyles?: string;
+}) {
   // Convert to string and format with commas
   const formattedAmount = amount
     .toFixed(2)
@@ -8,9 +16,9 @@ export default function FormatCurrencyNaira({ amount }: { amount: number }) {
 
   // Return formatted string with a naira symbol inside a div
   return (
-    <div className="flex items-center">
-      <TbCurrencyNaira className="inline text-lg md:text-xl" />
-      <p className="leading-[20px]">{formattedAmount}</p>
-    </div>
+    <span className="inline-flex items-center">
+      <TbCurrencyNaira className={`inline text-lg md:text-xl ${iconStyles}`} />
+      <p className={`leading-[20px] ${textStyles}`}>{formattedAmount}</p>
+    </span>
   );
 }

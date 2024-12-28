@@ -10,6 +10,7 @@ export default {
     screens: { sm: "400px", md: "700px", xlg: "950px", lg: "1200px" },
     fontFamily: {
       jost: "Jost, sans-serif",
+      roboto: "Roboto, sans-serif",
     },
     listStyleType: {
       square: "square",

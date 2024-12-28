@@ -1,5 +1,6 @@
-import { Slider, styled } from "@mui/material";
 import { useState } from "react";
+
+import { Slider, styled } from "@mui/material";
 
 interface ShopPriceRangeFilterProps {
   min: number;
@@ -10,9 +11,9 @@ interface ShopPriceRangeFilterProps {
   handleHigherValueChange: (max: string | undefined) => void;
 }
 
-function valuetext(value: number) {
+/* function valuetext(value: number) {
   return `${value}°C`;
-}
+} */
 
 const customBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -42,14 +43,15 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
     fontSize: 12,
     fontWeight: "normal",
     top: -6,
-    backgroundColor: "unset",
-    color: theme.palette.text.primary,
+    backgroundColor: "#131118",
+    //color: theme.palette.text.primary,
+    color: "red",
     "&::before": {
       display: "none",
     },
     "& *": {
       //background: "#e5e7eb",
-      color: "#000",
+      color: "#fff",
       ...theme.applyStyles("dark", {
         color: "#131118",
       }),
@@ -57,7 +59,7 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
   },
   "& .MuiSlider-track": {
     border: "none",
-    height: 5,
+    height: 3,
   },
   "& .MuiSlider-rail": {
     opacity: 0.5,
@@ -69,7 +71,7 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
   }),
 }));
 
-export default function ShopPriceRangeFilter({
+export default function ShopPriceRangeSlider({
   min,
   max,
   initialLowerValue,
@@ -77,22 +79,21 @@ export default function ShopPriceRangeFilter({
   handleLowerValueChange,
   handleHigherValueChange,
 }: ShopPriceRangeFilterProps) {
-  const rangeMinDistance = 500;
+  //Minimum distance between lower and higher value in the slider
+  const rangeMinDistance = 200000;
 
+  //Min and max values of the slider
   const [value, setValue] = useState<number[] | number>([
     Number(initialLowerValue) || min || 300,
     Number(initialHigherValue) || max || 400,
   ]);
 
-  //console.log(initialLowerValue, initialHigherValue);
-
+  //Function to handle slider change
   const handleChange = (
     _: React.SyntheticEvent | Event,
     newValue: number | number[],
     activeThumb: number
   ) => {
-    //setValue(newValue);
-
     if (Array.isArray(newValue) && Array.isArray(value)) {
       if (activeThumb === 0) {
         setValue([
@@ -126,10 +127,11 @@ export default function ShopPriceRangeFilter({
       getAriaLabel={() => "Price range"}
       value={value}
       onChange={handleChange}
-      valueLabelDisplay="auto"
-      getAriaValueText={valuetext}
+      //valueLabelDisplay="auto"
+      //getAriaValueText={valuetext}
       min={min}
       max={max}
+      disableSwap
     />
   );
 }
