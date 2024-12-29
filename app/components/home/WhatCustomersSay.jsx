@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Scrollbar } from "swiper/modules";
 import "swiper/css";
 
-import RenderStars from "./RenderStars";
+import StarRating from "../ui/StarRating";
 
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 
@@ -195,8 +195,8 @@ export default function WhatCustomersSay() {
                 <SwiperSlide className="w-full max-w-[373.33px]" key={index}>
                   <div className="comment-box relative w-full h-[250px] bg-white p-6 rounded-[14px] flex flex-col justify-center overflow-hidden">
                     {/*** Rating stars */}
-                    <section className="flex gap-x-1">
-                      {RenderStars(customer.rating)}
+                    <section className="flex">
+                      <StarRating rating={customer.rating} />
                     </section>
 
                     {/*** Comment */}

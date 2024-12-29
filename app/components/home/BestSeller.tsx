@@ -17,7 +17,9 @@ import failedBestSellerLoadImg from "@/public/failedToLoad.svg";
 const BestSeller = memo(
   ({ isFetchingShopItems }: { isFetchingShopItems: boolean }) => {
     //Shop items from redux state
-    const shopItems = useAppSelector((state: ReduxStoreState) => state.shop);
+    const shopItems = useAppSelector(
+      (state: ReduxStoreState) => state.shop.items
+    );
 
     //Top 8 Best seller items
     const bestSellerItems = [...shopItems] // Create a shallow copy

@@ -1,15 +1,25 @@
 // redux/shopSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ShopState } from "../models/shop";
+
+const initialState: ShopState = {
+  items: [],
+  currentItem: null,
+};
+
 const shopSlice = createSlice({
   name: "shop",
-  initialState: [],
+  initialState,
   reducers: {
     setItems(state, action) {
-      return action.payload;
+      state.items = action.payload;
+    },
+    setCurrentItem(state, action) {
+      state.currentItem = action.payload;
     },
   },
 });
 
-export const { setItems } = shopSlice.actions;
+export const { setItems, setCurrentItem } = shopSlice.actions;
 export default shopSlice.reducer;

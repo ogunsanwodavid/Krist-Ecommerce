@@ -1,0 +1,25 @@
+import React from "react";
+import { PiStarFill, PiStarThin } from "react-icons/pi"; // Import PiStar icons
+
+interface RatingProps {
+  rating: number; // Rating out of 5
+}
+
+const StarRatingWithEmpty: React.FC<RatingProps> = ({ rating }) => {
+  // Ensure the rating is clamped between 0 and 5
+  const normalizedRating = Math.floor(rating);
+
+  return (
+    <div className="flex items-center gap-x-[0.1rem]">
+      {Array.from({ length: 5 }, (_, index) =>
+        index < normalizedRating ? (
+          <PiStarFill key={index} className="text-yellow-500 text-lg" />
+        ) : (
+          <PiStarThin key={index} className="text-gray-400 text-lg" />
+        )
+      )}
+    </div>
+  );
+};
+
+export default StarRatingWithEmpty;

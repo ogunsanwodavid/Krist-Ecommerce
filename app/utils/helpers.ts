@@ -14,8 +14,12 @@ export const shuffleArray = <T>(array: T[]): T[] => {
 
 /**
  * Formats a numeric value with thousands separators and preserves its decimal precision.
+ * This function is useful for presenting numeric values in a more readable format,
+ * such as monetary amounts, but it does not include any currency symbol.
+ *
  * @param amount - The numeric value to format
- * @returns A string representing the formatted value without the currency symbol
+ * @returns A string representing the formatted value with thousands separators
+ *          and up to two decimal places, e.g., "1,234.56"
  */
 export const formatToCurrency = (amount: number): string => {
   return amount.toLocaleString("en-NG", {
@@ -23,3 +27,18 @@ export const formatToCurrency = (amount: number): string => {
     maximumFractionDigits: 2,
   });
 };
+
+/**
+ * Capitalizes the first letter of each word in a given text string while converting
+ * the rest of the letters to lowercase. This ensures a proper capitalization format
+ * even if the input text is fully uppercase or lowercase.
+ *
+ * @param text - The string to be capitalized
+ * @returns A string with each word's first letter capitalized and the remaining letters in lowercase
+ *          e.g., "hello WORLD" -> "Hello World"
+ */
+export function capitalizeText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\b\w/g, (char: string) => char.toUpperCase());
+}

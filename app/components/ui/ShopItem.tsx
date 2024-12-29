@@ -16,19 +16,23 @@ import { PiHeart } from "react-icons/pi";
 import { IoEyeOutline } from "react-icons/io5";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 
 interface ShopItemProps {
   shopItem: ShopItemModel;
 }
 
 export default function ShopItem({ shopItem }: ShopItemProps) {
+  //SHop item image supabase url
   const itemImageUrl = formatToSupabaseImageUrl(
     "productImages",
     shopItem.image
   );
 
+  //Shop item ref
   const shopItemRef = useRef(null);
 
+  //Animation sequence
   useGSAP(
     () => {
       gsap.from(".wishlist-btn", {
@@ -71,8 +75,14 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
     { scope: shopItemRef }
   );
 
+  //Shop item id
+  const shopItemId = shopItem.id;
+
   return (
-    <div className="w-full max-w-[277.5px] space-y-6">
+    <Link
+      href={`/shop/${shopItemId}`}
+      className="w-full max-w-[277.5px] space-y-6"
+    >
       {/**** Item box */}
       <section
         className="relative w-full h-[350px] bg-gray-200  p-3 flex flex-col overflow-hidden"
@@ -144,6 +154,6 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
           </div>
         </div>
       </section>
-    </div>
+    </Link>
   );
 }

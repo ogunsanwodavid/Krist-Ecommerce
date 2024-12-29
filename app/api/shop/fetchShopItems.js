@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
-import { supabase } from "../lib/supabase";
+
+import { supabase } from "../../lib/supabase";
 
 export default async function fetchShopItems() {
   const { data, error } = await supabase.from("shop").select("*");

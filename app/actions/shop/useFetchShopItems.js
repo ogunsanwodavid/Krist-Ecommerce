@@ -1,12 +1,12 @@
+import { useEffect } from "react";
+
 import { useQuery } from "@tanstack/react-query";
 
-//import { toast } from "react-toastify";
+import { useAppDispatch } from "../../hooks/redux";
 
-import fetchShopItems from "../api/fetchShopItems";
+import { setItems } from "../../redux/shopSlice";
 
-import { setItems } from "../redux/shopSlice";
-import { useEffect } from "react";
-import { useAppDispatch } from "../hooks/redux";
+import fetchShopItems from "../../api/shop/fetchShopItems";
 
 export default function useFetchShopItems() {
   //Dispatch function
@@ -27,13 +27,3 @@ export default function useFetchShopItems() {
 
   return { isLoading }; // No UI rendering needed
 }
-
-/* onSuccess: (data) => {
-      // Dispatch action to set items in Redux state
-      dispatch(setItems(data));
-      console.log(data);
-    },
-    onError: (error) => {
-      // Optionally handle error state here
-      toast.error(error.message || "Failed to fetch shop items");
-    }, */

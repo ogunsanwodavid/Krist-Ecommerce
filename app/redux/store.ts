@@ -3,10 +3,10 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import shopReducer from "./shopSlice";
 
-import { ShopItem } from "@/app/models/shop";
+import { ShopState } from "@/app/models/shop";
 
 export interface ReduxStoreState {
-  shop: ShopItem[];
+  shop: ShopState;
 }
 
 const store = configureStore({

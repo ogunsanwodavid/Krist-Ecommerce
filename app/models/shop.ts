@@ -15,3 +15,8 @@ export interface ShopItem {
   price: number;
   sizesAvailable: string[];
 }
+
+export interface ShopState {
+  items: ShopItem[];
+  currentItem: ShopItem | null;
+}
