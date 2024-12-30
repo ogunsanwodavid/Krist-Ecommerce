@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "pnylqmufvrtzwockivuw.supabase.co",
-        pathname: "/storage/v1/object/public/**", // Use wildcard for public objects
+        pathname: "/storage/v1/object/public/**", // Use a wildcard for public objects
       },
     ],
   },
