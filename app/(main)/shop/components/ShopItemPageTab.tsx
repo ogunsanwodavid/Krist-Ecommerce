@@ -25,6 +25,11 @@ export default function ShopItemPageTab({
   const itemColorsAvailable = shopItem?.colorsAvailable;
   const itemSizesAvailable = shopItem?.sizesAvailable;
 
+  //Is there additional information to display
+  const isThereAdditionalInfo =
+    (Array.isArray(itemColorsAvailable) && itemColorsAvailable.length > 0) ||
+    (Array.isArray(itemSizesAvailable) && itemSizesAvailable.length > 0);
+
   return (
     <Box
       className="shopitem-page-tab font-jost"
@@ -50,33 +55,39 @@ export default function ShopItemPageTab({
 
         {/** Additional Information tab */}
         <TabPanel value="2">
-          <div className="space-y-3">
-            {/*** Colors */}
-            <section className="flex flex-wrap">
-              <span className="mr-2 font-medium">Color:</span>
+          {isThereAdditionalInfo ? (
+            <div className="space-y-3">
+              {/*** Colors */}
               {Array.isArray(itemColorsAvailable) &&
-                itemColorsAvailable.length > 0 &&
-                itemColorsAvailable.map((color, index) => (
-                  <span className="mr-2 capitalize" key={index}>
-                    {color}
-                    {index < itemColorsAvailable.length - 1 && ","}
-                  </span>
-                ))}
-            </section>
+                itemColorsAvailable.length > 0 && (
+                  <section className="flex flex-wrap">
+                    <span className="mr-2 font-medium">Colors:</span>
+                    {itemColorsAvailable.map((color, index) => (
+                      <span className="mr-2 capitalize" key={index}>
+                        {color}
+                        {index < itemColorsAvailable.length - 1 && ","}
+                      </span>
+                    ))}
+                  </section>
+                )}
 
-            {/** Sizes */}
-            <section className=" flex flex-wrap">
-              <span className="mr-2 font-medium">Sizes:</span>
+              {/** Sizes */}
               {Array.isArray(itemSizesAvailable) &&
-                itemSizesAvailable.length > 0 &&
-                itemSizesAvailable.map((size, index) => (
-                  <span className="mr-2 uppercase" key={index}>
-                    {size}
-                    {index < itemSizesAvailable.length - 1 && ","}
-                  </span>
-                ))}
-            </section>
-          </div>
+                itemSizesAvailable.length > 0 && (
+                  <section className=" flex flex-wrap">
+                    <span className="mr-2 font-medium">Sizes:</span>
+                    {itemSizesAvailable.map((size, index) => (
+                      <span className="mr-2 uppercase" key={index}>
+                        {size}
+                        {index < itemSizesAvailable.length - 1 && ","}
+                      </span>
+                    ))}
+                  </section>
+                )}
+            </div>
+          ) : (
+            <div className="md:text-lg">No information to display</div>
+          )}
         </TabPanel>
       </TabContext>
     </Box>

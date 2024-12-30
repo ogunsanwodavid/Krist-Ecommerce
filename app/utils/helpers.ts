@@ -30,15 +30,31 @@ export const formatToCurrency = (amount: number): string => {
 
 /**
  * Capitalizes the first letter of each word in a given text string while converting
- * the rest of the letters to lowercase. This ensures a proper capitalization format
- * even if the input text is fully uppercase or lowercase.
+ * the rest of the letters to lowercase. This ensures proper capitalization format
+ * regardless of the input case.
  *
- * @param text - The string to be capitalized
- * @returns A string with each word's first letter capitalized and the remaining letters in lowercase
- *          e.g., "hello WORLD" -> "Hello World"
+ * @param text - The input string to be capitalized.
+ * @returns A string with each word's first letter capitalized and the remaining letters in lowercase.
+ *          Example: "hello WORLD" -> "Hello World"
  */
 export function capitalizeText(text: string): string {
   return text
-    .toLowerCase()
-    .replace(/\b\w/g, (char: string) => char.toUpperCase());
+    .toLowerCase() // Convert the entire string to lowercase first.
+    .replace(/\b\w/g, (char: string) => char.toUpperCase()); // Capitalize the first letter of each word.
+}
+
+/**
+ * Formats a given Date object into a string in the format "Month DD, YYYY".
+ *
+ * @param date - The Date object to be formatted.
+ * @returns A string representation of the date in the format "Month DD, YYYY".
+ *          Example: June 05, 2023
+ */
+export function formatDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    day: "2-digit",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options); // Format the date based on the specified options.
 }

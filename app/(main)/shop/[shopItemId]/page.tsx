@@ -175,39 +175,41 @@ export default function ShopItemPage() {
           <p className="text-[15px] md:text-[17px]">{itemDescription}</p>
 
           {/** Colors available */}
-          <section className="space-y-1">
-            <h6 className="text-base font-medium md:text-lg">Colors</h6>
+          {Array.isArray(itemColorsAvailable) &&
+            itemColorsAvailable.length > 0 && (
+              <section className="space-y-1">
+                <h6 className="text-base font-medium md:text-lg">Colors</h6>
 
-            <main className="flex items-center flex-wrap gap-2">
-              {Array.isArray(itemColorsAvailable) &&
-                itemColorsAvailable.length > 0 &&
-                itemColorsAvailable.map((color, index) => (
-                  <div
-                    className="w-6 h-6 rounded-[5px]"
-                    style={{ backgroundColor: color }}
-                    key={index}
-                  ></div>
-                ))}
-            </main>
-          </section>
+                <main className="flex items-center flex-wrap gap-2">
+                  {itemColorsAvailable.map((color, index) => (
+                    <div
+                      className="w-6 h-6 rounded-[5px]"
+                      style={{ backgroundColor: color }}
+                      key={index}
+                    ></div>
+                  ))}
+                </main>
+              </section>
+            )}
 
           {/** Sizes available */}
-          <section className="space-y-1">
-            <h6 className="text-base font-medium md:text-lg">Sizes</h6>
+          {Array.isArray(itemSizesAvailable) &&
+            itemSizesAvailable.length > 0 && (
+              <section className="space-y-1">
+                <h6 className="text-base font-medium md:text-lg">Sizes</h6>
 
-            <main className="flex items-center flex-wrap gap-2">
-              {Array.isArray(itemSizesAvailable) &&
-                itemSizesAvailable.length > 0 &&
-                itemSizesAvailable.map((size, index) => (
-                  <div
-                    className="w-max h-max min-w-8 p-1 border-[2px] border-black rounded-[5px] flex items-center justify-center text-[13px]"
-                    key={index}
-                  >
-                    <span>{size}</span>
-                  </div>
-                ))}
-            </main>
-          </section>
+                <main className="flex items-center flex-wrap gap-2">
+                  {itemSizesAvailable.map((size, index) => (
+                    <div
+                      className="w-max h-max min-w-8 p-1 border-[2px] border-black rounded-[5px] flex items-center justify-center text-[13px]"
+                      key={index}
+                    >
+                      <span>{size}</span>
+                    </div>
+                  ))}
+                </main>
+              </section>
+            )}
 
           {/*** Cart & Wishlist */}
           <section className="!mt-4 space-y-2">

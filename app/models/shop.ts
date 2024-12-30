@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface ShopItem {
   id: number;
   title: string;
@@ -16,16 +18,19 @@ export interface ShopItem {
   sizesAvailable: string[];
 }
 
-export interface ShopState {
-  items: ShopItem[];
-  currentItem: ShopItem | null;
-}
-
 export interface ItemReview {
-  avatar: string;
+  itemId: number;
+  userId: string;
+  avatar: string | StaticImageData;
   name: string;
   rating: number;
   title: string;
   description: string;
   createdAt: Date;
+}
+
+export interface ShopState {
+  items: ShopItem[];
+  currentItem: ShopItem | null;
+  reviews: ItemReview[];
 }
