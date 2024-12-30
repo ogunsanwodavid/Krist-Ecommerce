@@ -1,0 +1,13 @@
+.shopitem-page-tab .MuiTabs-indicator {
+  background-color: #131118 !important;
+}
+
+.shopitem-page-tab .MuiButtonBase-root.MuiTab-root {
+  font-family: Jost, sans-serif !important;
+  font-size: 17px !important;
+  text-transform: none !important;
+}
+
+.shopitem-page-tab .MuiTabPanel-root {
+  padding: 13px 0 !important;
+}

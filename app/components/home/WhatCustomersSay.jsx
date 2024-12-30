@@ -205,7 +205,7 @@ export default function WhatCustomersSay() {
                     </p>
 
                     {/*** Customer information */}
-                    <section className="mt-7 grid grid-cols-[40px_auto] gap-4">
+                    <section className="mt-7 grid grid-cols-[45px_auto] gap-4">
                       {/*** Customer avatar */}
                       <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden">
                         <Image

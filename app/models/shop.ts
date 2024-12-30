@@ -20,3 +20,12 @@ export interface ShopState {
   items: ShopItem[];
   currentItem: ShopItem | null;
 }
+
+export interface ItemReview {
+  avatar: string;
+  name: string;
+  rating: number;
+  title: string;
+  description: string;
+  createdAt: Date;
+}

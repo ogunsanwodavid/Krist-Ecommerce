@@ -7,8 +7,8 @@ interface RatingProps {
 }
 
 const StarRating: React.FC<RatingProps> = ({ rating }) => {
-  // Ensure the rating is clamped between 0 and 5
-  const normalizedRating = Math.floor(rating);
+  // Ensure the rating is rounded up to the nearest whole number
+  const normalizedRating = Math.round(rating);
 
   return (
     <div className="flex items-center gap-x-[0.1rem]">

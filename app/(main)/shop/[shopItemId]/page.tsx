@@ -127,12 +127,12 @@ export default function ShopItemPage() {
           )}
 
           {/*** Brand of item */}
-          <h3 className="text-[17px] md:text-[19px] font-medium">
+          <h3 className="text-[18px] md:text-[20px] font-medium">
             {itemBrand}
           </h3>
 
           {/*** Title of item */}
-          <h4 className="text-base md:text-lg">
+          <h4 className="text-[17px] md:text-[19px]">
             {capitalizeText(String(itemTitle))}
           </h4>
 
@@ -141,7 +141,7 @@ export default function ShopItemPage() {
             {Boolean(itemAvgRating) && (
               <StarRatingWithEmpty rating={Number(itemAvgRating)} />
             )}
-            <span className="text-[15px] text-gray-400 md:text-[17px]">
+            <span className="text-[16px] text-gray-400 md:text-[18px]">
               {itemAvgRating} ({numberOfReviews} Reviews)
             </span>
           </section>
