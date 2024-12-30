@@ -24,7 +24,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
     <div
       className={`${
         isOpen ? "block" : "hidden"
-      } transition-all duration-150 ease-in-out absolute bg-white top-full right-3 w-[calc(100vw_-_24px)] max-w-[250px] rounded-[15px] overflow-x-hidden overflow-y-auto z-50 lg:hidden`}
+      } transition-all duration-150 ease-in-out absolute bg-white top-full right-3 w-[calc(100vw_-_24px)] max-w-[250px] max-h-[calc(100vh_-_100%)] rounded-[15px] overflow-x-hidden overflow-y-auto z-50  lg:hidden`}
       style={{
         boxShadow:
           "3px 3px 10px rgba(0, 0, 0, 0.2), -3px 3px 10px rgba(0, 0, 0, 0.2), 0px 10px 10px rgba(0, 0, 0, 0.2)",
