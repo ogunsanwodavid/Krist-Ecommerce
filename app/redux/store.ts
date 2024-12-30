@@ -1,7 +1,9 @@
 // redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
 
-import storage from "redux-persist/lib/storage"; // Default: localStorage for web
+//import storage from "redux-persist/lib/storage"; // Default: localStorage for web
+import storageEngine from "./storageEngine";
+
 import { persistReducer, persistStore } from "redux-persist";
 
 import shopReducer from "./shopSlice";
@@ -15,7 +17,7 @@ export interface ReduxStoreState {
 // Persist configuration for the shop slice
 const shopPersistConfig = {
   key: "shop",
-  storage,
+  storage: storageEngine,
   whitelist: ["reviews"], // Only persist the `reviews` state
 };
 
@@ -30,7 +32,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore redux-persist actions
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        ignoredActions: ["persist/PERSIST"],
       },
     }),
 });

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import Image from "next/image";
 
 import { ReduxStoreState } from "@/app/redux/store";
@@ -16,13 +18,18 @@ import StarRating from "@/app/components/ui/StarRating";
 import reviewAvatar1 from "@/public/reviewAvatar1.jpeg";
 import reviewAvatar2 from "@/public/reviewAvatar2.jpeg";
 import reviewAvatar3 from "@/public/reviewAvatar3.jpeg";
-import { useEffect, useState } from "react";
+
+interface ShopItemReviewsProps {
+  shopItem: ShopItemModel;
+  setItemAverageRating: React.Dispatch<React.SetStateAction<number>>;
+  setNumberOfItemReviews: React.Dispatch<React.SetStateAction<number>>;
+}
 
 export default function ShopItemReviews({
   shopItem,
-}: {
-  shopItem: ShopItemModel;
-}) {
+  setItemAverageRating,
+  setNumberOfItemReviews,
+}: ShopItemReviewsProps) {
   //Useful Shop item key-values
   const itemId = shopItem?.id;
   const itemAvgRating = shopItem?.averageRating;
@@ -38,7 +45,7 @@ export default function ShopItemReviews({
       title: "Excellent quality and value",
       description:
         "I was pleasantly surprised by how well this product performed. The build quality is exceptional, and it feels like it was made to last.",
-      createdAt: new Date(2024, 12, 6),
+      createdAt: new Date(2024, 12, 6).toISOString(),
     },
     {
       itemId: itemId,
@@ -49,7 +56,7 @@ export default function ShopItemReviews({
       title: "Good, but there’s room for improvement",
       description:
         "The product works as advertised and has some really great features, but there are a few areas where it could be better.",
-      createdAt: new Date(2024, 9, 21),
+      createdAt: new Date(2024, 9, 21).toISOString(),
     },
     {
       itemId: itemId,
@@ -60,7 +67,7 @@ export default function ShopItemReviews({
       title: "What I expected",
       description:
         "Nice product but I’ll likely look for alternatives next time.",
-      createdAt: new Date(2024, 10, 12),
+      createdAt: new Date(2024, 10, 12).toISOString(),
     },
   ]);
 
@@ -68,6 +75,8 @@ export default function ShopItemReviews({
   const dynamicReviews = useAppSelector(
     (state: ReduxStoreState) => state.shop.reviews
   );
+
+  console.log(dynamicReviews);
 
   //Dynamic reviews for item
   const dynamicReviewsForItem: ItemReviewModel[] | null =
@@ -90,8 +99,27 @@ export default function ShopItemReviews({
     }
   }, [setAllReviews]);
 
+  //Set item average rating and number of reviews
+  useEffect(() => {
+    const calculateAverageRating = (reviews: ItemReviewModel[]) => {
+      if (!Array.isArray(reviews) || reviews.length === 0) {
+        return 0; // Return 0 if no reviews
+      }
+      const totalRating = reviews.reduce(
+        (sum, review) => sum + (review.rating || 0),
+        0
+      );
+      return (totalRating / reviews.length).toFixed(1);
+    };
+
+    const averageRating = calculateAverageRating(allReviews);
+
+    setItemAverageRating(Number(averageRating));
+    setNumberOfItemReviews(Number(allReviews.length));
+  }, [allReviews, setItemAverageRating, setNumberOfItemReviews]);
+
   //Check if item has been purchased and delivered to user
-  const isItemDeliveredToUser = true;
+  //const isItemDeliveredToUser = true;
 
   return (
     <div className="w-full text-black space-y-3">

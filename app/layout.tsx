@@ -5,6 +5,7 @@ import "./globals.css";
 import { Jost } from "next/font/google";
 
 import LayoutContent from "./components/LayoutContent";
+
 import ReduxProvider from "./providers/ReduxProvider";
 import QueryProvider from "./providers/QueryProvider";
 
@@ -41,6 +42,8 @@ export default function RootLayout({
             <LayoutContent>{children}</LayoutContent>
           </QueryProvider>
         </ReduxProvider>
+
+        {/* <ReduxPersistLoader /> */}
       </body>
     </html>
   );

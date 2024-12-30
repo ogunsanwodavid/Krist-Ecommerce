@@ -10,11 +10,17 @@ import TabPanel from "@mui/lab/TabPanel";
 
 import ShopItemReviews from "./ShopItemReviews";
 
+interface ShopItemPageTabProps {
+  shopItem: ShopItemModel;
+  setItemAverageRating: React.Dispatch<React.SetStateAction<number>>;
+  setNumberOfItemReviews: React.Dispatch<React.SetStateAction<number>>;
+}
+
 export default function ShopItemPageTab({
   shopItem,
-}: {
-  shopItem: ShopItemModel;
-}) {
+  setItemAverageRating,
+  setNumberOfItemReviews,
+}: ShopItemPageTabProps) {
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -50,7 +56,11 @@ export default function ShopItemPageTab({
 
         {/** Reviews tab */}
         <TabPanel value="1">
-          <ShopItemReviews shopItem={shopItem} />
+          <ShopItemReviews
+            shopItem={shopItem}
+            setItemAverageRating={setItemAverageRating}
+            setNumberOfItemReviews={setNumberOfItemReviews}
+          />
         </TabPanel>
 
         {/** Additional Information tab */}

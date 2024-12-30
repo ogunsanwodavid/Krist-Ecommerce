@@ -24,7 +24,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
     <div
       className={`${
         isOpen ? "block" : "hidden"
-      } transition-all duration-150 ease-in-out absolute bg-white top-full right-3 w-[calc(100vw_-_24px)] max-w-[250px] rounded-[15px] overflow-hidden z-50 lg:hidden`}
+      } transition-all duration-150 ease-in-out absolute bg-white top-full right-3 w-[calc(100vw_-_24px)] max-w-[250px] rounded-[15px] overflow-x-hidden overflow-y-auto z-50 lg:hidden`}
       style={{
         boxShadow:
           "3px 3px 10px rgba(0, 0, 0, 0.2), -3px 3px 10px rgba(0, 0, 0, 0.2), 0px 10px 10px rgba(0, 0, 0, 0.2)",
@@ -40,7 +40,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
         />
 
         {/*** User name */}
-        <div className="flex-shrink flex-1 h-max my-auto space-y-1 font-semibold">
+        <div className="flex-shrink flex-1 h-max my-auto space-y-1 font-medium">
           <h3 className="text-lg leading-[1.3rem]">David</h3>
           <h4 className="text-base whitespace-nowrap text-ellipsis overflow-hidden leading-[1rem]">
             Ogunsanwo
@@ -49,7 +49,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
       </section>
 
       {/*** Navigation */}
-      <nav className="w-full space-y-6 bg-gray-50 p-4 font-semibold">
+      <nav className="w-full space-y-6 bg-gray-50 p-4 font-medium">
         {/*** Home */}
         <Link href="/" className="flex items-center gap-x-4">
           <HiMiniHome className="text-black text-xl" />

@@ -20,13 +20,15 @@ import { CircularProgress } from "@mui/material";
 import { capitalizeText, formatToCurrency } from "@/app/utils/helpers";
 
 import StarRatingWithEmpty from "@/app/components/ui/StarRatingWithEmpty";
+import MainButton from "@/app/components/ui/MainButton";
+
+import ShopItemPageTab from "../components/ShopItemPageTab";
 
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-import noImgPlaceholder from "@/public/no-image-placeholder.svg";
-import MainButton from "@/app/components/ui/MainButton";
 import { PiHeart, PiHeartFill } from "react-icons/pi";
-import ShopItemPageTab from "../components/ShopItemPageTab";
+
+import noImgPlaceholder from "@/public/no-image-placeholder.svg";
 
 export default function ShopItemPage() {
   //Route parameters
@@ -53,13 +55,15 @@ export default function ShopItemPage() {
     itemImage &&
     formatToSupabaseImageUrl("productImages", itemImage.toString());
   const isItemInStock = currentShopItem?.inStock;
-  const itemAvgRating = currentShopItem?.averageRating;
-  const numberOfReviews = currentShopItem?.numberOfReviews;
   const itemPrice = Number(currentShopItem?.price);
   const itemDiscount = Number(currentShopItem?.discount);
   const itemDescription = currentShopItem?.description;
   const itemColorsAvailable = currentShopItem?.colorsAvailable;
   const itemSizesAvailable = currentShopItem?.sizesAvailable;
+
+  //Average rating of item and number of reviews
+  const [itemAverageRating, setItemAverageRating] = useState<number>(0);
+  const [numberOfItemReviews, setNumberOfItemReviews] = useState<number>(0);
 
   //Quantity to add to cart
   const [itemQuantity, setItemQuantity] = useState(1);
@@ -138,11 +142,11 @@ export default function ShopItemPage() {
 
           {/*** Star rating */}
           <section className="flex items-center gap-x-2">
-            {Boolean(itemAvgRating) && (
-              <StarRatingWithEmpty rating={Number(itemAvgRating)} />
+            {Boolean(itemAverageRating) && (
+              <StarRatingWithEmpty rating={Number(itemAverageRating)} />
             )}
             <span className="text-[16px] text-gray-400 md:text-[18px]">
-              {itemAvgRating} ({numberOfReviews} Reviews)
+              {itemAverageRating} ({numberOfItemReviews} Reviews)
             </span>
           </section>
 
@@ -229,7 +233,15 @@ export default function ShopItemPage() {
             </div>
 
             {/** Add to cart button */}
-            <MainButton className="w-full">Add to Cart</MainButton>
+            {
+              //Disable if item is out of stock
+            }
+            <MainButton
+              className="w-full disabled:opacity-70"
+              disabled={!isItemInStock}
+            >
+              Add to Cart
+            </MainButton>
 
             {/** Wishlist toggle button */}
             <div className="w-[35px] h-[35px] rounded-[8px] border-[2px] border-black flex items-center justify-center">
@@ -242,7 +254,13 @@ export default function ShopItemPage() {
           </section>
 
           {/** Shop item tab */}
-          {currentShopItem && <ShopItemPageTab shopItem={currentShopItem} />}
+          {currentShopItem && (
+            <ShopItemPageTab
+              shopItem={currentShopItem}
+              setItemAverageRating={setItemAverageRating}
+              setNumberOfItemReviews={setNumberOfItemReviews}
+            />
+          )}
         </div>
       </main>
     </div>

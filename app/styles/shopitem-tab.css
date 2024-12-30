@@ -9,5 +9,6 @@
 }
 
 .shopitem-page-tab .MuiTabPanel-root {
+  font-family: Jost, sans-serif !important;
   padding: 13px 0 !important;
 }

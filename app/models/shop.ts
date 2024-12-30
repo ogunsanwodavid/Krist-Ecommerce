@@ -26,7 +26,7 @@ export interface ItemReview {
   rating: number;
   title: string;
   description: string;
-  createdAt: Date;
+  createdAt: string | Date;
 }
 
 export interface ShopState {

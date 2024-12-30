@@ -44,17 +44,21 @@ export function capitalizeText(text: string): string {
 }
 
 /**
- * Formats a given Date object into a string in the format "Month DD, YYYY".
+ * Formats a given ISO string or Date object into a string in the format "Month DD, YYYY".
  *
- * @param date - The Date object to be formatted.
+ * @param dateInput - The ISO string or Date object to be formatted.
  * @returns A string representation of the date in the format "Month DD, YYYY".
  *          Example: June 05, 2023
  */
-export function formatDate(date: Date): string {
+export function formatDate(dateInput: string | Date): string {
+  // Ensure the input is converted to a Date object
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+
   const options: Intl.DateTimeFormatOptions = {
     month: "long",
     day: "2-digit",
     year: "numeric",
   };
-  return date.toLocaleDateString("en-US", options); // Format the date based on the specified options.
+
+  return date.toLocaleDateString("en-US", options); // Format the date based on the specified options
 }
