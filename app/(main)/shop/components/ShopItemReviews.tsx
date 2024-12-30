@@ -100,7 +100,7 @@ export default function ShopItemReviews({
         Customer Reviews
       </h5>
 
-      {/** All Reviews */}
+      {/** All Customers' Reviews */}
       <main className="w-full">
         {allReviews.map((review, index) => {
           return (
@@ -139,6 +139,11 @@ export default function ShopItemReviews({
           );
         })}
       </main>
+
+      {/** Add a review form */}
+      {
+        //Only displays when user has purchased and has the item delivered
+      }
     </div>
   );
 }

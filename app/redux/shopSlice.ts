@@ -1,4 +1,3 @@
-// redux/shopSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 import { ShopState } from "../models/shop";
