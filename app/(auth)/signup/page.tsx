@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
+import { redirect } from "next/navigation";
+
 import { signup } from "../actions/auth";
+
+import { toast } from "react-toastify";
 
 import AuthPage from "../components/AuthPage";
 
@@ -13,8 +17,6 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
 
 import signupImage from "@/public/signup.png";
-import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
 
 export default function SignUp() {
   //State of display password inputs contents
@@ -126,7 +128,11 @@ export default function SignUp() {
             id="firstName"
             autoComplete="off"
             value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
+              setFirstName(filteredValue);
+            }}
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
               firstNameInputError && "!border-errorRed"
             }`}
@@ -141,7 +147,11 @@ export default function SignUp() {
             id="lastName"
             autoComplete="off"
             value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
+              setLastName(filteredValue);
+            }}
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
               lastNameInputError && "!border-errorRed"
             }`}
@@ -235,9 +245,9 @@ export default function SignUp() {
               <FaCheck className="text-white text-[0.6rem]" />
             </span>
 
-            <span className="flex gap-x-1 md:text-lg">
+            <span className="md:text-lg">
               <span>I agree to the</span>
-              <span className="font-semibold">Terms and Conditions</span>
+              <span className="ml-1 font-semibold">Terms and Conditions</span>
             </span>
           </label>
         </section>

@@ -15,6 +15,8 @@ import { formatDate, shuffleArray } from "@/app/utils/helpers";
 
 import StarRating from "@/app/components/ui/StarRating";
 
+import AddYourReviewForm from "./AddYourReviewForm";
+
 import reviewAvatar1 from "@/public/reviewAvatar1.jpeg";
 import reviewAvatar2 from "@/public/reviewAvatar2.jpeg";
 import reviewAvatar3 from "@/public/reviewAvatar3.jpeg";
@@ -119,7 +121,10 @@ export default function ShopItemReviews({
   }, [allReviews, setItemAverageRating, setNumberOfItemReviews]);
 
   //Check if item has been purchased and delivered to user
-  //const isItemDeliveredToUser = true;
+  const isItemDeliveredToUser = false;
+
+  //Check if user has already reviewed the product
+  const hasUserReviewedItem = false;
 
   return (
     <div className="w-full text-black space-y-3">
@@ -172,6 +177,9 @@ export default function ShopItemReviews({
       {
         //Only displays when user has purchased and has the item delivered
       }
+      {(!hasUserReviewedItem || !isItemDeliveredToUser) && (
+        <AddYourReviewForm itemId={itemId} />
+      )}
     </div>
   );
 }

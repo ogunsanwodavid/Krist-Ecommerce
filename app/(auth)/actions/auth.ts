@@ -26,7 +26,7 @@ export async function login(formData: FormData) {
   // Call the provider or db to create a user...
 }
 
-//Signup functionm
+//Signup function
 export async function signup(formData: FormData) {
   const firstName = String(formData.get("firstName"));
   const lastName = String(formData.get("lastName"));
