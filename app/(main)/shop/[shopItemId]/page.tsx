@@ -23,6 +23,7 @@ import StarRatingWithEmpty from "@/app/components/ui/StarRatingWithEmpty";
 import MainButton from "@/app/components/ui/MainButton";
 
 import ShopItemPageTab from "../components/ShopItemPageTab";
+import RelatedProductsList from "../components/RelatedProductsList";
 
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
@@ -61,6 +62,7 @@ export default function ShopItemPage() {
   const itemDescription = currentShopItem?.description;
   const itemColorsAvailable = currentShopItem?.colorsAvailable;
   const itemSizesAvailable = currentShopItem?.sizesAvailable;
+  const itemCategory = currentShopItem?.category;
 
   //Average rating of item and number of reviews
   const [itemAverageRating, setItemAverageRating] = useState<number>(0);
@@ -289,6 +291,14 @@ export default function ShopItemPage() {
           setNumberOfItemReviews={setNumberOfItemReviews}
         />
       )}
+
+      {/** Related products to item */}
+      {
+        <RelatedProductsList
+          category={String(itemCategory)}
+          itemId={Number(shopItemId)}
+        />
+      }
     </div>
   );
 }

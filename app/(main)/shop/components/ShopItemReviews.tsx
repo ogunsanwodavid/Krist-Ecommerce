@@ -83,17 +83,12 @@ export default function ShopItemReviews({
     (state: ReduxStoreState) => state.shop.reviews
   );
 
-  //Dynamic reviews for item
-  /*  const dynamicReviewsForItem: ItemReviewModel[] =
-    dynamicReviews.length > 0
-      ? dynamicReviews.filter((review) => review.itemId === itemId)
-      : []; */
-
   // State to hold dynamic reviews for the specific item
   const [dynamicReviewsForItem, setDynamicReviewsForItem] = useState<
     ItemReviewModel[]
   >([]);
 
+  //Set dynamic reviews for the item
   useEffect(() => {
     if (dynamicReviews.length > 0) {
       setDynamicReviewsForItem(
@@ -111,13 +106,9 @@ export default function ShopItemReviews({
   //Set all Reviews if there are dynamic reviews for the item
   useEffect(() => {
     if (Array.isArray(dynamicReviewsForItem)) {
-      /*  setAllReviews((prevReviews) => [
-        ...prevReviews,
-        ...dynamicReviewsForItem,
-      ]); */
       setAllReviews([...staticReviews, ...dynamicReviewsForItem]);
     }
-  }, [setAllReviews, dynamicReviews]);
+  }, [setAllReviews, dynamicReviewsForItem]);
 
   //Set item average rating and number of reviews
   useEffect(() => {

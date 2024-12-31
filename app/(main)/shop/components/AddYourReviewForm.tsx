@@ -113,7 +113,7 @@ export default function AddYourReviewForm({
     <div className="w-full space-y-3 text-black !mt-5">
       {/** Header */}
       <header>
-        <h5 className="text-[17px] font-semibold md:text-[18px]">
+        <h5 className="text-[17px] font-semibold md:text-[19px]">
           Add Your Review
         </h5>
       </header>

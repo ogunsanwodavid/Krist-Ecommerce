@@ -65,7 +65,7 @@ export default function ShopItemPageTab({
         </TabPanel>
 
         {/** Additional Information tab */}
-        <TabPanel value="2">
+        <TabPanel value="2" className="min-h-[200px]">
           {isThereAdditionalInfo ? (
             <div className="space-y-3 md:space-y-5 md:text-lg">
               {/*** Colors */}
@@ -102,7 +102,7 @@ export default function ShopItemPageTab({
         </TabPanel>
 
         {/** Description tab */}
-        <TabPanel value="3">
+        <TabPanel value="3" className="min-h-[200px]">
           <p className="md:text-lg">{shopItem?.description}</p>
         </TabPanel>
       </TabContext>
