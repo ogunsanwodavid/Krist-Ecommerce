@@ -1,18 +1,27 @@
 import { useState } from "react";
 
+import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
+
+import { setReviews } from "@/app/redux/shopSlice";
+import { ReduxStoreState } from "@/app/redux/store";
+
+import { addReview } from "@/app/actions/shop/add-review";
+
 import FormButton from "@/app/components/ui/FormButton";
 import FormInput from "@/app/components/ui/FormInput";
 import SetRating from "@/app/components/ui/SetRating";
 
 import { FaCheck } from "react-icons/fa6";
 
-import { addReview } from "@/app/actions/shop/add-review";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
-import { setReviews } from "@/app/redux/shopSlice";
-import { ItemReview as ItemReviewModel } from "@/app/models/shop";
-import { ReduxStoreState } from "@/app/redux/store";
+interface AddYourReviewFormProps {
+  itemId: number;
+  setIsFormSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function AddYourReviewForm({ itemId }: { itemId: number }) {
+export default function AddYourReviewForm({
+  itemId,
+  setIsFormSubmitted,
+}: AddYourReviewFormProps) {
   //Redux dipatch function
   const dispatch = useAppDispatch();
 
@@ -22,7 +31,7 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
   );
 
   //User credentials
-  const userId = "0x1";
+  const userId = "0x4";
   const userAvatar = "";
 
   //Type of the error state of the login form
@@ -33,7 +42,7 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
   } | null;
 
   //State of the input and error states
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(1);
   const [name, setName] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -69,7 +78,7 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
       formData.append("userId", userId);
       formData.append("name", name);
       formData.append("rating", rating.toString());
-      formData.append("title", name);
+      formData.append("title", title);
       formData.append("description", description);
       formData.append("createdAt", new Date().toISOString());
 
@@ -92,7 +101,7 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
       //Dispatch new review to the store
       if (newReview) {
         dispatch(setReviews([...dynamicReviews, newReview]));
-        //console.log(newReview);
+        setIsFormSubmitted(true);
       }
 
       // Set Loading state to false
@@ -147,11 +156,7 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
             placeholder="Title of your review"
             autoComplete="off"
             value={title}
-            onChange={(e) => {
-              const value = e.target.value;
-              const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
-              setTitle(filteredValue);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
             className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
               titleInputError && "!border-errorRed"
             }`}
@@ -167,11 +172,7 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
             placeholder="Describe your experience"
             autoComplete="off"
             value={description}
-            onChange={(e) => {
-              const value = e.target.value;
-              const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
-              setDescription(filteredValue);
-            }}
+            onChange={(e) => setDescription(e.target.value)}
             className={`w-full h-[150px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey resize-none ${
               descriptionInputError && "!border-errorRed"
             }`}

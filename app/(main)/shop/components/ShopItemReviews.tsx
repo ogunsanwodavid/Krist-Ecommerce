@@ -17,10 +17,11 @@ import StarRating from "@/app/components/ui/StarRating";
 
 import AddYourReviewForm from "./AddYourReviewForm";
 
+import { FaUserCircle } from "react-icons/fa";
+
 import reviewAvatar1 from "@/public/reviewAvatar1.jpeg";
 import reviewAvatar2 from "@/public/reviewAvatar2.jpeg";
 import reviewAvatar3 from "@/public/reviewAvatar3.jpeg";
-import { FaUser } from "react-icons/fa6";
 
 interface ShopItemReviewsProps {
   shopItem: ShopItemModel;
@@ -33,6 +34,9 @@ export default function ShopItemReviews({
   setItemAverageRating,
   setNumberOfItemReviews,
 }: ShopItemReviewsProps) {
+  //User credentials
+  const userId = "0x4";
+
   //Useful Shop item key-values
   const itemId = shopItem?.id;
   const itemAvgRating = shopItem?.averageRating;
@@ -79,8 +83,6 @@ export default function ShopItemReviews({
     (state: ReduxStoreState) => state.shop.reviews
   );
 
-  console.log(dynamicReviews);
-
   //Dynamic reviews for item
   const dynamicReviewsForItem: ItemReviewModel[] | null =
     dynamicReviews.length > 0
@@ -98,9 +100,13 @@ export default function ShopItemReviews({
       dynamicReviews &&
       dynamicReviewsForItem.length > 0
     ) {
+      /*  setAllReviews((prevReviews) => [
+        ...prevReviews,
+        ...dynamicReviewsForItem,
+      ]); */
       setAllReviews([...staticReviews, ...dynamicReviewsForItem]);
     }
-  }, [setAllReviews]);
+  }, [setAllReviews, dynamicReviews]);
 
   //Set item average rating and number of reviews
   useEffect(() => {
@@ -125,7 +131,14 @@ export default function ShopItemReviews({
   const isItemDeliveredToUser = false;
 
   //Check if user has already reviewed the product
-  const hasUserReviewedItem = false;
+  const hasUserReviewedItem =
+    Array.isArray(dynamicReviewsForItem) &&
+    dynamicReviews &&
+    dynamicReviewsForItem.length > 0 &&
+    dynamicReviews.some((review) => review.userId === userId);
+
+  // State to track form submission and trigger remount
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   return (
     <div className="w-full text-black space-y-3">
@@ -144,13 +157,13 @@ export default function ShopItemReviews({
             >
               {/*** Customer avatar, name and rating */}
               <section className="grid grid-cols-[45px_auto] gap-3 items-center">
-                <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden">
-                  {review.avatar ? (
+                {review.avatar ? (
+                  <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden">
                     <Image src={review.avatar} alt={review.description} fill />
-                  ) : (
-                    <FaUserCircle />
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <FaUserCircle className="w-[45px] h-[45px]" />
+                )}
 
                 <div className="w-full space-y-1">
                   <p className="w-full text-[15px] md:text-[17px]">
@@ -180,10 +193,14 @@ export default function ShopItemReviews({
 
       {/** Add a review form */}
       {
-        //Only displays when user has purchased and has the item delivered
+        //Only displays  item hasnt be purchased and delivered to user and user has not reviewed item
       }
-      {(!hasUserReviewedItem || !isItemDeliveredToUser) && (
-        <AddYourReviewForm itemId={itemId} />
+      {!hasUserReviewedItem && !isItemDeliveredToUser && (
+        <AddYourReviewForm
+          itemId={itemId}
+          key={isFormSubmitted ? "remount" : "original"}
+          setIsFormSubmitted={setIsFormSubmitted}
+        />
       )}
     </div>
   );
