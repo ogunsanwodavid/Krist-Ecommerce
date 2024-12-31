@@ -7,8 +7,15 @@ import { useShopBreadcrumb } from "../contexts/ShopBreadcrumbContext";
 export default function ShopBreadcrumbNav() {
   const { shopBreadcrumbs } = useShopBreadcrumb();
 
+  const isOnShopItemPage =
+    shopBreadcrumbs.length === 3 && shopBreadcrumbs[2] !== "All Products";
+
   return (
-    <nav className="hidden lg:block lg:max-w-[1000px] lg:mx-auto">
+    <nav
+      className={`hidden lg:block ${
+        isOnShopItemPage && "lg:max-w-[1000px] lg:mx-auto"
+      }`}
+    >
       <p className="text-[14px] md:text-base text-black whitespace-nowrap overflow-hidden">
         {shopBreadcrumbs.map((segment, index) => {
           const href = index === 0 ? "/" : index === 1 ? "/shop" : "";

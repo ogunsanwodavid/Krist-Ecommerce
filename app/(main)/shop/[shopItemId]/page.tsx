@@ -29,6 +29,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { PiHeart, PiHeartFill } from "react-icons/pi";
 
 import noImgPlaceholder from "@/public/no-image-placeholder.svg";
+import failedToLoadImg from "@/public/failedToLoad.svg";
 
 export default function ShopItemPage() {
   //Route parameters
@@ -102,6 +103,22 @@ export default function ShopItemPage() {
         <CircularProgress color="inherit" size={40} />
       </div>
     );
+
+  //Shoe error if there is no shop item to display
+  if (!isFetchingCurrentItem && !currentShopItem) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
+        <Image
+          src={failedToLoadImg}
+          className="w-full max-w-[200px] md:max-w-[300px]"
+          alt="Failed to load error image"
+        />
+        <p className="text-base text-center md:text-lg">
+          Failed to load shop item
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-[700px] mx-auto lg:max-w-[1000px]">

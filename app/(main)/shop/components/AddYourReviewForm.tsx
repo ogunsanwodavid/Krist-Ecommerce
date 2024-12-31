@@ -106,7 +106,7 @@ export default function AddYourReviewForm({
 
       // Set Loading state to false
       setIsAddingReview(false);
-    }, 2000); // Delay for 2 seconds
+    }, 2000); // Delay for 2 seconds for better user experience
   };
 
   return (
@@ -141,7 +141,7 @@ export default function AddYourReviewForm({
               const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
               setName(filteredValue);
             }}
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey md:text-lg md:p-4 md:placeholder:text-lg ${
               nameInputError && "!border-errorRed"
             }`}
           />
@@ -157,7 +157,7 @@ export default function AddYourReviewForm({
             autoComplete="off"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey md:text-lg md:p-4 md:placeholder:text-lg ${
               titleInputError && "!border-errorRed"
             }`}
           />
@@ -169,11 +169,11 @@ export default function AddYourReviewForm({
             //type="text"
             name="description"
             id="description"
-            placeholder="Describe your experience"
+            placeholder="Share your thoughts and experience with this product..."
             autoComplete="off"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className={`w-full h-[150px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey resize-none ${
+            className={`w-full h-[150px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey  md:text-lg md:placeholder:text-lg md:p-4 resize-none lg:h-[250px] ${
               descriptionInputError && "!border-errorRed"
             }`}
           />

@@ -89,6 +89,8 @@ export default function ShopItemReviews({
       ? dynamicReviews.filter((review) => review.itemId === itemId)
       : null;
 
+  console.log(dynamicReviewsForItem);
+
   //All reviews
   const [allReviews, setAllReviews] =
     useState<ItemReviewModel[]>(staticReviews);
@@ -97,7 +99,6 @@ export default function ShopItemReviews({
   useEffect(() => {
     if (
       Array.isArray(dynamicReviewsForItem) &&
-      dynamicReviews &&
       dynamicReviewsForItem.length > 0
     ) {
       /*  setAllReviews((prevReviews) => [
@@ -158,11 +159,11 @@ export default function ShopItemReviews({
               {/*** Customer avatar, name and rating */}
               <section className="grid grid-cols-[45px_auto] gap-3 items-center">
                 {review.avatar ? (
-                  <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden">
+                  <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden lg:w-[50px] lg:h-[50px]">
                     <Image src={review.avatar} alt={review.description} fill />
                   </div>
                 ) : (
-                  <FaUserCircle className="w-[45px] h-[45px]" />
+                  <FaUserCircle className="w-[45px] h-[45px] lg:w-[50px] lg:h-[50px]" />
                 )}
 
                 <div className="w-full space-y-1">

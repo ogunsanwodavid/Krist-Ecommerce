@@ -1,4 +1,5 @@
 import React from "react";
+
 import { PiStarFill, PiStarThin } from "react-icons/pi"; // Import PiStar icons
 
 interface RatingProps {
