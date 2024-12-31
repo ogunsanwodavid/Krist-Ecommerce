@@ -89,18 +89,13 @@ export default function ShopItemReviews({
       ? dynamicReviews.filter((review) => review.itemId === itemId)
       : null;
 
-  console.log(dynamicReviewsForItem);
-
   //All reviews
   const [allReviews, setAllReviews] =
     useState<ItemReviewModel[]>(staticReviews);
 
   //Set all Reviews if there are dynamic reviews for the item
   useEffect(() => {
-    if (
-      Array.isArray(dynamicReviewsForItem) &&
-      dynamicReviewsForItem.length > 0
-    ) {
+    if (Array.isArray(dynamicReviewsForItem)) {
       /*  setAllReviews((prevReviews) => [
         ...prevReviews,
         ...dynamicReviewsForItem,
