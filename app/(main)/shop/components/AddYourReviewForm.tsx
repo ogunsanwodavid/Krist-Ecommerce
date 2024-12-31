@@ -5,9 +5,22 @@ import FormInput from "@/app/components/ui/FormInput";
 import SetRating from "@/app/components/ui/SetRating";
 
 import { FaCheck } from "react-icons/fa6";
+
 import { addReview } from "@/app/actions/shop/add-review";
+import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
+import { setReviews } from "@/app/redux/shopSlice";
+import { ItemReview as ItemReviewModel } from "@/app/models/shop";
+import { ReduxStoreState } from "@/app/redux/store";
 
 export default function AddYourReviewForm({ itemId }: { itemId: number }) {
+  //Redux dipatch function
+  const dispatch = useAppDispatch();
+
+  //Reviews from redux state
+  const dynamicReviews = useAppSelector(
+    (state: ReduxStoreState) => state.shop.reviews
+  );
+
   //User credentials
   const userId = "0x1";
   const userAvatar = "";
@@ -71,6 +84,15 @@ export default function AddYourReviewForm({ itemId }: { itemId: number }) {
         setErrors(result.errors);
       } else {
         setErrors(null);
+      }
+
+      //New review
+      const newReview = result?.data;
+
+      //Dispatch new review to the store
+      if (newReview) {
+        dispatch(setReviews([...dynamicReviews, newReview]));
+        //console.log(newReview);
       }
 
       // Set Loading state to false

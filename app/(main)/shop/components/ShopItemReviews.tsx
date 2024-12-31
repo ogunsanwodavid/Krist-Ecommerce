@@ -20,6 +20,7 @@ import AddYourReviewForm from "./AddYourReviewForm";
 import reviewAvatar1 from "@/public/reviewAvatar1.jpeg";
 import reviewAvatar2 from "@/public/reviewAvatar2.jpeg";
 import reviewAvatar3 from "@/public/reviewAvatar3.jpeg";
+import { FaUser } from "react-icons/fa6";
 
 interface ShopItemReviewsProps {
   shopItem: ShopItemModel;
@@ -144,7 +145,11 @@ export default function ShopItemReviews({
               {/*** Customer avatar, name and rating */}
               <section className="grid grid-cols-[45px_auto] gap-3 items-center">
                 <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden">
-                  <Image src={review.avatar} alt={review.description} fill />
+                  {review.avatar ? (
+                    <Image src={review.avatar} alt={review.description} fill />
+                  ) : (
+                    <FaUserCircle />
+                  )}
                 </div>
 
                 <div className="w-full space-y-1">

@@ -1,15 +1,6 @@
-import { useAppDispatch } from "@/app/hooks/redux";
-
 import { AddReviewFormSchema } from "@/app/lib/definitions/add-review";
 
-import { ItemReview } from "@/app/models/shop";
-
-import { setReviews } from "@/app/redux/shopSlice";
-
 export function addReview(formData: FormData) {
-  //Redux dispatch function
-  const dispatch = useAppDispatch();
-
   const itemId = Number(formData.get("itemId"));
   const userId = String(formData.get("userId"));
   const avatar = String(formData.get("avatar"));
@@ -38,11 +29,5 @@ export function addReview(formData: FormData) {
     };
   }
 
-  //New Review object
-  const newReview = validatedFields.data;
-
-  //Dispatch new review to the store
-  dispatch(setReviews((reviews: ItemReview[]) => [...reviews, newReview]));
-
-  return { success: true };
+  return { success: true, data: validatedFields.data };
 }
