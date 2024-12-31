@@ -8,7 +8,7 @@ export default function ShopBreadcrumbNav() {
   const { shopBreadcrumbs } = useShopBreadcrumb();
 
   return (
-    <nav className="hidden lg:block">
+    <nav className="hidden lg:block lg:max-w-[1000px] lg:mx-auto">
       <p className="text-[14px] md:text-base text-black whitespace-nowrap overflow-hidden">
         {shopBreadcrumbs.map((segment, index) => {
           const href = index === 0 ? "/" : index === 1 ? "/shop" : "";

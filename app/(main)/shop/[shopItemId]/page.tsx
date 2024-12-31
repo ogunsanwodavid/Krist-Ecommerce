@@ -104,10 +104,10 @@ export default function ShopItemPage() {
     );
 
   return (
-    <div className="w-full max-w-[700px] mx-auto">
-      <div className="w-full space-y-3 ">
+    <div className="w-full max-w-[700px] mx-auto lg:max-w-[1000px]">
+      <div className="w-full space-y-3 lg:flex lg:gap-12 lg:space-y-0">
         {/** Shop item image */}
-        <section className="relative w-full h-[350px] shadow-md border-t-[1px] border-gray-200 md:h-[450px]">
+        <section className="relative w-full h-[350px] shadow-md border-t-[1px] border-gray-200 md:h-[450px] lg:max-w-[400px] lg:h-[500px]">
           <Image
             src={itemImageUrl || noImgPlaceholder}
             alt={String(itemTitle) || "Image not available"}
@@ -118,22 +118,24 @@ export default function ShopItemPage() {
 
         {/*** Shop item details */}
         <main className="w-full text-black">
-          <div className="space-y-2">
-            {/*** Display if item is in stock or not */}
-            {isItemInStock ? (
-              <span className="inline-block px-3 py-1 bg-green-100 text-green-400 font-medium text-[13px] rounded-[5px]">
-                In stock
-              </span>
-            ) : (
-              <span className="inline-block px-3 py-1 bg-red-100 text-red-400 font-medium text-[13px] rounded-[5px]">
-                Out of Stock
-              </span>
-            )}
+          <div className="space-y-2 md:space-y-4">
+            <section className="space-y-2 md:flex md:flex-row-reverse md:items-center md:justify-between md:space-y-0">
+              {/*** Display if item is in stock or not */}
+              {isItemInStock ? (
+                <span className="inline-block px-3 py-1 bg-green-100 text-green-400 font-medium text-[13px] rounded-[5px]">
+                  In stock
+                </span>
+              ) : (
+                <span className="inline-block px-3 py-1 bg-red-100 text-red-400 font-medium text-[13px] rounded-[5px]">
+                  Out of Stock
+                </span>
+              )}
 
-            {/*** Brand of item */}
-            <h3 className="text-[18px] md:text-[20px] font-medium">
-              {itemBrand}
-            </h3>
+              {/*** Brand of item */}
+              <h3 className="text-[18px] md:text-[20px] font-medium">
+                {itemBrand}
+              </h3>
+            </section>
 
             {/*** Title of item */}
             <h4 className="text-[17px] md:text-[19px]">
@@ -187,7 +189,7 @@ export default function ShopItemPage() {
                   <main className="flex items-center flex-wrap gap-2">
                     {itemColorsAvailable.map((color, index) => (
                       <div
-                        className="w-6 h-6 rounded-[5px] border-[2px] border-black"
+                        className="w-7 h-7 rounded-[5px] border-[2px] border-black"
                         style={{
                           backgroundColor: color,
                         }}
@@ -218,7 +220,7 @@ export default function ShopItemPage() {
               )}
 
             {/*** Cart & Wishlist */}
-            <section className="!mt-4 space-y-2 md:flex md:items-center md:gap-3 md:space-y-0">
+            <section className="!mt-4 space-y-2 md:flex md:items-center md:gap-3 md:space-y-0 md:!mt-6">
               {/** Item quantity */}
               <div className="h-[40px] w-[100px] rounded-[8px] py-1 px-2 border-[2px] border-black flex items-center justify-between md:h-[44px] md:w-[130px]">
                 <FaMinus
