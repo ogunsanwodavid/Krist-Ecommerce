@@ -84,10 +84,25 @@ export default function ShopItemReviews({
   );
 
   //Dynamic reviews for item
-  const dynamicReviewsForItem: ItemReviewModel[] | null =
+  /*  const dynamicReviewsForItem: ItemReviewModel[] =
     dynamicReviews.length > 0
       ? dynamicReviews.filter((review) => review.itemId === itemId)
-      : null;
+      : []; */
+
+  // State to hold dynamic reviews for the specific item
+  const [dynamicReviewsForItem, setDynamicReviewsForItem] = useState<
+    ItemReviewModel[]
+  >([]);
+
+  useEffect(() => {
+    if (dynamicReviews.length > 0) {
+      setDynamicReviewsForItem(
+        dynamicReviews.filter((review) => review.itemId === itemId)
+      );
+    } else {
+      setDynamicReviewsForItem([]);
+    }
+  }, [dynamicReviews, itemId]);
 
   //All reviews
   const [allReviews, setAllReviews] =

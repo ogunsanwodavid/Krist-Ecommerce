@@ -206,7 +206,7 @@ export default function AddYourReviewForm({
 
         {/***** Submit button */}
         <FormButton
-          className="!w-[100px] !px-5 !py-2"
+          className="!w-[100px] !px-5 !py-2 md:!h-max md:!w-[150px] md:!px-6 md:!py-3"
           loading={isAddingReview}
           disabled={isAddingReview}
         >
