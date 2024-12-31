@@ -143,9 +143,9 @@ export default function ShopItemReviews({
   return (
     <div className="w-full text-black space-y-3">
       {/** Header */}
-      <h5 className="font-medium text-[17px] md:text-[19px]">
+      {/* <h5 className="font-medium text-[17px] md:text-[19px]">
         Customer Reviews
-      </h5>
+      </h5> */}
 
       {/** All Customers' Reviews */}
       <main className="w-full">

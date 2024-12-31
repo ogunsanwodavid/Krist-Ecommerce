@@ -12,3 +12,13 @@
   font-family: Jost, sans-serif !important;
   padding: 13px 0 !important;
 }
+
+@media (min-width: 700px) {
+  .shopitem-page-tab .MuiButtonBase-root.MuiTab-root {
+    font-size: 19px !important;
+  }
+
+  .shopitem-page-tab .MuiTabPanel-root {
+    padding: 26px 0 !important;
+  }
+}

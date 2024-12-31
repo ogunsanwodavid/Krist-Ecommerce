@@ -38,8 +38,8 @@ export default function ShopItemPageTab({
 
   return (
     <Box
-      className="shopitem-page-tab font-jost"
-      sx={{ width: "100%", typography: "body1", marginTop: "28px" }}
+      className="shopitem-page-tab font-jost mt-[28px] lg:mt-[50px]"
+      sx={{ width: "100%", typography: "body1" }}
     >
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -49,8 +49,9 @@ export default function ShopItemPageTab({
             onChange={handleChange}
             aria-label="lab API tabs example"
           >
-            <Tab label="Reviews" value="1" />
+            <Tab label="Customer Reviews" value="1" />
             <Tab label="Additional Information" value="2" />
+            <Tab label="Description" value="3" />
           </TabList>
         </Box>
 
@@ -66,7 +67,7 @@ export default function ShopItemPageTab({
         {/** Additional Information tab */}
         <TabPanel value="2">
           {isThereAdditionalInfo ? (
-            <div className="space-y-3">
+            <div className="space-y-3 md:space-y-5 md:text-lg">
               {/*** Colors */}
               {Array.isArray(itemColorsAvailable) &&
                 itemColorsAvailable.length > 0 && (
@@ -98,6 +99,11 @@ export default function ShopItemPageTab({
           ) : (
             <div className="md:text-lg">No information to display</div>
           )}
+        </TabPanel>
+
+        {/** Description tab */}
+        <TabPanel value="3">
+          <p className="md:text-lg">{shopItem?.description}</p>
         </TabPanel>
       </TabContext>
     </Box>

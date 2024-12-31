@@ -147,7 +147,7 @@ export default function ShopItemPage() {
               {Boolean(itemAverageRating) && (
                 <StarRatingWithEmpty rating={Number(itemAverageRating)} />
               )}
-              <span className="text-[16px] text-gray-400 md:text-[18px]">
+              <span className="text-[16px] leading-[16px] text-gray-400 md:text-[18px] md:leading-[18px]">
                 {itemAverageRating} ({numberOfItemReviews} Reviews)
               </span>
             </section>
@@ -178,7 +178,9 @@ export default function ShopItemPage() {
             </section>
 
             {/** Item description */}
-            <p className="text-[15px] md:text-[17px]">{itemDescription}</p>
+            <p className="text-[15px] line-clamp-3 overflow-hidden text-ellipsis md:text-[17px]">
+              {itemDescription}
+            </p>
 
             {/** Colors available */}
             {Array.isArray(itemColorsAvailable) &&

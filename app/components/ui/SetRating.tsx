@@ -49,9 +49,9 @@ export default function SetRating({
             className="cursor-pointer "
           >
             {isFilled ? (
-              <PiStarFill className="text-yellow-400 text-lg" />
+              <PiStarFill className="text-yellow-400 text-lg md:text-xl" />
             ) : (
-              <PiStarThin className="text-gray-400 text-lg" />
+              <PiStarThin className="text-gray-400 text-lg md:text-xl" />
             )}
           </div>
         );

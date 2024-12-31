@@ -13,9 +13,15 @@ const StarRatingWithEmpty: React.FC<RatingProps> = ({ rating }) => {
     <div className="flex items-center gap-x-[0.1rem]">
       {Array.from({ length: 5 }, (_, index) =>
         index < normalizedRating ? (
-          <PiStarFill key={index} className="text-yellow-500 text-lg" />
+          <PiStarFill
+            key={index}
+            className="text-yellow-500 text-lg md:text-xl"
+          />
         ) : (
-          <PiStarThin key={index} className="text-gray-400 text-lg" />
+          <PiStarThin
+            key={index}
+            className="text-gray-400 text-lg md:text-xl"
+          />
         )
       )}
     </div>
