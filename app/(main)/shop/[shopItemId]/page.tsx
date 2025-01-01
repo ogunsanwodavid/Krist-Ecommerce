@@ -13,6 +13,10 @@ import { useShopBreadcrumb } from "../contexts/ShopBreadcrumbContext";
 
 import useFetchCurrentShopItem from "@/app/actions/shop/useFetchCurrentShopItem";
 
+import { useAddItemToCart } from "@/app/actions/cart/useAddItemToCart";
+
+import { useItemVariationModal } from "../../contexts/ItemVariationModalContext";
+
 import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
 
 import { CircularProgress } from "@mui/material";
@@ -47,7 +51,7 @@ export default function ShopItemPage() {
   //Current shop item from redux state
   const currentShopItem = useAppSelector(
     (state: ReduxStoreState) => state.shop.currentItem
-  );
+  )!;
 
   //Current shop item key-values
   const itemBrand = currentShopItem?.brand;
@@ -84,6 +88,21 @@ export default function ShopItemPage() {
       setItemQuantity((prev) => prev - 1);
     }
   }
+
+  //Add item to cart
+  const addItemToCart = useAddItemToCart(currentShopItem, itemQuantity);
+
+  function handleAddToCart(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    addItemToCart();
+  }
+
+  //Close item variation modal on mount
+  const { closeVariationModal } = useItemVariationModal();
+  useEffect(() => {
+    closeVariationModal();
+  }, []);
 
   //Set breadcrumb if title exists
   const { setShopBreadcrumb } = useShopBreadcrumb();
@@ -266,6 +285,7 @@ export default function ShopItemPage() {
               <MainButton
                 className="w-full disabled:opacity-70"
                 disabled={!isItemInStock}
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </MainButton>

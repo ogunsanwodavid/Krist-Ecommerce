@@ -7,15 +7,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../redux/store";
 
 import ReduxPersistLoader from "../components/ReduxPersistLoader";
-import { useEffect } from "react";
 
 export default function ReduxProvider({ children }) {
-  //return <Provider store={store}>{children}</Provider>;
-
-  useEffect(() => {
-    console.log(store.getState().shop.reviews); // Logs the reviews state after rehydration
-  }, []);
-
   return (
     <Provider store={store}>
       {/* PersistGate ensures that the app waits for state rehydration */}

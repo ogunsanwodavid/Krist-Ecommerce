@@ -1,9 +1,13 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 
 import { ShopItem as ShopItemModel } from "@/app/models/shop";
+
+import { useAddItemToCart } from "@/app/actions/cart/useAddItemToCart";
+
+import { useItemVariationModal } from "@/app/(main)/contexts/ItemVariationModalContext";
 
 import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
 
@@ -18,7 +22,6 @@ gsap.registerPlugin(ScrollTrigger);
 import { PiHeart } from "react-icons/pi";
 
 import { IoEyeOutline } from "react-icons/io5";
-import { useAddItemToCart } from "@/app/actions/cart/add-to-cart";
 
 interface ShopItemProps {
   shopItem: ShopItemModel;
@@ -83,9 +86,17 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
   //Add item to cart
   const addItemToCart = useAddItemToCart(shopItem);
 
-  function handleAddToCart() {
+  function handleAddToCart(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
     addItemToCart();
   }
+
+  //Close item variation modal on mount
+  const { closeVariationModal } = useItemVariationModal();
+  useEffect(() => {
+    closeVariationModal();
+  }, []);
 
   return (
     <Link

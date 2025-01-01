@@ -12,8 +12,10 @@ export function useAddItemToCart(item: ShopItem, quantity?: number) {
   const itemQuantity = quantity ? quantity : 1;
 
   //Check if item has size or color variations
-  const itemHasSizeVariation = item.sizesAvailable.length > 0;
-  const itemHasColorVariation = item.colorsAvailable.length < 0;
+  const itemHasSizeVariation =
+    Array.isArray(item?.sizesAvailable) && item?.sizesAvailable.length > 0;
+  const itemHasColorVariation =
+    Array.isArray(item?.colorsAvailable) && item?.colorsAvailable.length < 0;
 
   function addItemToCart() {
     if (itemHasSizeVariation || itemHasColorVariation) {

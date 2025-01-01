@@ -27,7 +27,7 @@ interface ItemVariationModalProviderProps {
 export const ItemVariationModalProvider: React.FC<
   ItemVariationModalProviderProps
 > = ({ children }) => {
-  const [isVariationModalOpen, setIsVariationModalOpen] = useState(true);
+  const [isVariationModalOpen, setIsVariationModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
   const [size, setSize] = useState<string | undefined>(undefined);
   const [color, setColor] = useState<string | undefined>(undefined);

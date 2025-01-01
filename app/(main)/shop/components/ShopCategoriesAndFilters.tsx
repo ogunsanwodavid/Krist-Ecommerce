@@ -316,7 +316,7 @@ export default function ShopCategoriesAndFilters({
           className="w-max ml-auto bg-gray-100 border-black border-[1.5px] p-1 rounded-[6px] lg:hidden"
           onClick={handleClose}
         >
-          <CgClose className="text-black text-lg " />
+          <CgClose className="text-black text-lg" />
         </div>
         {/*** Main section */}
         <main className="w-full space-y-4">
