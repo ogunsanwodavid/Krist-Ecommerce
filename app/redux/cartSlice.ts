@@ -8,11 +8,11 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setItems(_, action: PayloadAction<CartProduct[]>) {
+    setCart(_, action: PayloadAction<CartProduct[]>) {
       // Replace the entire cart with new items
       return action.payload;
     },
-    addItem(state, action: PayloadAction<CartProduct>) {
+    addToCart(state, action: PayloadAction<CartProduct>) {
       const newProduct = action.payload;
 
       // Check if the product with same id, size, and color already exists in the cart
@@ -31,7 +31,7 @@ const cartSlice = createSlice({
         state.push(newProduct);
       }
     },
-    removeItem(
+    removeFromCart(
       state,
       action: PayloadAction<{ id: number; size?: string; color?: string }>
     ) {
@@ -53,5 +53,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setItems, addItem, removeItem } = cartSlice.actions;
+export const { setCart, addToCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

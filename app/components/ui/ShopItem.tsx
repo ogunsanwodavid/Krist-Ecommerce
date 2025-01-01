@@ -18,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 import { PiHeart } from "react-icons/pi";
 
 import { IoEyeOutline } from "react-icons/io5";
+import { useAddItemToCart } from "@/app/actions/cart/add-to-cart";
 
 interface ShopItemProps {
   shopItem: ShopItemModel;
@@ -79,6 +80,13 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
   //Shop item id
   const shopItemId = shopItem.id;
 
+  //Add item to cart
+  const addItemToCart = useAddItemToCart(shopItem);
+
+  function handleAddToCart() {
+    addItemToCart();
+  }
+
   return (
     <Link
       href={`/shop/${shopItemId}`}
@@ -118,7 +126,10 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
         </section>
 
         {/**** Category button*/}
-        <button className="button w-full h-[44px] max-w-[230px] mx-auto mt-auto bg-gray-100 text-black font-medium flex items-center justify-center rounded-[7px] z-10 ">
+        <button
+          className="button w-full h-[44px] max-w-[230px] mx-auto mt-auto bg-gray-100 text-black font-medium flex items-center justify-center rounded-[7px] z-10"
+          onClick={handleAddToCart}
+        >
           Add to Cart
         </button>
       </section>

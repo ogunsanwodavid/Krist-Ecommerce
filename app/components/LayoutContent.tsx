@@ -4,7 +4,8 @@ import React from "react";
 
 import { usePathname } from "next/navigation";
 
-import ToastProvider from "./ToastProvider";
+//import ToastProvider from "./ToastProvider";
+
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -27,8 +28,7 @@ export default function LayoutContent({
       {/*** Render Navbar if it is not an auth page */}
       {!isAuthPage && <Navbar />}
 
-      {/*** Main content wrapped in the toast provider */}
-      <ToastProvider>{children}</ToastProvider>
+      {children}
 
       {/*** Render Footer if it is not an auth page */}
       {!isAuthPage && <Footer />}

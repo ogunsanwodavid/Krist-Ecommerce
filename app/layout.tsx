@@ -36,14 +36,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jost.className}`} suppressHydrationWarning>
+      <body
+        className={`${jost.className} overflow-hidden`}
+        suppressHydrationWarning
+      >
         <ReduxProvider>
           <QueryProvider>
             <LayoutContent>{children}</LayoutContent>
           </QueryProvider>
         </ReduxProvider>
-
-        {/* <ReduxPersistLoader /> */}
       </body>
     </html>
   );
