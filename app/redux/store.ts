@@ -32,7 +32,7 @@ const cartPersistConfig = {
 
 // Apply persistReducer to the shop and cart reducers
 const persistedShopReducer = persistReducer(shopPersistConfig, shopReducer);
-const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer); // Persist cart slice
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 
 // Configure the store with the persisted reducer
 const store = configureStore({

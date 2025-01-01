@@ -10,6 +10,7 @@ import QueryProvider from "./providers/QueryProvider";
 import { ItemVariationModalProvider } from "./(main)/contexts/ItemVariationModalContext";
 
 import LayoutContent from "./components/LayoutContent";
+import ToastProvider from "./components/ToastProvider";
 
 //Jost google font
 const jost = Jost({
@@ -41,9 +42,11 @@ export default function RootLayout({
       <body className={`${jost.className} `} suppressHydrationWarning>
         <ReduxProvider>
           <QueryProvider>
-            <ItemVariationModalProvider>
-              <LayoutContent>{children}</LayoutContent>
-            </ItemVariationModalProvider>
+            <ToastProvider>
+              <ItemVariationModalProvider>
+                <LayoutContent>{children}</LayoutContent>
+              </ItemVariationModalProvider>
+            </ToastProvider>
           </QueryProvider>
         </ReduxProvider>
       </body>

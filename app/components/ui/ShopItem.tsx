@@ -11,6 +11,8 @@ import { useItemVariationModal } from "@/app/(main)/contexts/ItemVariationModalC
 
 import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
 
+import { toast } from "react-toastify";
+
 import FormatCurrencyNaira from "./FormatCurrencyNaira";
 
 import gsap from "gsap";
@@ -83,13 +85,21 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
   //Shop item id
   const shopItemId = shopItem.id;
 
+  //Is item out of stock
+  const isOutOfStock = !shopItem.inStock;
+
   //Add item to cart
   const addItemToCart = useAddItemToCart(shopItem);
 
+  //Function to add item to cart if it isnt out of stock
   function handleAddToCart(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
-    addItemToCart();
+    if (isOutOfStock) {
+      toast.error("Item is out of stock");
+    } else {
+      addItemToCart();
+    }
   }
 
   //Close item variation modal on mount
@@ -136,7 +146,7 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
           </div>
         </section>
 
-        {/**** Category button*/}
+        {/**** Add to cart button*/}
         <button
           className="button w-full h-[44px] max-w-[230px] mx-auto mt-auto bg-gray-100 text-black font-medium flex items-center justify-center rounded-[7px] z-10"
           onClick={handleAddToCart}

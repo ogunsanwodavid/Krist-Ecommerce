@@ -23,6 +23,8 @@ import { CircularProgress } from "@mui/material";
 
 import { capitalizeText, formatToCurrency } from "@/app/utils/helpers";
 
+import { toast } from "react-toastify";
+
 import StarRatingWithEmpty from "@/app/components/ui/StarRatingWithEmpty";
 import MainButton from "@/app/components/ui/MainButton";
 
@@ -92,10 +94,15 @@ export default function ShopItemPage() {
   //Add item to cart
   const addItemToCart = useAddItemToCart(currentShopItem, itemQuantity);
 
+  //Function to add item to cart if it isnt out of stock
   function handleAddToCart(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
-    addItemToCart();
+    if (!isItemInStock) {
+      toast.error("Item is out of stock");
+    } else {
+      addItemToCart();
+    }
   }
 
   //Close item variation modal on mount
@@ -279,12 +286,8 @@ export default function ShopItemPage() {
               </div>
 
               {/** Add to cart button */}
-              {
-                //Disable if item is out of stock
-              }
               <MainButton
                 className="w-full disabled:opacity-70"
-                disabled={!isItemInStock}
                 onClick={handleAddToCart}
               >
                 Add to Cart

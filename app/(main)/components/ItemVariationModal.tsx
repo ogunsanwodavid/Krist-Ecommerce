@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useItemVariationModal } from "../contexts/ItemVariationModalContext"; // Import useModal hook
 
@@ -12,7 +12,6 @@ import InputBase from "@mui/material/InputBase";
 
 import { CgClose } from "react-icons/cg";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import MainButton from "@/app/components/ui/MainButton";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -41,22 +40,26 @@ export default function ItemVariationModal() {
   const [quantity, setQuantity] = useState(itemQuantity ?? 1);
 
   // If no item is selected, don't render modal
-  if (
-    !isVariationModalOpen
-    //|| !selectedItem
-  )
-    return null;
+  if (!isVariationModalOpen || !selectedItem) return null;
 
   //Available sizes and colors
   const sizes = selectedItem?.sizesAvailable;
   const colors = selectedItem?.colorsAvailable;
 
-  const handleAddToCart = () => {
-    if (!size || !color) {
-      alert("Please select both size and color.");
-      return;
-    }
+  //Check if user can add item to cart after selecting size and color
+  const canUserAddToCart =
+    Array.isArray(sizes) &&
+    sizes.length > 0 &&
+    Array.isArray(colors) &&
+    colors.length > 0
+      ? size && color
+      : Array.isArray(sizes) && sizes.length > 0 && !colors
+      ? size
+      : Array.isArray(colors) && colors.length > 0 && !sizes
+      ? color
+      : true;
 
+  const handleAddToCart = () => {
     const newCartProduct: CartProduct = {
       quantity,
       item: selectedItem,
@@ -169,13 +172,18 @@ export default function ItemVariationModal() {
           {/** Continue Shopping */}
           <button
             className="hidden w-full h-max px-4 py-2 text-black border-[2px] border-black items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg md:flex"
-            // onClick={() => closeVariationModal()}
+            onClick={() => closeVariationModal()}
           >
             Continue Shopping
           </button>
 
           {/** Add Item to Cart */}
-          <button className="w-full h-max px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg">
+          <button
+            className={`w-full h-max px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg ${
+              !canUserAddToCart && "opacity-50 cursor-not-allowed"
+            }`}
+            disabled={!canUserAddToCart}
+          >
             Add item
           </button>
         </section>

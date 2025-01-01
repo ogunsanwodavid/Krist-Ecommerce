@@ -4,6 +4,7 @@ import { createContext, useState, useContext, ReactNode } from "react";
 
 import { CartProduct } from "@/app/models/cart";
 import { ShopItem } from "@/app/models/shop";
+
 import ItemVariationModal from "../components/ItemVariationModal";
 
 // Type for Item Variation Modal Context
@@ -66,6 +67,8 @@ export const ItemVariationModalProvider: React.FC<
       }}
     >
       {children}
+
+      {/** Render Is Variation Modal */}
       {isVariationModalOpen && <ItemVariationModal />}
     </ItemVariationModalContext.Provider>
   );
@@ -76,7 +79,7 @@ export const useItemVariationModal = () => {
   const context = useContext(ItemVariationModalContext);
   if (!context) {
     throw new Error(
-      "useModal must be used within a ItemVariationModalProvider"
+      "useItemVariationModal must be used within a ItemVariationModalProvider"
     );
   }
   return context;
