@@ -31,6 +31,7 @@ export default function OurInstagramStories() {
               <div className="w-full max-w-[277.5px] group" key={index}>
                 <Link
                   href={post.link}
+                  target="blank"
                   className="relative w-full h-[320px] flex flex-col overflow-hidden"
                 >
                   {/*** Post image */}

@@ -44,6 +44,7 @@ export default function Footer() {
             {/**** Phone call */}
             <a
               href="tel:+2348159867285"
+              target="blank"
               className="space-x-2 text-center sm:text-left"
             >
               <LiaPhoneVolumeSolid className="text-white text-lg inline-block" />
@@ -53,6 +54,7 @@ export default function Footer() {
             {/*** Email */}
             <a
               href="mailto:ogunsannwodavid123@gmail.com"
+              target="blank"
               className="space-x-2 text-center sm:text-left"
             >
               <CiMail className="text-white text-lg inline-block" />
@@ -133,17 +135,20 @@ export default function Footer() {
           {/*** Social Logos */}
           <section className="flex items-center justify-center gap-x-5 md:justify-start">
             {/*** Twitter X icon */}
-            <Link href="https://x.com/00xdave">
+            <Link href="https://x.com/00xdave" target="blank">
               <FaXTwitter className="text-white text-2xl" />
             </Link>
 
             {/** Github icon */}
-            <Link href="https://github.com/ogunsanwodavid">
+            <Link href="https://github.com/ogunsanwodavid" target="blank">
               <FaGithub className="text-white text-2xl" />
             </Link>
 
             {/** Linkedin icon */}
-            <Link href="https://www.linkedin.com/in/ogunsanwo-david-399817238">
+            <Link
+              href="https://www.linkedin.com/in/ogunsanwo-david-399817238"
+              target="blank"
+            >
               <FaLinkedin className="text-white text-2xl" />
             </Link>
           </section>
