@@ -4,10 +4,12 @@ import "./globals.css";
 
 import { Jost } from "next/font/google";
 
-import LayoutContent from "./components/LayoutContent";
-
 import ReduxProvider from "./providers/ReduxProvider";
 import QueryProvider from "./providers/QueryProvider";
+
+import { ItemVariationModalProvider } from "./(main)/contexts/ItemVariationModalContext";
+
+import LayoutContent from "./components/LayoutContent";
 
 //Jost google font
 const jost = Jost({
@@ -39,7 +41,9 @@ export default function RootLayout({
       <body className={`${jost.className} `} suppressHydrationWarning>
         <ReduxProvider>
           <QueryProvider>
-            <LayoutContent>{children}</LayoutContent>
+            <ItemVariationModalProvider>
+              <LayoutContent>{children}</LayoutContent>
+            </ItemVariationModalProvider>
           </QueryProvider>
         </ReduxProvider>
       </body>

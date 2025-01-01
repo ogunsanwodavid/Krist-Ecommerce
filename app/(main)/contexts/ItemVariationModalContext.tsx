@@ -12,6 +12,7 @@ interface ItemVariationModalContextType {
   openVariationModal: (item: ShopItem, quantity: number) => void;
   closeVariationModal: () => void;
   selectedItem: ShopItem | null;
+  quantity: number;
 }
 
 // Item Variation Modal context
@@ -61,6 +62,7 @@ export const ItemVariationModalProvider: React.FC<
         openVariationModal,
         closeVariationModal,
         selectedItem,
+        quantity,
       }}
     >
       {children}
