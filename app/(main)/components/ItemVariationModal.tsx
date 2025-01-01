@@ -3,7 +3,28 @@ import { useState } from "react";
 import { useItemVariationModal } from "../contexts/ItemVariationModalContext"; // Import useModal hook
 
 import { CartProduct } from "@/app/models/cart"; // Assuming CartProduct type is already defined
+
+import { styled } from "@mui/material/styles";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputBase from "@mui/material/InputBase";
+
 import { CgClose } from "react-icons/cg";
+import { FaMinus, FaPlus } from "react-icons/fa6";
+
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  "label + &": {
+    marginTop: theme.spacing(3),
+  },
+  "& .MuiInputBase-input": {
+    position: "relative",
+    fontFamily: "Jost, sans-serif",
+  },
+  "& .MuiSvgIcon-root.MuiSelect-icon": {
+    fill: "#131118",
+  },
+}));
 
 export default function ItemVariationModal() {
   const { isVariationModalOpen, closeVariationModal, selectedItem } =
@@ -19,18 +40,9 @@ export default function ItemVariationModal() {
   )
     return null;
 
-  // Handle color and size change
-  const handleColorChange = (color: string) => {
-    setColor(color);
-  };
-
-  const handleSizeChange = (size: string) => {
-    setSize(size);
-  };
-
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantity(Number(e.target.value));
-  };
+  //Available sizes and colors
+  const sizes = selectedItem?.sizesAvailable;
+  const colors = selectedItem?.colorsAvailable;
 
   const handleAddToCart = () => {
     if (!size || !color) {
@@ -49,14 +61,66 @@ export default function ItemVariationModal() {
   return (
     <div className="fixed top-0 left-0 min-h-screen w-screen bg-[rgba(0,0,0,0.4)] z-[300] flex items-center justify-center p-3">
       {/* Modal Content */}
-      <main className="w-full bg-white rounded-xl p-4 text-black">
+      <main className="w-full max-w-[470px] mx-auto bg-white rounded-xl p-4 text-black space-y-1 md:space-y-3">
         {/** Close icon */}
-        <CgClose className="text-base ml-auto md:text-lg" />
+        <CgClose
+          className="text-lg ml-auto md:text-xl"
+          onClick={() => closeVariationModal()}
+        />
 
         {/** Header */}
-        <header className="">
-          <h4>Please Select a Variation</h4>
-        </header>
+        <h4 className="font-medium text-[17px] md:text-[19px]">
+          Please Select a Variation
+        </h4>
+
+        {/** Item quantity */}
+        <section className="space-y-1 md:flex md:items-center md:justify-between">
+          <p className="text-base md:text-lg">Quantity</p>
+          <div className="h-[40px] w-full rounded-[8px] py-1 px-2 border-[2px] border-black flex items-center justify-between md:h-[44px] md:w-[250px]">
+            <FaMinus
+              className="text-black text-[12px]"
+              onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+            />
+
+            <span className="text-[15px] md:text-[17px]">{quantity}</span>
+
+            <FaPlus
+              className="text-black text-[12px]"
+              onClick={() => setQuantity((prev) => prev + 1)}
+            />
+          </div>
+        </section>
+
+        {/** Item size select input */}
+        {sizes && sizes.length > 0 && (
+          <section className="space-y-1 md:flex md:items-center md:justify-between">
+            <p className="text-base md:text-lg">Size</p>
+
+            <FormControl
+              className="w-full h-[40px] rounded-[8px] py-1 px-2 border-[2px] border-black md:h-[44px] md:w-[250px]"
+              variant="standard"
+            >
+              <Select
+                value={size ?? ""}
+                onChange={(e) => setSize(e.target.value)}
+                input={<BootstrapInput />}
+                className="h-[40px] rounded-[8px] py-1 px-2 border-[2px] border-black"
+              >
+                {sizes.map((size) => {
+                  return (
+                    <MenuItem
+                      value={size}
+                      className="!font-jost !text-base md:!text-lg"
+                      key={size}
+                    >
+                      {size}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </section>
+        )}
       </main>
     </div>
   );
