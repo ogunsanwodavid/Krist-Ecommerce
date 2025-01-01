@@ -15,6 +15,8 @@ const cartSlice = createSlice({
     addToCart(state, action: PayloadAction<CartProduct>) {
       const newProduct = action.payload;
 
+      console.log(state);
+
       // Check if the product with the same id, size, and color already exists in the cart
       const existingIndex = state.findIndex(
         (product) =>
