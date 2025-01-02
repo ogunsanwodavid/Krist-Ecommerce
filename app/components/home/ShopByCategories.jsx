@@ -22,6 +22,7 @@ import bagsCategoryImg from "@/public/bags-category.png";
 import watchesCategoryImg from "@/public/watches-category.png";
 import headwearCategoryImg from "@/public/headwear-category.png";
 import shoesCategoryImg from "@/public/shoes-category.png";
+import Link from "next/link";
 
 export default function ShopByCategories() {
   //Shopping Categories
@@ -31,36 +32,43 @@ export default function ShopByCategories() {
         category: "Men's wear",
         image: menCategoryImg,
         alt: "Men's wear image",
+        code: "men",
       },
       {
         category: "Women's wear",
         image: womenCategoryImg,
         alt: "Women's wear image",
+        code: "women",
       },
       {
         category: "Kids' wear",
         image: kidsCategoryImg,
         alt: "Kids' wear image",
+        code: "kids",
       },
       {
         category: "Bags",
         image: bagsCategoryImg,
         alt: "Bag image",
+        code: "bags",
       },
       {
         category: "Watches",
         image: watchesCategoryImg,
         alt: "Watch image",
+        code: "watches",
       },
       {
         category: "Headwear",
         image: headwearCategoryImg,
         alt: "Headwear image",
+        code: "headwear",
       },
       {
         category: "Shoes",
         image: shoesCategoryImg,
         alt: "Shoe image",
+        code: "shoes",
       },
     ],
     []
@@ -209,7 +217,8 @@ export default function ShopByCategories() {
             {shoppingCategories.map((category, index) => {
               return (
                 <SwiperSlide className="w-full max-w-[277.5px]" key={index}>
-                  <div
+                  <Link
+                    href={`/shop/?categories=${category.code.toLowerCase()}`}
                     className="relative w-full h-[350px] bg-gray-200  p-3 flex flex-col overflow-hidden"
                     ref={categoryBoxesRefs.current[index]}
                   >
@@ -229,7 +238,7 @@ export default function ShopByCategories() {
                     <button className="button w-full h-[44px] max-w-[230px] mx-auto mt-auto bg-gray-100 text-black font-medium flex items-center justify-center rounded-[7px] z-10 ">
                       {category.category}
                     </button>
-                  </div>
+                  </Link>
                 </SwiperSlide>
               );
             })}
