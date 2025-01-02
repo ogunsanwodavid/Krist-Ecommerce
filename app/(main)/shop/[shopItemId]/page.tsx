@@ -65,6 +65,10 @@ export default function ShopItemPage() {
   const isItemInStock = currentShopItem?.inStock;
   const itemPrice = Number(currentShopItem?.price);
   const itemDiscount = Number(currentShopItem?.discount);
+  const itemDiscountPercentage =
+    itemPrice > 0 && itemDiscount > 0
+      ? Math.floor((itemDiscount / itemPrice) * 100)
+      : 0;
   const itemDescription = currentShopItem?.description;
   const itemColorsAvailable = currentShopItem?.colorsAvailable;
   const itemSizesAvailable = currentShopItem?.sizesAvailable;
@@ -214,9 +218,12 @@ export default function ShopItemPage() {
               </span>
               <span className="text-gray-400 line-through">
                 {itemDiscount > 0 && (
-                  <div className="inline">
+                  <div className="inline-flex items-center">
                     <span className="font-roboto">₦</span>
                     <span>{formatToCurrency(itemPrice)}</span>
+                    <span className="ml-2 inline-block p-[2px] rounded-[4px] font-medium text-[12px] text-[#eab308] bg-[rgb(234,179,8,0.1)] md:text-[14px]">
+                      {itemDiscountPercentage}%
+                    </span>
                   </div>
                 )}
               </span>

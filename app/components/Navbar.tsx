@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
+import { ReduxStoreState } from "../redux/store";
+
+import { useAppSelector } from "../hooks/redux";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import MobileNav from "./MobileNav";
+import MiniCart from "./MiniCart";
 
 import MainButton from "./ui/MainButton";
 
@@ -32,6 +37,15 @@ export default function Navbar() {
   function handleMenuBtnClick() {
     setIsMobileNavOpen((prev) => !prev);
   }
+
+  //Check if cart icon is hovered
+  const [isCartIconHovered, setIsCartIconHovered] = useState<boolean>(false);
+
+  //Cart Items from redux state
+  const cartItems = useAppSelector((state: ReduxStoreState) => state.cart.cart);
+
+  //Number of items in the cart
+  const cartItemsCount = cartItems.length;
 
   return (
     <div className="w-full z-50 bg-white sticky top-0 shadow-md">
@@ -74,8 +88,28 @@ export default function Navbar() {
           {/**** Wishlist icon */}
           <PiHeart className="text-black text-2xl" />
 
-          {/*** Cart icon */}
-          <PiShoppingCartSimple className="text-black text-2xl" />
+          {/*** Cart section*/}
+          <div
+            className="relative w-max cursor-pointer"
+            onMouseEnter={() => setIsCartIconHovered(true)}
+            onMouseLeave={() => setIsCartIconHovered(false)}
+          >
+            {/** Cart icon */}
+            <PiShoppingCartSimple className="text-black text-2xl" />
+
+            {/** Cart badge */}
+            {cartItemsCount > 0 && (
+              <span className="absolute right-0 top-0 bg-black rounded-full w-[14px] h-[14px] text-[9px] text-white flex items-center justify-center">
+                {cartItemsCount}
+              </span>
+            )}
+
+            {/** Mini cart */}
+            {
+              //isCartIconHovered &&
+              <MiniCart />
+            }
+          </div>
 
           {/*** User avatar */}
           <Image

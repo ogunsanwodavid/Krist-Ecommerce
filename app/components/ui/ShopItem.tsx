@@ -179,7 +179,10 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
           </div>
           <div className="text-gray-400 line-through">
             {shopItem.discount > 0 && (
-              <FormatCurrencyNaira amount={shopItem.price} />
+              <FormatCurrencyNaira
+                amount={shopItem.price}
+                textStyles="!line-through"
+              />
             )}
           </div>
         </div>
