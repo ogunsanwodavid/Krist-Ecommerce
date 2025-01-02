@@ -6,6 +6,8 @@ import { useItemVariationModal } from "@/app/(main)/contexts/ItemVariationModalC
 
 import { ShopItem } from "@/app/models/shop";
 
+import { toast } from "react-toastify";
+
 export function useAddItemToCart(item: ShopItem, quantity?: number) {
   //Redux dispatch function
   const dispatch = useAppDispatch();
@@ -28,6 +30,7 @@ export function useAddItemToCart(item: ShopItem, quantity?: number) {
       openVariationModal(item, itemQuantity);
     } else {
       dispatch(addToCart({ quantity: itemQuantity, item: item }));
+      toast.success("Item added to cart");
     }
   }
 

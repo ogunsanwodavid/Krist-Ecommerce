@@ -2,7 +2,6 @@
 
 import { createContext, useState, useContext, ReactNode } from "react";
 
-import { CartProduct } from "@/app/models/cart";
 import { ShopItem } from "@/app/models/shop";
 
 import ItemVariationModal from "../components/ItemVariationModal";
@@ -31,8 +30,8 @@ export const ItemVariationModalProvider: React.FC<
 > = ({ children }) => {
   const [isVariationModalOpen, setIsVariationModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
-  const [size, setSize] = useState<string | undefined>(undefined);
-  const [color, setColor] = useState<string | undefined>(undefined);
+  //const [size, setSize] = useState<string | undefined>(undefined);
+  //const [color, setColor] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState(1);
 
   const openVariationModal = (item: ShopItem, quantity: number) => {
@@ -44,16 +43,9 @@ export const ItemVariationModalProvider: React.FC<
   const closeVariationModal = () => {
     setIsVariationModalOpen(false);
     setSelectedItem(null);
-    setSize(undefined);
-    setColor(undefined);
+    //setSize(undefined);
+    // setColor(undefined);
     setQuantity(1);
-  };
-
-  const addToCart = (product: CartProduct) => {
-    // Add the product to the cart (you can dispatch redux action or call a function)
-    console.log("Added to cart:", product);
-    // For example, you could dispatch a redux action here to add the product
-    closeVariationModal(); // Close modal after adding to the cart
   };
 
   return (

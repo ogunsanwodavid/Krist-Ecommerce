@@ -6,3 +6,7 @@ export interface CartProduct {
   size?: string;
   color?: string;
 }
+
+export interface CartState {
+  cart: CartProduct[];
+}

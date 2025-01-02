@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useAppDispatch } from "@/app/hooks/redux";
+
+import { addToCart } from "@/app/redux/cartSlice";
 
 import { useItemVariationModal } from "../contexts/ItemVariationModalContext"; // Import useModal hook
 
 import { CartProduct } from "@/app/models/cart"; // Assuming CartProduct type is already defined
+
+import { toast } from "react-toastify";
 
 import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
@@ -29,6 +35,10 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ItemVariationModal() {
+  //Redux dispatch function
+  const dispatch = useAppDispatch();
+
+  //Variables from variation modal context
   const {
     isVariationModalOpen,
     closeVariationModal,
@@ -59,13 +69,26 @@ export default function ItemVariationModal() {
       ? color
       : true;
 
+  //Function to add product to cart
   const handleAddToCart = () => {
+    //New cart product
     const newCartProduct: CartProduct = {
       quantity,
       item: selectedItem,
-      size,
-      color,
+      size: size ? size : "",
+      color: color ? color : "",
     };
+
+    console.log(newCartProduct);
+
+    //Dispatch action to add product to cart
+    dispatch(addToCart(newCartProduct));
+
+    //Toast success message
+    toast.success("Item added to cart");
+
+    //Close variation modal
+    closeVariationModal();
   };
 
   return (
@@ -183,6 +206,7 @@ export default function ItemVariationModal() {
               !canUserAddToCart && "opacity-50 cursor-not-allowed"
             }`}
             disabled={!canUserAddToCart}
+            onClick={handleAddToCart}
           >
             Add item
           </button>

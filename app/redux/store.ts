@@ -1,7 +1,5 @@
-// redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
 
-//import storage from "redux-persist/lib/storage"; // Default: localStorage for web
 import storageEngine from "./storageEngine";
 
 import { persistReducer, persistStore } from "redux-persist";
@@ -10,11 +8,11 @@ import shopReducer from "./shopSlice";
 import cartReducer from "./cartSlice";
 
 import { ShopState } from "@/app/models/shop";
-import { CartProduct } from "@/app/models/cart";
+import { CartState } from "@/app/models/cart";
 
 export interface ReduxStoreState {
   shop: ShopState;
-  cart: CartProduct[];
+  cart: CartState;
 }
 
 // Persist configuration for the shop slice

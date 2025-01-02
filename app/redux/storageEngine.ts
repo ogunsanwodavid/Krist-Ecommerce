@@ -1,6 +1,8 @@
-"use client"; // This tells Next.js or React to use this on the client side
+"use client";
 
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+
+//import storage from "redux-persist/lib/storage";
 
 // Custom noop storage to be used in SSR or non-browser environments
 const createNoopStorage = () => {
