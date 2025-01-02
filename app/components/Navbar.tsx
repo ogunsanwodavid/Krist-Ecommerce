@@ -41,6 +41,18 @@ export default function Navbar() {
   //Check if cart icon is hovered
   const [isCartIconHovered, setIsCartIconHovered] = useState<boolean>(false);
 
+  //State of minicart
+  const [isMiniCartOpen, setIsMiniCartOpen] = useState<boolean>(false);
+
+  //Open minicart on cart icon hover
+  useEffect(() => {
+    if (isCartIconHovered) {
+      setIsMiniCartOpen(true);
+    } else {
+      setIsMiniCartOpen(false);
+    }
+  }, [isCartIconHovered]);
+
   //Cart Items from redux state
   const cartItems = useAppSelector((state: ReduxStoreState) => state.cart.cart);
 
@@ -105,10 +117,9 @@ export default function Navbar() {
             )}
 
             {/** Mini cart */}
-            {
-              //isCartIconHovered &&
-              <MiniCart />
-            }
+            {isMiniCartOpen && cartItemsCount > 0 && (
+              <MiniCart setIsMiniCartOpen={setIsMiniCartOpen} />
+            )}
           </div>
 
           {/*** User avatar */}

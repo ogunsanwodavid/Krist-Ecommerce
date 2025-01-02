@@ -18,8 +18,6 @@ const cartSlice = createSlice({
       const newProduct = action.payload;
       const cartItems = state.cart;
 
-      console.log(cartItems);
-
       // Check if the product with the same id, size, and color already exists in the cart
       const existingIndex = cartItems.findIndex(
         (product) =>
@@ -32,8 +30,8 @@ const cartSlice = createSlice({
         // Increase the quantity of the existing product
         cartItems[existingIndex].quantity += newProduct.quantity;
       } else {
-        // Add the new product to the cart
-        cartItems.push(newProduct);
+        // Add the new product to the cart's first index
+        cartItems.unshift(newProduct);
       }
     },
     removeFromCart(
