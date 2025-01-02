@@ -1,16 +1,18 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { ReduxStoreState } from "../redux/store";
 
 import { useAppSelector } from "../hooks/redux";
 
+import { RemoveItemFromCart } from "../actions/cart/RemoveItemFromCart";
+
 import { formatToSupabaseImageUrl } from "../lib/supabase";
+
+import { formatToCurrency } from "../utils/helpers";
 
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { useRouter } from "next/navigation";
-import { formatToCurrency } from "../utils/helpers";
-import { RemoveItemFromCart } from "../actions/cart/RemoveItemFromCart";
 
 interface MiniCartProps {
   setIsMiniCartOpen: (isOpen: boolean) => void;
@@ -162,7 +164,7 @@ export default function MiniCart({ setIsMiniCartOpen }: MiniCartProps) {
 
       {/** Cart subtotal */}
       <section className="flex justify-between items-center px-3 mt-3 text-base font-semibold">
-        <p>Subtotal:</p>
+        <p>Subtotal</p>
         <p>
           <span className="font-roboto">₦</span>
           {formatToCurrency(cartSubTotal)}

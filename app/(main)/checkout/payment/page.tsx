@@ -1,3 +1,3 @@
 export default function CheckoutPayment() {
-  return <div>Checkout Address</div>;
+  return <div>Checkout Payment</div>;
 }

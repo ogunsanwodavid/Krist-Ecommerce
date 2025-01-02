@@ -5,5 +5,5 @@ export default function CheckoutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div>Checkout {children}</div>;
+  return <div>{children}</div>;
 }

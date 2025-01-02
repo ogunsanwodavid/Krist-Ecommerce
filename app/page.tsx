@@ -1,6 +1,7 @@
 "use client";
 
 import useFetchShopItems from "./actions/shop/useFetchShopItems";
+
 import BestSeller from "./components/home/BestSeller";
 import DealsOfTheMonth from "./components/home/DealsOfTheMonth";
 import HeroSection from "./components/home/HeroSection";

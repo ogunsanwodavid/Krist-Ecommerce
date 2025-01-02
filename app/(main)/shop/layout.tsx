@@ -1,5 +1,6 @@
-import ShopBreadcrumbNav from "./components/ShopBreadcrumbNav";
 import { ShopBreadcrumbProvider } from "./contexts/ShopBreadcrumbContext";
+
+import ShopBreadcrumbNav from "./components/ShopBreadcrumbNav";
 
 export default function ShopLayout({
   children,
