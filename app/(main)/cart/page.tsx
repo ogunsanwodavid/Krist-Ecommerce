@@ -46,14 +46,14 @@ export default function Cart() {
   }
 
   return (
-    <div className="space-y-3 md:space-y-5">
+    <div className="space-y-3 max-w-[600px] mx-auto md:space-y-5 lg:max-w-none">
       {/** Header */}
       <header>
         <h2 className="text-black text-[23px] md:text-3xl">Cart</h2>
       </header>
 
       {/** Main section */}
-      <main>
+      <main className="lg:flex lg:flex-row-reverse lg:gap-x-[30px]">
         {/** Cart Summary */}
         <CartSummary>
           {/** Checkout button */}
@@ -63,13 +63,16 @@ export default function Cart() {
                 ? `/checkout?discountCode=${effectiveDiscountCode}`
                 : "/checkout"
             }
-            className="hidden lg:block"
+            className="hidden px-3 pt-1 pb-3 lg:block"
           >
-            <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[15px]">
+            <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[15px] lg:text-base">
               Proceed to Checkout
             </button>
           </Link>
         </CartSummary>
+
+        {/** Cart products list */}
+        <section className="w-full"></section>
       </main>
     </div>
   );
