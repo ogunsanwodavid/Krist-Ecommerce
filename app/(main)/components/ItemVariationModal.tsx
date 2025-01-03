@@ -1,12 +1,16 @@
 import { useState } from "react";
 
-import { useAppDispatch } from "@/app/hooks/redux";
+import { ReduxStoreState } from "@/app/redux/store";
+
+import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
 
 import { addToCart } from "@/app/redux/cartSlice";
 
 import { useItemVariationModal } from "../contexts/ItemVariationModalContext"; // Import useModal hook
 
 import { CartProduct } from "@/app/models/cart"; // Assuming CartProduct type is already defined
+
+import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
 
 import { toast } from "react-toastify";
 
@@ -52,6 +56,19 @@ export default function ItemVariationModal() {
   // If no item is selected, don't render modal
   if (!isVariationModalOpen || !selectedItem) return null;
 
+  //Wishlist items from redux state
+  const wishlistItems = useAppSelector(
+    (state: ReduxStoreState) => state.wishlist.items
+  );
+
+  //Check if item already exists in the wishlist
+  const isItemInWishlist = wishlistItems.some(
+    (item) => item.id === selectedItem.id
+  );
+
+  //Function to remove item from wishlist
+  const removeItemFromWishlist = RemoveItemFromWishlist(selectedItem.id);
+
   //Available sizes and colors
   const sizes = selectedItem?.sizesAvailable;
   const colors = selectedItem?.colorsAvailable;
@@ -79,10 +96,13 @@ export default function ItemVariationModal() {
       color: color ? color : "",
     };
 
-    console.log(newCartProduct);
-
     //Dispatch action to add product to cart
     dispatch(addToCart(newCartProduct));
+
+    //Remove from wishlist if it was there
+    if (isItemInWishlist) {
+      removeItemFromWishlist();
+    }
 
     //Toast success message
     toast.success("Item added to cart");

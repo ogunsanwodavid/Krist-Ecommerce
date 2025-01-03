@@ -109,7 +109,7 @@ export default function Shop() {
 
   // Effect to handle route changes
   useEffect(() => {
-    // Close mobile nav on route change
+    // Close categories and filter modal on route change
     setIsCategoriesAndFiltersOpen(false);
   }, [pathname]); // Dependency array includes pathname
 

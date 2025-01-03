@@ -11,7 +11,7 @@ import {
   HiUser,
 } from "react-icons/hi2";
 
-import { PiShoppingCartSimpleFill } from "react-icons/pi";
+import { PiHeartFill, PiShoppingCartSimpleFill } from "react-icons/pi";
 
 import MainButton from "./ui/MainButton";
 
@@ -31,7 +31,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
       }}
     >
       {/** User profile info */}
-      <section className="max-w-full flex items-center p-6 gap-x-5">
+      <section className="max-w-full flex items-center p-4 gap-x-5">
         {/*** User avatar */}
         <Image
           src={defaultAvatar}
@@ -49,7 +49,7 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
       </section>
 
       {/*** Navigation */}
-      <nav className="w-full space-y-6 bg-gray-50 p-4 font-medium">
+      <nav className="w-full space-y-5 bg-gray-50 p-4 font-medium">
         {/*** Home */}
         <Link href="/" className="flex items-center gap-x-4">
           <HiMiniHome className="text-black text-xl" />
@@ -69,6 +69,13 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
           <PiShoppingCartSimpleFill className="text-black text-xl" />
 
           <p>Cart</p>
+        </Link>
+
+        {/*** Wishlist */}
+        <Link href="/wishlist" className="flex items-center gap-x-4">
+          <PiHeartFill className="text-black text-xl" />
+
+          <p>Wishlist</p>
         </Link>
 
         {/*** Our Story */}
