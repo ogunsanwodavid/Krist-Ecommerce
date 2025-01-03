@@ -4,9 +4,10 @@ import { PiStarFill, PiStarThin } from "react-icons/pi"; // Import PiStar icons
 
 interface RatingProps {
   rating: number; // Rating out of 5
+  starStyles?: string;
 }
 
-const StarRatingWithEmpty: React.FC<RatingProps> = ({ rating }) => {
+const StarRatingWithEmpty: React.FC<RatingProps> = ({ rating, starStyles }) => {
   // Ensure the rating is rounded up to the nearest whole number
   const normalizedRating = Math.round(rating);
 
@@ -16,12 +17,12 @@ const StarRatingWithEmpty: React.FC<RatingProps> = ({ rating }) => {
         index < normalizedRating ? (
           <PiStarFill
             key={index}
-            className="text-yellow-500 text-lg md:text-xl"
+            className={`text-yellow-500 text-lg md:text-xl ${starStyles}`}
           />
         ) : (
           <PiStarThin
             key={index}
-            className="text-gray-400 text-lg md:text-xl"
+            className={`text-yellow-500 text-lg md:text-xl ${starStyles}`}
           />
         )
       )}

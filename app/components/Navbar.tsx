@@ -11,6 +11,7 @@ import Link from "next/link";
 
 import MobileNav from "./MobileNav";
 import MiniCart from "./MiniCart";
+import MiniWishlist from "./MiniWishlist";
 
 import MainButton from "./ui/MainButton";
 
@@ -38,11 +39,14 @@ export default function Navbar() {
     setIsMobileNavOpen((prev) => !prev);
   }
 
-  //Check if cart icon is hovered
+  //Check if icons are hovered
   const [isCartIconHovered, setIsCartIconHovered] = useState<boolean>(false);
+  const [isWishlistIconHovered, setIsWishlistIconHovered] =
+    useState<boolean>(false);
 
   //State of minicart
   const [isMiniCartOpen, setIsMiniCartOpen] = useState<boolean>(false);
+  const [isMiniWishlistOpen, setIsMiniWishlistOpen] = useState<boolean>(false);
 
   //Open minicart on cart icon hover
   useEffect(() => {
@@ -53,11 +57,28 @@ export default function Navbar() {
     }
   }, [isCartIconHovered]);
 
+  //Open miniwishlist on cart icon hover
+  useEffect(() => {
+    if (isWishlistIconHovered) {
+      setIsMiniWishlistOpen(true);
+    } else {
+      setIsMiniWishlistOpen(false);
+    }
+  }, [isWishlistIconHovered]);
+
   //Cart Items from redux state
   const cartItems = useAppSelector((state: ReduxStoreState) => state.cart.cart);
 
   //Number of items in the cart
   const cartItemsCount = cartItems.length;
+
+  //Wishlist items from redux state
+  const wishlistItems = useAppSelector(
+    (state: ReduxStoreState) => state.wishlist.items
+  );
+
+  //Number of items in the wishlist
+  const wishlistItemsCount = wishlistItems.length;
 
   return (
     <div className="w-full z-50 bg-white sticky top-0 shadow-md">
@@ -97,8 +118,27 @@ export default function Navbar() {
 
         {/***** Right aligned contents on desktop */}
         <section className="hidden items-center gap-x-5 lg:flex">
-          {/**** Wishlist icon */}
-          <PiHeart className="text-black text-2xl" />
+          {/** Wishlist section */}
+          <div
+            className="relative w-max cursor-pointer"
+            onMouseEnter={() => setIsWishlistIconHovered(true)}
+            onMouseLeave={() => setIsWishlistIconHovered(false)}
+          >
+            {/**** Wishlist icon */}
+            <PiHeart className="text-black text-2xl" />
+
+            {/** Wishlist count badge */}
+            {wishlistItemsCount > 0 && (
+              <span className="absolute right-0 top-0 bg-black rounded-full w-[14px] h-[14px] text-[9px] text-white flex items-center justify-center">
+                {wishlistItemsCount}
+              </span>
+            )}
+
+            {/** Mini wishlist */}
+            {isMiniWishlistOpen && wishlistItemsCount > 0 && (
+              <MiniWishlist setIsMiniWishlistOpen={setIsMiniWishlistOpen} />
+            )}
+          </div>
 
           {/*** Cart section*/}
           <div
@@ -109,7 +149,7 @@ export default function Navbar() {
             {/** Cart icon */}
             <PiShoppingCartSimple className="text-black text-2xl" />
 
-            {/** Cart badge */}
+            {/** Cart count badge */}
             {cartItemsCount > 0 && (
               <span className="absolute right-0 top-0 bg-black rounded-full w-[14px] h-[14px] text-[9px] text-white flex items-center justify-center">
                 {cartItemsCount}

@@ -72,22 +72,22 @@ export default function Footer() {
           <nav className="w-full flex flex-col items-center gap-y-2 sm:items-start">
             <h4 className="font-semibold text-lg md:text-xl">Information</h4>
 
-            <Link href="/profile">My Profile</Link>
-
-            <Link href="/login">Login</Link>
-
             <Link href="/cart">My Cart</Link>
 
-            <Link href="/profile/wishlist">My Wishlist</Link>
+            <Link href="/wishlist">My Wishlist</Link>
 
             <Link href="/checkout">Checkout</Link>
+
+            <Link href="/blog">Blog</Link>
+
+            <Link href="/our-story">Our Story</Link>
           </nav>
 
           {/*** Services nav */}
           <nav className="w-full flex flex-col items-center gap-y-2 sm:items-start">
             <h4 className="font-semibold text-lg md:text-xl">Services</h4>
 
-            <Link href="#">About Us</Link>
+            <Link href="/contact-us">Contact Us</Link>
 
             <Link href="#">Careers</Link>
 

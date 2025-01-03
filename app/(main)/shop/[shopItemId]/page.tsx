@@ -37,6 +37,8 @@ import { PiHeart, PiHeartFill } from "react-icons/pi";
 
 import noImgPlaceholder from "@/public/no-image-placeholder.svg";
 import failedToLoadImg from "@/public/failedToLoad.svg";
+import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
+import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
 
 export default function ShopItemPage() {
   //Route parameters
@@ -81,9 +83,6 @@ export default function ShopItemPage() {
   //Quantity to add to cart
   const [itemQuantity, setItemQuantity] = useState(1);
 
-  //Check if item is in wishlist
-  const isItemInWishlist = true;
-
   //Function to increase and decrease item quantity
   function handleIncreaseItemQuantity() {
     setItemQuantity((prev) => prev + 1);
@@ -106,6 +105,34 @@ export default function ShopItemPage() {
       toast.error("Item is out of stock");
     } else {
       addItemToCart();
+    }
+  }
+
+  //Wishlist items from redux state
+  const wishlistItems = useAppSelector(
+    (state: ReduxStoreState) => state.wishlist.items
+  );
+
+  //Check if item already exists in the wishlist
+  const isItemInWishlist = wishlistItems.some(
+    (item) => item.id === Number(shopItemId)
+  );
+
+  //Function to add item to wishlist
+  const addItemToWishlist = AddItemToWishlist(currentShopItem);
+
+  //Function to remove item from wishlist
+  const removeItemFromWishlist = RemoveItemFromWishlist(Number(shopItemId));
+
+  //Function to toggle item from wishlist
+  //Add if it doesnt exist before and remove if it does
+  function handleToggleWishlist(e: React.MouseEvent<HTMLDivElement>) {
+    e.preventDefault();
+
+    if (!isItemInWishlist) {
+      addItemToWishlist();
+    } else {
+      removeItemFromWishlist();
     }
   }
 
@@ -216,11 +243,13 @@ export default function ShopItemPage() {
                   </div>
                 )}
               </span>
-              <span className="text-gray-400 line-through">
+              <span className="text-gray-400">
                 {itemDiscount > 0 && (
-                  <div className="inline-flex items-center">
-                    <span className="font-roboto">₦</span>
-                    <span>{formatToCurrency(itemPrice)}</span>
+                  <div className="inline-flex items-center ">
+                    <span className="font-roboto line-through">₦</span>
+                    <span className="line-through">
+                      {formatToCurrency(itemPrice)}
+                    </span>
                     <span className="ml-2 inline-block p-[2px] rounded-[4px] font-medium text-[12px] text-[#eab308] bg-[rgb(234,179,8,0.1)] md:text-[14px]">
                       {itemDiscountPercentage}%
                     </span>
@@ -301,8 +330,11 @@ export default function ShopItemPage() {
               </MainButton>
 
               {/** Wishlist toggle button */}
-              <div className="w-[35px] h-[35px] rounded-[8px] border-[2px] border-black flex items-center justify-center md:shrink-0 md:w-[44px] md:h-[44px]">
-                {!isItemInWishlist ? (
+              <div
+                className="w-[35px] h-[35px] rounded-[8px] border-[2px] border-black flex items-center justify-center md:shrink-0 md:w-[44px] md:h-[44px]"
+                onClick={handleToggleWishlist}
+              >
+                {isItemInWishlist ? (
                   <PiHeartFill className="text-black text-lg md:text-xl" />
                 ) : (
                   <PiHeart className="text-black text-lg md:text-xl" />

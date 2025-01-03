@@ -3,9 +3,16 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useAppSelector } from "@/app/hooks/redux";
+
+import { ReduxStoreState } from "@/app/redux/store";
+
 import { ShopItem as ShopItemModel } from "@/app/models/shop";
 
 import { useAddItemToCart } from "@/app/actions/cart/useAddItemToCart";
+
+import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
+import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
 
 import { useItemVariationModal } from "@/app/(main)/contexts/ItemVariationModalContext";
 
@@ -21,11 +28,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-import { PiHeart } from "react-icons/pi";
+import { PiHeart, PiHeartFill } from "react-icons/pi";
 
-import { IoEyeOutline } from "react-icons/io5";
-import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
-import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
+//import { IoEyeOutline } from "react-icons/io5";
 
 interface ShopItemProps {
   shopItem: ShopItemModel;
@@ -104,19 +109,29 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
     }
   }
 
+  //Wishlist items from redux state
+  const wishlistItems = useAppSelector(
+    (state: ReduxStoreState) => state.wishlist.items
+  );
+
+  //Check if item already exists in the wishlist
+  const isItemInWishlist = wishlistItems.some((item) => item.id === shopItemId);
+
+  //Function to add item to wishlist
+  const addItemToWishlist = AddItemToWishlist(shopItem);
+
+  //Function to remove item from wishlist
+  const removeItemFromWishlist = RemoveItemFromWishlist(shopItemId);
+
   //Function to toggle item from wishlist
   //Add if it doesnt exist before and remove if it does
-  const isItemInWishlist = false;
+  function handleToggleWishlist(e: React.MouseEvent<HTMLDivElement>) {
+    e.preventDefault();
 
-  function handleToggleWishlist() {
     if (!isItemInWishlist) {
-      //Add item to wishlist
-      const addItemToWishlist = AddItemToWishlist(shopItem);
-
       addItemToWishlist();
     } else {
-      //Remove item from wishlist
-      const removeItemFromWishlist = RemoveItemFromWishlist(shopItem);
+      removeItemFromWishlist();
     }
   }
 
@@ -154,14 +169,21 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
         {/*** Buttons */}
         <section className="w-max h-max ml-auto space-y-3 z-10">
           {/*** Add to wishlist button */}
-          <div className="wishlist-btn w-[35px] h-[35px] bg-gray-100 rounded-full flex items-center justify-center">
-            <PiHeart className="text-xl text-black" />
+          <div
+            className="wishlist-btn w-[35px] h-[35px] bg-gray-100 rounded-full flex items-center justify-center"
+            onClick={handleToggleWishlist}
+          >
+            {isItemInWishlist ? (
+              <PiHeartFill className="text-xl text-black" />
+            ) : (
+              <PiHeart className="text-xl text-black" />
+            )}
           </div>
 
           {/**** Showcase product button */}
-          <div className="showcase-btn w-[35px] h-[35px] bg-gray-100 rounded-full flex items-center justify-center">
+          {/* <div className="showcase-btn w-[35px] h-[35px] bg-gray-100 rounded-full flex items-center justify-center">
             <IoEyeOutline className="text-xl text-black" />
-          </div>
+          </div> */}
         </section>
 
         {/**** Add to cart button*/}
