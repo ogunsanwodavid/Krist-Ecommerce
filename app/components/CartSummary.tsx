@@ -86,7 +86,7 @@ export default function CartSummary({
   const grandTotal = cartSubTotal + deliveryCharge - effectiveDiscount;
 
   return (
-    <div className="bg-white shadow-xl border-[2px] border-gray-50 lg:w-[330px] lg:shrink-0">
+    <div className="h-max bg-white shadow-xl border-[2px] border-gray-50 lg:w-[330px] lg:shrink-0">
       {/** Cart subtotal */}
       <section className="flex justify-between items-center px-3 py-3 text-[15px] font-semibold border-b-[1.5px] border-b-gray-100 md:text-base">
         <p>Subtotal</p>

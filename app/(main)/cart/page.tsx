@@ -13,6 +13,15 @@ import MainButton from "@/app/components/ui/MainButton";
 
 import CartSummary from "@/app/components/CartSummary";
 
+import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
+
+import { RemoveItemFromCart } from "@/app/actions/cart/RemoveItemFromCart";
+
+import { formatToCurrency } from "@/app/utils/helpers";
+
+import { FaMinus, FaPlus } from "react-icons/fa6";
+import { FaRegTrashAlt } from "react-icons/fa";
+
 import failedToLoadImg from "@/public/failedToLoad.svg";
 
 export default function Cart() {
@@ -53,7 +62,7 @@ export default function Cart() {
       </header>
 
       {/** Main section */}
-      <main className="lg:flex lg:flex-row-reverse lg:gap-x-[30px]">
+      <main className="lg:flex lg:flex-row-reverse lg:gap-x-[60px]">
         {/** Cart Summary */}
         <CartSummary>
           {/** Checkout button */}
@@ -72,7 +81,133 @@ export default function Cart() {
         </CartSummary>
 
         {/** Cart products list */}
-        <section className="w-full"></section>
+        <section className="w-full h-max mt-5 lg:mt-0">
+          {/** Table header for large screens */}
+          <header className="hidden py-2 px-3 lg:grid grid-cols-[auto_100px_120px_120px_16px] gap-4 text-base">
+            <p>Products</p>
+            <p>Price</p>
+            <p>Quantity</p>
+            <p>Subtotal</p>
+            <p className="opacity-0">Del</p>
+          </header>
+
+          {/** Main section */}
+          <main className="border-b-[2px] border-gray-200">
+            {cartProducts.map((product, index) => {
+              //Supabase url for the product image
+              const productImageUrl = formatToSupabaseImageUrl(
+                "productImages",
+                product.item.image
+              );
+
+              //Product's price
+              const productPrice = product.item.discount
+                ? product.item.price - product.item.discount
+                : product.item.price;
+
+              //Product's size and color
+              const productSize = product.size;
+              const productColor = product.color;
+
+              //Product subtotal
+              const productSubtotal = productPrice * product.quantity;
+
+              //Function to handle product deletion
+              const removeItemFromCart = RemoveItemFromCart(
+                product.item.id,
+                productSize,
+                productColor
+              );
+
+              function handleRemoveItem() {
+                removeItemFromCart();
+              }
+
+              return (
+                <div
+                  className="py-4 px-3 space-y-2 border-t-[2px] border-gray-200 lg:space-y-0 lg:flex lg:gap-4 lg:justify-between"
+                  key={index}
+                >
+                  <section className="grid grid-cols-[90px_auto] gap-2 lg:grid-cols-[50px_280px] lg:gap-4">
+                    {/** Image */}
+                    <div className="relative w-[90px] h-[90px] rounded-[6px] overflow-hidden lg:h-[60px] lg:w-[60px]">
+                      <Image
+                        src={productImageUrl}
+                        alt={product.item.title}
+                        fill
+                        className="object-cover object-center"
+                      />
+                    </div>
+
+                    {/** Details */}
+                    <div className="space-y-1 lg:w-[280px]">
+                      {/** Title */}
+                      <p className="w-full line-clamp-1 text-ellipsis overflow-hidden font-semibold text-[15px] md:text-[16px]">
+                        {product.item.title}
+                      </p>
+
+                      {/** Quantity and price */}
+                      <p className=" text-[14px] md:text-[15px] lg:hidden">
+                        <span className="ml-1 font-roboto">₦</span>
+                        {formatToCurrency(productPrice)}
+                      </p>
+
+                      {/** Size and color */}
+                      {(productSize || productColor) && (
+                        <p className="line-clamp-1 text-ellipsis overflow-hidden text-[14px] space-x-1 capitalize md:text-[15px]">
+                          {productSize && <span>Size: {productSize}, </span>}
+
+                          {productColor && <span>Color: {productColor}</span>}
+                        </p>
+                      )}
+                    </div>
+                  </section>
+
+                  <section className="w-full flex items-center justify-between lg:w-max lg:gap-4 lg:grid lg:grid-cols-[100px_120px_120px_16px] lg:justify-between">
+                    {/** Price */}
+                    <p className="hidden lg:block lg:w-[100px]">
+                      <span className="font-roboto">₦</span>
+                      {formatToCurrency(productPrice)}
+                    </p>
+
+                    {/** Item quantity */}
+                    <div className="h-[40px] w-[100px] rounded-[8px] py-1 px-2 border-[2px] border-black flex items-center justify-between md:h-[44px] lg:w-[120px]">
+                      <FaMinus
+                        className="text-black text-[12px]"
+                        // onClick={handleDecreaseItemQuantity}
+                      />
+
+                      <span className="text-[15px] md:text-[17px]">
+                        {product.quantity}
+                      </span>
+
+                      <FaPlus
+                        className="text-black text-[12px]"
+                        // onClick={handleIncreaseItemQuantity}
+                      />
+                    </div>
+
+                    {/** Subtotal */}
+                    <p className="hidden lg:block lg:w-[120px]">
+                      {" "}
+                      <span className="font-roboto">₦</span>
+                      {formatToCurrency(productSubtotal)}
+                    </p>
+
+                    {/** Delete icon */}
+                    <div
+                      className="w-max flex gap-x-1 items-center text-[15px] text-errorRed cursor-pointer md:text-[16px] lg:gap-x-0 lg:w-[16px]"
+                      onClick={handleRemoveItem}
+                    >
+                      <FaRegTrashAlt className="text-errorRed lg:text-base" />
+                      <p className="lg:hidden">Remove</p>
+                    </div>
+                  </section>
+                </div>
+              );
+            })}
+          </main>
+        </section>
       </main>
     </div>
   );
