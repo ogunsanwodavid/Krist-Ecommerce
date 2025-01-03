@@ -231,6 +231,20 @@ export default function Cart() {
               );
             })}
           </main>
+
+          {/** Checkout button */}
+          <Link
+            href={
+              effectiveDiscountCode
+                ? `/checkout?discountCode=${effectiveDiscountCode}`
+                : "/checkout"
+            }
+            className="sticky bottom-2 px-3 pt-1 pb-3 lg:hidden"
+          >
+            <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[17px]">
+              Proceed to Checkout
+            </button>
+          </Link>
         </section>
       </main>
     </div>
