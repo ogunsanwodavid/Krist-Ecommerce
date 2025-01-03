@@ -6,13 +6,16 @@ import { persistReducer, persistStore } from "redux-persist";
 
 import shopReducer from "./shopSlice";
 import cartReducer from "./cartSlice";
+import wishlistReducer from "./wishlistSlice";
 
 import { ShopState } from "@/app/models/shop";
 import { CartState } from "@/app/models/cart";
+import { WishlistState } from "../models/wishlist";
 
 export interface ReduxStoreState {
   shop: ShopState;
   cart: CartState;
+  wishlist: WishlistState;
 }
 
 // Persist configuration for the shop slice
@@ -28,15 +31,26 @@ const cartPersistConfig = {
   storage: storageEngine,
 };
 
-// Apply persistReducer to the shop and cart reducers
+//Persist configuration for the wishlist slicee
+const wishlistPersistConfig = {
+  key: "wishlist",
+  storage: storageEngine,
+};
+
+// Apply persistReducer to the reducers
 const persistedShopReducer = persistReducer(shopPersistConfig, shopReducer);
 const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+const persistedWishlistReducer = persistReducer(
+  wishlistPersistConfig,
+  wishlistReducer
+);
 
 // Configure the store with the persisted reducer
 const store = configureStore({
   reducer: {
     shop: persistedShopReducer,
     cart: persistedCartReducer,
+    wishlist: persistedWishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

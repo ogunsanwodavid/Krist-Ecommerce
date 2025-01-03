@@ -24,6 +24,8 @@ gsap.registerPlugin(ScrollTrigger);
 import { PiHeart } from "react-icons/pi";
 
 import { IoEyeOutline } from "react-icons/io5";
+import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
+import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
 
 interface ShopItemProps {
   shopItem: ShopItemModel;
@@ -99,6 +101,22 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
       toast.error("Item is out of stock");
     } else {
       addItemToCart();
+    }
+  }
+
+  //Function to toggle item from wishlist
+  //Add if it doesnt exist before and remove if it does
+  const isItemInWishlist = false;
+
+  function handleToggleWishlist() {
+    if (!isItemInWishlist) {
+      //Add item to wishlist
+      const addItemToWishlist = AddItemToWishlist(shopItem);
+
+      addItemToWishlist();
+    } else {
+      //Remove item from wishlist
+      const removeItemFromWishlist = RemoveItemFromWishlist(shopItem);
     }
   }
 
