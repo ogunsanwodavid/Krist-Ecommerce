@@ -2,6 +2,7 @@
 @import "./styles/toastify.css";
 @import "./styles/shopitem-tab.css";
 @import "./styles/item-variation-modal.css";
+@import "./styles/mini-box-scroll.css";
 
 @tailwind base;
 @tailwind components;
@@ -23,4 +24,18 @@ button,
 img,
 select {
   cursor: pointer;
+}
+
+/** No scrollbar **/
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }

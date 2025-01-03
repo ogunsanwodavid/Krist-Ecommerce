@@ -50,9 +50,8 @@ export default function MiniWishlist({
       </p>
 
       {/** Wishlist items */}
-      {/** Displays only the first four */}
-      <main className="mt-2 px-3">
-        {wishlistItems.slice(0, 4).map((item, index) => {
+      <main className="mt-2 px-3 max-h-[350px] overflow-y-auto overflow-x-hidden mini-box-scroll">
+        {wishlistItems.map((item, index) => {
           //Supabase url for the product image
           const itemImageUrl = formatToSupabaseImageUrl(
             "productImages",

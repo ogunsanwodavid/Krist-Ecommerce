@@ -1,0 +1,16 @@
+/***** Styles for the scrollbar in the mini cart and wishlist *****/
+.mini-box-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.mini-box-scroll::-webkit-scrollbar-track {
+  /* Customize the scrollbar track */
+  background-color: #f3f4f6 !important;
+  border-radius: 2.5px !important;
+}
+
+.mini-box-scroll::-webkit-scrollbar-thumb {
+  /* Customize the scrollbar thumb */
+  background-color: rgb(19, 17, 24) !important;
+  border-radius: 2.5px;
+}

@@ -12,7 +12,6 @@ import { formatToSupabaseImageUrl } from "../lib/supabase";
 import { formatToCurrency } from "../utils/helpers";
 
 import { FaRegTrashAlt } from "react-icons/fa";
-import { FiMoreHorizontal } from "react-icons/fi";
 
 interface MiniCartProps {
   setIsMiniCartOpen: (isOpen: boolean) => void;
@@ -72,9 +71,8 @@ export default function MiniCart({ setIsMiniCartOpen }: MiniCartProps) {
       </p>
 
       {/** Cart items */}
-      {/** Displays only the first three */}
-      <main className="mt-2 px-3">
-        {cartProducts.slice(0, 3).map((product, index) => {
+      <main className="mt-2 px-3 max-h-[250px] overflow-y-auto overflow-x-hidden mini-box-scroll">
+        {cartProducts.map((product, index) => {
           //Supabase url for the product image
           const productImageUrl = formatToSupabaseImageUrl(
             "productImages",
@@ -151,16 +149,6 @@ export default function MiniCart({ setIsMiniCartOpen }: MiniCartProps) {
           );
         })}
       </main>
-
-      {/** More icon
-       * displays if there are more than 3 items in cart and
-       * takes the user to the cart page
-       */}
-      {cartProductsCount > 3 && (
-        <div className="block w-full mt-2 px-3" onClick={handleViewCart}>
-          <FiMoreHorizontal className="ml-auto text-black" />
-        </div>
-      )}
 
       {/** Cart subtotal */}
       <section className="flex justify-between items-center px-3 mt-3 text-base font-semibold">
