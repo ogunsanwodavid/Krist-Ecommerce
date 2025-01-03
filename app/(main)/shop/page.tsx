@@ -219,13 +219,15 @@ export default function Shop() {
         )}
 
         {/*** Pagination buttons */}
-        {!exceedsTotalPages && !filterError && (
-          <PaginationButtons
-            items={filteredShopItems}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-          />
-        )}
+        {!exceedsTotalPages &&
+          !filterError &&
+          filteredShopItems.length > itemsPerPage && (
+            <PaginationButtons
+              items={filteredShopItems}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+            />
+          )}
       </main>
     </div>
   );

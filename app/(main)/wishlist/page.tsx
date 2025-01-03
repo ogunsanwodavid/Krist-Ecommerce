@@ -124,7 +124,7 @@ export default function WishList() {
         )}
 
         {/*** Pagination buttons */}
-        {!exceedsTotalPages && (
+        {!exceedsTotalPages && wishlistItems.length > itemsPerPage && (
           <PaginationButtons
             items={wishlistItems}
             itemsPerPage={itemsPerPage}
