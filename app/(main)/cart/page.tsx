@@ -16,6 +16,8 @@ import CartSummary from "@/app/components/CartSummary";
 import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
 
 import { RemoveItemFromCart } from "@/app/actions/cart/RemoveItemFromCart";
+import { IncreaseItemQuantity } from "@/app/actions/cart/IncreaseItemQuantity";
+import { DecreaseItemQuantity } from "@/app/actions/cart/DecreaseItemQuantity";
 
 import { formatToCurrency } from "@/app/utils/helpers";
 
@@ -55,7 +57,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="space-y-3 max-w-[600px] mx-auto md:space-y-5 lg:max-w-none">
+    <div className="space-y-3 max-w-[600px] mx-auto pb-10 md:space-y-5 lg:pb-16 lg:max-w-none">
       {/** Header */}
       <header>
         <h2 className="text-black text-[23px] md:text-3xl">Cart</h2>
@@ -112,7 +114,7 @@ export default function Cart() {
               //Product subtotal
               const productSubtotal = productPrice * product.quantity;
 
-              //Function to handle product deletion
+              //Handle product deletion
               const removeItemFromCart = RemoveItemFromCart(
                 product.item.id,
                 productSize,
@@ -123,12 +125,34 @@ export default function Cart() {
                 removeItemFromCart();
               }
 
+              //Handle product quantity increment
+              const increaseItemQuantity = IncreaseItemQuantity(
+                product.item.id,
+                productSize,
+                productColor
+              );
+
+              function handleIncreaseItemQuantity() {
+                increaseItemQuantity();
+              }
+
+              //Handle product quantity decrement
+              const decreaseItemQuantity = DecreaseItemQuantity(
+                product.item.id,
+                productSize,
+                productColor
+              );
+
+              function handleDecreaseItemQuantity() {
+                decreaseItemQuantity();
+              }
+
               return (
                 <div
                   className="py-4 px-3 space-y-2 border-t-[2px] border-gray-200 lg:space-y-0 lg:flex lg:gap-4 lg:justify-between"
                   key={index}
                 >
-                  <section className="grid grid-cols-[90px_auto] gap-2 lg:grid-cols-[50px_280px] lg:gap-4">
+                  <section className="grid grid-cols-[90px_auto] gap-2 lg:grid-cols-[60px_auto] lg:gap-4">
                     {/** Image */}
                     <div className="relative w-[90px] h-[90px] rounded-[6px] overflow-hidden lg:h-[60px] lg:w-[60px]">
                       <Image
@@ -140,7 +164,7 @@ export default function Cart() {
                     </div>
 
                     {/** Details */}
-                    <div className="space-y-1 lg:w-[280px]">
+                    <div className="space-y-1">
                       {/** Title */}
                       <p className="w-full line-clamp-1 text-ellipsis overflow-hidden font-semibold text-[15px] md:text-[16px]">
                         {product.item.title}
@@ -148,7 +172,7 @@ export default function Cart() {
 
                       {/** Quantity and price */}
                       <p className=" text-[14px] md:text-[15px] lg:hidden">
-                        <span className="ml-1 font-roboto">₦</span>
+                        <span className="font-roboto">₦</span>
                         {formatToCurrency(productPrice)}
                       </p>
 
@@ -174,7 +198,7 @@ export default function Cart() {
                     <div className="h-[40px] w-[100px] rounded-[8px] py-1 px-2 border-[2px] border-black flex items-center justify-between md:h-[44px] lg:w-[120px]">
                       <FaMinus
                         className="text-black text-[12px]"
-                        // onClick={handleDecreaseItemQuantity}
+                        onClick={handleDecreaseItemQuantity}
                       />
 
                       <span className="text-[15px] md:text-[17px]">
@@ -183,7 +207,7 @@ export default function Cart() {
 
                       <FaPlus
                         className="text-black text-[12px]"
-                        // onClick={handleIncreaseItemQuantity}
+                        onClick={handleIncreaseItemQuantity}
                       />
                     </div>
 
