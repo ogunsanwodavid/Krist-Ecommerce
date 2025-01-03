@@ -11,7 +11,6 @@ import { ShopItem as ShopItemModel } from "@/app/models/shop";
 
 import { useAddItemToCart } from "@/app/actions/cart/useAddItemToCart";
 
-import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
 import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
 
 import { useItemVariationModal } from "@/app/(main)/contexts/ItemVariationModalContext";
@@ -28,7 +27,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-import { PiHeart, PiHeartFill } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 interface WishlistItemProps {
@@ -133,7 +131,7 @@ export default function WishlistItem({ wishlistItem }: WishlistItemProps) {
     }
 
     //Remove from wishlist if item wont trigger variation modal
-    if (!itemWillTriggerVariationModal) {
+    if (!itemWillTriggerVariationModal && isItemInWishlist) {
       removeItemFromWishlist();
     }
   }

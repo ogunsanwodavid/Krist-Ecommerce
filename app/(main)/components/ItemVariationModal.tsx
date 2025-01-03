@@ -53,13 +53,13 @@ export default function ItemVariationModal() {
   const [color, setColor] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState(itemQuantity ?? 1);
 
-  // If no item is selected, don't render modal
-  if (!isVariationModalOpen || !selectedItem) return null;
-
   //Wishlist items from redux state
   const wishlistItems = useAppSelector(
     (state: ReduxStoreState) => state.wishlist.items
   );
+
+  // If no item is selected, don't render modal
+  if (!isVariationModalOpen || !selectedItem) return null;
 
   //Check if item already exists in the wishlist
   const isItemInWishlist = wishlistItems.some(
