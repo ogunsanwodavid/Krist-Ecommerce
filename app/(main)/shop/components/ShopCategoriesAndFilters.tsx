@@ -288,7 +288,7 @@ export default function ShopCategoriesAndFilters({
     }
 
     // Update the router with the new parameters
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   }, [
     router,
     selectedCategories,
