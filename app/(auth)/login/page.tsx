@@ -1,15 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import { login } from "../actions/auth";
+import { redirect } from "next/navigation";
+
+import { login } from "../actions/login";
 
 import AuthPage from "../components/AuthPage";
 
 import FormInput from "@/app/components/ui/FormInput";
 import FormButton from "@/app/components/ui/FormButton";
+
+import { toast } from "react-toastify";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
@@ -43,9 +47,15 @@ export default function Login() {
   const emailInputError = errors?.email?.at(0);
   const passwordInputError = errors?.password?.at(0);
 
+  //Loading state of login
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+
   //Function to submit login form
   const handleSubmit = async (e: React.FormEvent) => {
-    //Prevet default
+    //Set Loading state true
+    setIsLoggingIn(true);
+
+    //Prevent default
     e.preventDefault();
 
     // Collect form data
@@ -62,9 +72,40 @@ export default function Login() {
       setErrors(result.errors); // Set validation errors
     } else {
       setErrors(null);
-      console.log("Login successful!");
     }
+
+    //Check for error from server
+    if (result?.error) {
+      //Toast error
+      toast.error(result.error);
+    }
+
+    //Check if request is successful
+    if (result.success) {
+      //Toast success
+      toast.success("Login successful!");
+
+      //Redirect to home page
+      redirect("/");
+    }
+
+    //Set Loading state false
+    setIsLoggingIn(false);
   };
+
+  //Check if it is a signup email confirmation redirect
+  useEffect(() => {
+    // Check for the hash fragment
+    const hash = window.location.hash;
+    if (hash) {
+      const params = new URLSearchParams(hash.substring(1)); // Remove '#' and parse
+      const type = params.get("type");
+
+      if (type === "signup") {
+        toast.success("Your email has been confirmed! Please login.");
+      }
+    }
+  }, []);
 
   return (
     <AuthPage imageUrl={loginImage}>
@@ -161,7 +202,9 @@ export default function Login() {
         </section>
 
         {/***** Submit button */}
-        <FormButton>Login</FormButton>
+        <FormButton loading={isLoggingIn} disabled={isLoggingIn}>
+          Login
+        </FormButton>
       </form>
     </AuthPage>
   );

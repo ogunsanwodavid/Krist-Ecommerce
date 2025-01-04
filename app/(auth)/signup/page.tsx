@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { redirect } from "next/navigation";
 
-import { signup } from "../actions/auth";
+import { signup } from "../actions/signup";
 
 import { toast } from "react-toastify";
 
@@ -66,7 +66,7 @@ export default function SignUp() {
     //Set Loading state true
     setIsSigningUp(true);
 
-    //Prevet default
+    //Prevent default
     e.preventDefault();
 
     // Collect form data

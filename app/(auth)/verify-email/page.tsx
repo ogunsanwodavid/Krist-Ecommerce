@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
-import { verifyEmail } from "../actions/auth";
+import { verifyEmail } from "../actions/verify-email";
 
 import AuthPage from "../components/AuthPage";
 

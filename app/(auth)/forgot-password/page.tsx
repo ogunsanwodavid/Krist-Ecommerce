@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
-import { requestPasswordReset } from "../actions/auth";
+import { requestPasswordReset } from "../actions/forgot-password";
 
 import AuthPage from "../components/AuthPage";
 
