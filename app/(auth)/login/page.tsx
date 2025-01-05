@@ -17,8 +17,6 @@ import { toast } from "react-toastify";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-import { FaCheck } from "react-icons/fa";
-
 import loginImage from "@/public/login.png";
 
 export default function Login() {
@@ -40,7 +38,6 @@ export default function Login() {
   //States of the input and error state
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [errors, setErrors] = useState<LoginFormErrors>(null); // To store validation errors
 
   //Error states of login form
@@ -62,7 +59,6 @@ export default function Login() {
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("rememberMe", String(rememberMe));
 
     // Call the login function
     const result = await login(formData);
@@ -169,37 +165,15 @@ export default function Login() {
               )}
             </div>
           </main>
-        </FormInput>
-
-        {/*** Remember me checkbox */}
-        <section className="flex items-center justify-between mt-1">
-          <label className="flex items-center gap-x-2" htmlFor="rememberMe">
-            {/*** Hidden input */}
-            <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              name="rememberMe"
-              className="hidden peer"
-            />
-
-            {/* Custom Checkbox */}
-            <span className="flex items-center justify-center h-4 w-4 border-2 border-black rounded-sm peer-checked:bg-black">
-              <FaCheck className="text-white text-[0.6rem]" />
-            </span>
-
-            <span className="md:text-lg">Remember Me</span>
-          </label>
 
           {/**** Forgot Password */}
           <Link
             href="/forgot-password"
-            className="text-[14px] text-black lg:text-base"
+            className="w-max ml-auto text-[14px] text-black lg:text-base"
           >
             Forgot Password?
           </Link>
-        </section>
+        </FormInput>
 
         {/***** Submit button */}
         <FormButton loading={isLoggingIn} disabled={isLoggingIn}>

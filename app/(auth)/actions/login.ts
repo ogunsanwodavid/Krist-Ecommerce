@@ -6,13 +6,11 @@ import { supabase } from "@/app/lib/supabase";
 export async function login(formData: FormData) {
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
-  const rememberMe = Boolean(formData.get("rememberMe"));
 
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email,
     password,
-    rememberMe,
   });
 
   // If any form fields are invalid, return early
@@ -37,12 +35,6 @@ export async function login(formData: FormData) {
   //Return any login error
   if (authError) {
     return { error: authError.message };
-  }
-
-  // Handle session persistence
-  if (!rememberMe) {
-    // Remove session data from localStorage if "Remember Me" is unchecked
-    localStorage.removeItem(`supabase.auth.token`);
   }
 
   console.log(authData);

@@ -7,7 +7,6 @@ export const LoginFormSchema = z.object({
     .email({ message: "Please enter a valid email." })
     .trim(),
   password: z.string().min(1, { message: "Password is required." }).trim(),
-  rememberMe: z.boolean(),
 });
 
 export type LoginFormState =
