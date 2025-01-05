@@ -37,7 +37,5 @@ export async function login(formData: FormData) {
     return { error: authError.message };
   }
 
-  console.log(authData);
-
   return { success: true };
 }

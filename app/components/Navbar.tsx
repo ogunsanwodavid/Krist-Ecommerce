@@ -9,6 +9,8 @@ import { useAppSelector } from "../hooks/redux";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useAuth } from "@/contexts/AuthContext";
+
 import MobileNav from "./MobileNav";
 import MiniCart from "./MiniCart";
 import MiniWishlist from "./MiniWishlist";
@@ -17,9 +19,9 @@ import MainButton from "./ui/MainButton";
 
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 import { PiHeart, PiShoppingCartSimple } from "react-icons/pi";
+import { FaUserCircle } from "react-icons/fa";
 
 import darkLogo from "@/public/dark-logo.svg";
-import defaultProfilePic from "@/public/dave.jpeg";
 
 export default function Navbar() {
   // Get the current pathname
@@ -79,6 +81,13 @@ export default function Navbar() {
 
   //Number of items in the wishlist
   const wishlistItemsCount = wishlistItems.length;
+
+  //Variables from Auth context
+  const { user, isAuthenticated } = useAuth();
+
+  //User credentials
+  const firstName = user?.firstName;
+  const userAvatar = user?.avatar;
 
   return (
     <div className="w-full z-50 bg-white sticky top-0 shadow-md">
@@ -162,24 +171,39 @@ export default function Navbar() {
             )}
           </div>
 
+          {/** User name if authenticated */}
+          {isAuthenticated && <p className="text-lg">Hi, {firstName}</p>}
+
           {/*** User avatar */}
-          <Image
-            src={defaultProfilePic}
-            className="h-[40px] w-[40px] object-cover rounded-full border-[1.5px] border-grey"
-            alt="Default profile picture"
-          />
+          {userAvatar ? (
+            <Image
+              src={userAvatar}
+              className="h-[40px] w-[40px] object-cover rounded-full border-[1.5px] border-grey"
+              alt="Default profile picture"
+            />
+          ) : (
+            <Link href="/account" className="block">
+              <FaUserCircle className="text-black text-[40px]" />
+            </Link>
+          )}
 
-          {/*** Login button */}
-          <Link href="/login">
-            <MainButton>Login</MainButton>
-          </Link>
+          {!isAuthenticated ? (
+            <>
+              <Link href="/login">
+                <MainButton>Login</MainButton>
+              </Link>
 
-          {/*** Login button */}
-          <Link href="/signup">
-            <MainButton className="bg-white border-[1.5px] border-black !text-black">
-              Signup
-            </MainButton>
-          </Link>
+              <Link href="/signup">
+                <MainButton className="bg-white border-[1.5px] border-black !text-black">
+                  Signup
+                </MainButton>
+              </Link>
+            </>
+          ) : (
+            <Link href="/account">
+              <MainButton>My Account</MainButton>
+            </Link>
+          )}
         </section>
 
         {/**** Mobile Nav */}

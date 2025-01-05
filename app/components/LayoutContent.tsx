@@ -18,7 +18,12 @@ export default function LayoutContent({
   const pathname = usePathname();
 
   // Define routes where Navbar and Footer should not appear
-  const authRoutes = ["/login", "/signup", "/forgot-password", "/verify-email"];
+  const authRoutes = [
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+  ];
 
   //Check if route is an auth page
   const isAuthPage = authRoutes.includes(pathname);

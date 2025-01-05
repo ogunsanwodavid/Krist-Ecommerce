@@ -8,6 +8,8 @@ import { supabase } from "@/app/lib/supabase";
 
 import { toast } from "react-toastify";
 
+import OnboardingLoader from "@/app/components/OnboardingLoader";
+
 interface User {
   id: string;
   email: string;
@@ -32,6 +34,13 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userSession, setUserSession] = useState<AuthSession | null>(null);
 
+  //User credentials
+  const [userId, setUserId] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  //Loading state of getting user profile
+  const [isGettingUser, setIsGettingUser] = useState<boolean>(false);
+
   //Function to get user session
   async function getUserSession() {
     const { data, error } = await supabase.auth.getSession();
@@ -49,16 +58,55 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     getUserSession();
   }, []); // Empty dependency array ensures this runs only once
 
-  // Check if the user is authenticated on app load
+  // Update userId and userEmail when userSession changes
   useEffect(() => {
     if (userSession) {
-      // fetchUserProfile(session.user?.id); // Fetch profile if session exists
-      console.log(userSession);
+      setUserId(userSession.user?.id);
+      setUserEmail(String(userSession.user?.email));
     }
-    /*   const { data: authListener } = supabase.auth.onAuthStateChange(
+  }, [userSession]);
+
+  // Check if the user is authenticated on app load
+  useEffect(() => {
+    // Fetch user profile from the database (Profile Table)
+    const fetchUserProfile = async (userId: string) => {
+      setIsGettingUser(true);
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("userId, firstName, lastName, avatar")
+        .eq("userId", userId)
+        .single();
+
+      if (error) {
+        toast.error("Error fetching user profile");
+        return;
+      }
+
+      if (data) {
+        setUser({
+          id: userId,
+          email: userEmail,
+          firstName: data.firstName ?? "",
+          lastName: data.lastName ?? "",
+          avatar: data.avatar ?? "",
+        });
+        setIsAuthenticated(true);
+      }
+
+      setIsGettingUser(false);
+    };
+
+    // Fetch profile if user id exists
+    if (userId) {
+      fetchUserProfile(userId);
+    }
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         if (session) {
-          fetchUserProfile(session.user?.id); // Fetch profile after login
+          setUserId(session.user?.id);
+          setUserEmail(String(session.user?.email));
         } else {
           setUser(null);
           setIsAuthenticated(false); // Clear user data on logout
@@ -68,12 +116,13 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
     return () => {
       authListener.subscription.unsubscribe();
-    }; */
-  }, [userSession]);
+    };
+  }, [userId, userEmail]);
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated }}>
-      {children}
+      {/** Show loader while loading user profile */}
+      {isGettingUser ? <OnboardingLoader /> : children}
     </AuthContext.Provider>
   );
 }

@@ -7,6 +7,8 @@ import { ReduxStoreState } from "@/app/redux/store";
 
 import { addReview } from "@/app/actions/shop/add-review";
 
+import { useAuth } from "@/contexts/AuthContext";
+
 import FormButton from "@/app/components/ui/FormButton";
 import FormInput from "@/app/components/ui/FormInput";
 import SetRating from "@/app/components/ui/SetRating";
@@ -30,9 +32,12 @@ export default function AddYourReviewForm({
     (state: ReduxStoreState) => state.shop.reviews
   );
 
+  //Variable from auth context
+  const { user } = useAuth();
+
   //User credentials
-  const userId = "0x4";
-  const userAvatar = "";
+  const userId = user?.id;
+  const userAvatar = user?.avatar;
 
   //Type of the error state of the login form
   type AddYourReviewFormErrors = {
@@ -75,7 +80,7 @@ export default function AddYourReviewForm({
       // Collect form data
       const formData = new FormData();
       formData.append("itemId", itemId.toString());
-      formData.append("userId", userId);
+      formData.append("userId", String(userId));
       formData.append("name", name);
       formData.append("rating", rating.toString());
       formData.append("title", title);
@@ -83,7 +88,7 @@ export default function AddYourReviewForm({
       formData.append("createdAt", new Date().toISOString());
 
       // Set avatar based on anonymous review
-      formData.append("avatar", isAnonymousReview ? "" : userAvatar);
+      formData.append("avatar", isAnonymousReview ? "" : String(userAvatar));
 
       // Call the add review function
       const result = addReview(formData);

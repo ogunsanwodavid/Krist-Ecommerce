@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { login } from "../actions/login";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 import AuthPage from "../components/AuthPage";
 
@@ -20,6 +22,19 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import loginImage from "@/public/login.png";
 
 export default function Login() {
+  //Router function
+  const router = useRouter();
+
+  //Variables from auth context
+  const { isAuthenticated } = useAuth();
+
+  //Redirect user to home page when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
   //State of display password input content
   const [showPassword, setShowPassword] = useState<boolean>(false);
 

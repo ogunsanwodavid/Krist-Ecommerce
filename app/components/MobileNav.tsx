@@ -1,25 +1,36 @@
 import Image from "next/image";
 
-import defaultAvatar from "@/public/dave.jpeg";
 import Link from "next/link";
+
+import { useAuth } from "@/contexts/AuthContext";
+
+import MainButton from "./ui/MainButton";
+
 import {
   HiChatBubbleOvalLeftEllipsis,
   HiDocumentText,
   HiMiniHome,
   HiMiniShoppingBag,
   HiUserGroup,
-  HiUser,
 } from "react-icons/hi2";
 
 import { PiHeartFill, PiShoppingCartSimpleFill } from "react-icons/pi";
 
-import MainButton from "./ui/MainButton";
+import { FaUserCircle } from "react-icons/fa";
 
 interface MobileNavProps {
   isOpen: boolean;
 }
 
 export default function MobileNav({ isOpen }: MobileNavProps) {
+  //Variables from Auth context
+  const { user, isAuthenticated } = useAuth();
+
+  //User credentials
+  const firstName = user?.firstName;
+  const lastName = user?.lastName;
+  const userAvatar = user?.avatar;
+
   return (
     <div
       className={`${
@@ -31,25 +42,31 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
       }}
     >
       {/** User profile info */}
-      <section className="max-w-full flex items-center p-4 gap-x-5">
+      <section className="grid grid-cols-[43px_auto] items-center p-4 gap-x-3">
         {/*** User avatar */}
-        <Image
-          src={defaultAvatar}
-          className="w-[43px] h-[43px] shrink-0 object-cover border-[1.5px] border-grey rounded-[4px] "
-          alt="User avatar"
-        />
+        {userAvatar ? (
+          <Image
+            src={userAvatar}
+            className="w-[43px] h-[43px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
+            alt="User avatar"
+          />
+        ) : (
+          <Link href="/account" className="block">
+            <FaUserCircle className="text-black text-[40px]" />
+          </Link>
+        )}
 
         {/*** User name */}
-        <div className="flex-shrink flex-1 h-max my-auto space-y-1 font-medium">
-          <h3 className="text-lg leading-[1.3rem]">David</h3>
-          <h4 className="text-base whitespace-nowrap text-ellipsis overflow-hidden leading-[1rem]">
-            Ogunsanwo
+        <div className="h-max my-auto space-y-1 font-medium">
+          <h3 className="text-lg leading-[1.3rem]">{firstName}</h3>
+          <h4 className="w-full text-base line-clamp-1 text-ellipsis overflow-hidden leading-[1rem]">
+            {lastName}
           </h4>
         </div>
       </section>
 
       {/*** Navigation */}
-      <nav className="w-full space-y-5 bg-gray-50 p-4 font-medium">
+      <nav className="w-full space-y-6 bg-gray-50 p-4 font-medium">
         {/*** Home */}
         <Link href="/" className="flex items-center gap-x-4">
           <HiMiniHome className="text-black text-xl" />
@@ -99,26 +116,28 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
           <p>Contact Us</p>
         </Link>
 
-        {/*** Profile */}
-        <Link href="/profile" className="flex items-center gap-x-4">
-          <HiUser className="text-black text-xl" />
-
-          <p>My Profile</p>
-        </Link>
-
-        {/*** Buttons */}
+        {/**
+         *Buttons
+         *Show login and signup button when user not authenticated
+         *else show my account button
+         */}
         <section className="space-y-2">
-          {/*** Login button */}
-          <Link href="/login" className="flex items-center">
-            <MainButton className="w-full">Login</MainButton>
-          </Link>
-
-          {/*** Signup button */}
-          <Link href="/signup" className="flex items-center">
-            <MainButton className="w-full bg-white border-[1.5px] border-black !text-black">
-              Signup
-            </MainButton>
-          </Link>
+          {!isAuthenticated ? (
+            <>
+              <Link href="/login" className="flex items-center">
+                <MainButton className="w-full">Login</MainButton>
+              </Link>
+              <Link href="/signup" className="flex items-center">
+                <MainButton className="w-full bg-white border-[1.5px] border-black !text-black">
+                  Signup
+                </MainButton>
+              </Link>{" "}
+            </>
+          ) : (
+            <Link href="/account" className="flex items-center">
+              <MainButton className="w-full">My Account</MainButton>
+            </Link>
+          )}
         </section>
       </nav>
     </div>

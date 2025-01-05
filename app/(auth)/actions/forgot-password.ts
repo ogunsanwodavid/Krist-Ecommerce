@@ -1,12 +1,14 @@
 import { ForgotPasswordFormSchema } from "@/app/(auth)/lib/definitions";
 
-//import { supabase } from "@/app/lib/supabase";
+import { supabase } from "@/app/lib/supabase";
 
 //Request password reset function
 export async function requestPasswordReset(formData: FormData) {
+  const email = String(formData.get("email"));
+
   // Validate form fields
   const validatedFields = ForgotPasswordFormSchema.safeParse({
-    email: formData.get("email"),
+    email,
   });
 
   // If any form fields are invalid, return early
@@ -16,5 +18,13 @@ export async function requestPasswordReset(formData: FormData) {
     };
   }
 
-  // Call the provider or db to create a user...
+  //Request for password reset
+  const { error: authError } = await supabase.auth.resetPasswordForEmail(email);
+
+  //Return any error
+  if (authError) {
+    return { error: authError.message };
+  }
+
+  return { success: true };
 }

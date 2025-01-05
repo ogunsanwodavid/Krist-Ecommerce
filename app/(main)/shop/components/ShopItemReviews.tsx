@@ -11,6 +11,8 @@ import {
   ShopItem as ShopItemModel,
 } from "@/app/models/shop";
 
+import { useAuth } from "@/contexts/AuthContext";
+
 import { formatDate, shuffleArray } from "@/app/utils/helpers";
 
 import StarRating from "@/app/components/ui/StarRating";
@@ -34,8 +36,11 @@ export default function ShopItemReviews({
   setItemAverageRating,
   setNumberOfItemReviews,
 }: ShopItemReviewsProps) {
+  //Variable from auth context
+  const { user, isAuthenticated } = useAuth();
+
   //User credentials
-  const userId = "0x4";
+  const userId = user?.id;
 
   //Useful Shop item key-values
   const itemId = shopItem?.id;
@@ -144,11 +149,6 @@ export default function ShopItemReviews({
 
   return (
     <div className="w-full text-black space-y-3">
-      {/** Header */}
-      {/* <h5 className="font-medium text-[17px] md:text-[19px]">
-        Customer Reviews
-      </h5> */}
-
       {/** All Customers' Reviews */}
       <main className="w-full">
         {allReviews.map((review, index) => {
@@ -195,9 +195,9 @@ export default function ShopItemReviews({
 
       {/** Add a review form */}
       {
-        //Only displays  item hasnt be purchased and delivered to user and user has not reviewed item
+        //Only displays when user is authenticated, item has been purchased and delivered to user and user has not reviewed item
       }
-      {!hasUserReviewedItem && !isItemDeliveredToUser && (
+      {isAuthenticated && !hasUserReviewedItem && !isItemDeliveredToUser && (
         <AddYourReviewForm
           itemId={itemId}
           key={isFormSubmitted ? "remount" : "original"}

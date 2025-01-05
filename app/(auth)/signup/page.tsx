@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { signup } from "../actions/signup";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 import { toast } from "react-toastify";
 
@@ -19,6 +21,19 @@ import { FaCheck } from "react-icons/fa";
 import signupImage from "@/public/signup.png";
 
 export default function SignUp() {
+  //Router function
+  const router = useRouter();
+
+  //Variables from auth context
+  const { isAuthenticated } = useAuth();
+
+  //Redirect user to home page when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
   //State of display password inputs contents
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
