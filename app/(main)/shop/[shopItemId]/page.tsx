@@ -17,6 +17,9 @@ import { useAddItemToCart } from "@/app/actions/cart/useAddItemToCart";
 
 import { useItemVariationModal } from "../../contexts/ItemVariationModalContext";
 
+import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
+import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
+
 import { formatToSupabaseImageUrl } from "@/app/lib/supabase";
 
 import { CircularProgress } from "@mui/material";
@@ -37,8 +40,6 @@ import { PiHeart, PiHeartFill } from "react-icons/pi";
 
 import noImgPlaceholder from "@/public/no-image-placeholder.svg";
 import failedToLoadImg from "@/public/failedToLoad.svg";
-import { AddItemToWishlist } from "@/app/actions/wishlist/AddItemToWishlist";
-import { RemoveItemFromWishlist } from "@/app/actions/wishlist/RemoveItemFromWishlist";
 
 export default function ShopItemPage() {
   //Route parameters

@@ -1,6 +1,6 @@
 import { BounceLoading } from "respinner";
 
-export default function ReduxPersistLoader() {
+export default function OnboardingLoader() {
   return (
     <div className="min-h-screen w-full bg-black flex flex-col items-center justify-center gap-y-2">
       <BounceLoading

@@ -7,6 +7,8 @@ import { Jost } from "next/font/google";
 import ReduxProvider from "./providers/ReduxProvider";
 import QueryProvider from "./providers/QueryProvider";
 
+import AuthProvider from "@/contexts/AuthContext";
+
 import { ItemVariationModalProvider } from "./(main)/contexts/ItemVariationModalContext";
 
 import LayoutContent from "./components/LayoutContent";
@@ -40,15 +42,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${jost.className} `} suppressHydrationWarning>
-        <ReduxProvider>
-          <QueryProvider>
-            <ToastProvider>
-              <ItemVariationModalProvider>
-                <LayoutContent>{children}</LayoutContent>
-              </ItemVariationModalProvider>
-            </ToastProvider>
-          </QueryProvider>
-        </ReduxProvider>
+        <AuthProvider>
+          <ReduxProvider>
+            <QueryProvider>
+              <ToastProvider>
+                <ItemVariationModalProvider>
+                  <LayoutContent>{children}</LayoutContent>
+                </ItemVariationModalProvider>
+              </ToastProvider>
+            </QueryProvider>
+          </ReduxProvider>
+        </AuthProvider>
       </body>
     </html>
   );
