@@ -135,7 +135,9 @@ export default function Navbar() {
             onMouseLeave={() => setIsWishlistIconHovered(false)}
           >
             {/**** Wishlist icon */}
-            <PiHeart className="text-black text-2xl" />
+            <Link href="/wishlist" className="block">
+              <PiHeart className="text-black text-2xl" />
+            </Link>
 
             {/** Wishlist count badge */}
             {wishlistItemsCount > 0 && (
@@ -157,7 +159,9 @@ export default function Navbar() {
             onMouseLeave={() => setIsCartIconHovered(false)}
           >
             {/** Cart icon */}
-            <PiShoppingCartSimple className="text-black text-2xl" />
+            <Link href="/cart" className="block">
+              <PiShoppingCartSimple className="text-black text-2xl" />
+            </Link>
 
             {/** Cart count badge */}
             {cartItemsCount > 0 && (
