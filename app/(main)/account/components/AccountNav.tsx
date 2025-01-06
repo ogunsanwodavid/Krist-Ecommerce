@@ -1,10 +1,11 @@
 "use client";
 
-import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 import { BsBoxSeam } from "react-icons/bs";
 

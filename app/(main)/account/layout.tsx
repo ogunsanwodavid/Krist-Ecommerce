@@ -2,9 +2,13 @@
 
 import React, { useEffect } from "react";
 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/contexts/AuthContext";
+
+import { toast } from "react-toastify";
+
+import { CircularProgress } from "@mui/material";
 
 import AccountNav from "./components/AccountNav";
 
@@ -13,15 +17,28 @@ export default function AccountLayout({
 }: {
   children: React.ReactNode;
 }) {
+  //Router function
+  const router = useRouter();
+
   //Variables from Auth context
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isGettingUser } = useAuth();
 
   //If user is unauthenticated redirect to home
   useEffect(() => {
-    if (!isAuthenticated) {
-      redirect("/");
+    if (!isAuthenticated && !isGettingUser) {
+      toast.error("Unauthorized access, login");
+      router.push("/login");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router, isGettingUser]);
+
+  //Return loader when getting user
+  if (isGettingUser) {
+    return (
+      <div className="w-full h-full flex-grow flex items-center justify-center py-6 text-black lg:py-12">
+        <CircularProgress color="inherit" size={40} />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-3 py-8 md:px-6 md:py-10 space-y-3 lg:px-0 lg:space-y-5">
@@ -33,7 +50,7 @@ export default function AccountLayout({
         </header>
 
         {/** Main section */}
-        <div className="space-y-3 lg:space-y-0 lg:flex lg:gap-x-[60px]">
+        <div className="space-y-5 lg:space-y-0 lg:flex lg:gap-x-[60px]">
           {/** Account page navigation */}
           <AccountNav />
 

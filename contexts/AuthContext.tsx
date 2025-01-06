@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useState, useEffect, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 
 import { AuthSession } from "@supabase/supabase-js";
 
@@ -21,6 +27,10 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  isGettingUser: boolean;
+  fetchUserProfile: (arg: string) => void;
+  isUpdatingProfile: boolean;
+  setIsUpdatingProfile: (arg: boolean) => void;
 }
 
 interface AuthProviderProps {
@@ -38,11 +48,14 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [userId, setUserId] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
 
-  //Loading state of getting user profile
+  //Loading states
   const [isGettingUser, setIsGettingUser] = useState<boolean>(false);
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
 
   //Function to get user session
   async function getUserSession() {
+    setIsGettingUser(true);
+
     const { data, error } = await supabase.auth.getSession();
 
     if (error) {
@@ -51,6 +64,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
 
     setUserSession(data.session);
+
+    setIsGettingUser(false);
   }
 
   // Fetch user session once on component load
@@ -67,10 +82,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [userSession]);
 
-  // Check if the user is authenticated on app load
-  useEffect(() => {
-    // Fetch user profile from the database (Profile Table)
-    const fetchUserProfile = async (userId: string) => {
+  //Fetch user profile function
+  const fetchUserProfile = useCallback(
+    async (userId: string) => {
       setIsGettingUser(true);
 
       const { data, error } = await supabase
@@ -96,8 +110,12 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       }
 
       setIsGettingUser(false);
-    };
+    },
+    [userEmail]
+  );
 
+  // Check if the user is authenticated on app load
+  useEffect(() => {
     // Fetch profile if user id exists
     if (userId) {
       fetchUserProfile(userId);
@@ -117,18 +135,28 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           setUser(null);
           setIsAuthenticated(false);
         }
+        setIsGettingUser(false);
       }
     );
 
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, [userId, userEmail]);
+  }, [userId, userEmail, fetchUserProfile]);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        isGettingUser,
+        fetchUserProfile,
+        isUpdatingProfile,
+        setIsUpdatingProfile,
+      }}
+    >
       {/** Show loader while loading user profile */}
-      {isGettingUser ? <OnboardingLoader /> : children}
+      {isGettingUser && !isUpdatingProfile ? <OnboardingLoader /> : children}
     </AuthContext.Provider>
   );
 }
