@@ -31,6 +31,8 @@ interface AuthContextType {
   fetchUserProfile: (arg: string) => void;
   isUpdatingProfile: boolean;
   setIsUpdatingProfile: (arg: boolean) => void;
+  isUploadingAvatar: boolean;
+  setIsUploadingAvatar: (arg: boolean) => void;
 }
 
 interface AuthProviderProps {
@@ -51,6 +53,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   //Loading states
   const [isGettingUser, setIsGettingUser] = useState<boolean>(false);
   const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState<boolean>(false);
 
   //Function to get user session
   async function getUserSession() {
@@ -153,10 +156,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         fetchUserProfile,
         isUpdatingProfile,
         setIsUpdatingProfile,
+        isUploadingAvatar,
+        setIsUploadingAvatar,
       }}
     >
       {/** Show loader while loading user profile */}
-      {isGettingUser && !isUpdatingProfile ? <OnboardingLoader /> : children}
+      {isGettingUser && !isUpdatingProfile && !isUploadingAvatar ? (
+        <OnboardingLoader />
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }

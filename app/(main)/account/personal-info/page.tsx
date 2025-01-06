@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
 import { useAuth } from "@/contexts/AuthContext";
 
 import { useUpdateProfile } from "@/app/actions/account/update-profile";
+import { useUploadAvatar } from "@/app/actions/account/upload-avatar";
 
 import { toast } from "react-toastify";
+
+import { CircularProgress } from "@mui/material";
 
 import FormInput from "@/app/components/ui/FormInput";
 
@@ -18,9 +21,16 @@ import { FaRegEdit, FaUserCircle } from "react-icons/fa";
 
 export default function AccountPersonalInfo() {
   //Variables from Auth context
-  const { user, isUpdatingProfile, setIsUpdatingProfile } = useAuth();
+  const {
+    user,
+    isUpdatingProfile,
+    setIsUpdatingProfile,
+    isUploadingAvatar,
+    setIsUploadingAvatar,
+  } = useAuth();
 
   //User credentials
+  const userId = user?.id;
   const userFirstName = user?.firstName;
   const userLastName = user?.lastName;
   const userEmail = user?.email;
@@ -53,7 +63,7 @@ export default function AccountPersonalInfo() {
 
   //Loading states
   const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
-  //const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
+  //const [isUploadingAvatar, setIsUploadingAvatar] = useState<boolean>(false);
 
   //Function to edit profile
   const handleEditProfile = async (e: React.FormEvent) => {
@@ -107,32 +117,97 @@ export default function AccountPersonalInfo() {
     setIsUpdatingProfile(false);
   };
 
+  // Image file input ref
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Handles click of avatar edit button
+  const handleAvatarEditButtonClick = () => {
+    fileInputRef.current?.click(); // Programmatically click the file input
+  };
+
+  //Upload avatar function
+  const uploadAvatar = useUploadAvatar();
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0]; // Get the selected file
+    if (!file) return;
+
+    //Set loading state true
+    setIsUploadingAvatar(true);
+
+    // Upload the file (use the function defined earlier)
+    const result = await uploadAvatar(file, userId ?? "");
+
+    //Check for error from server
+    if (result?.error) {
+      //Toast error
+      toast.error(result.error);
+    }
+
+    //Check if request is successful
+    if (result.success) {
+      //Toast success
+      toast.success("User avatar uploaded succesfully");
+    }
+
+    //Set loading state false
+    setIsUploadingAvatar(false);
+  };
+
   return (
     <div className="space-y-3 lg:space-y-5">
       {/** Header */}
       <header className="lg:flex lg:items-center lg:justify-between">
         {/** Change avatar */}
-        <div className="relative w-max">
+        <div className="relative w-max mx-auto lg:mx-0">
           {/** Avatar */}
           {userAvatar ? (
             <Image
               src={userAvatar}
-              className="w-[75px] h-[75px] shrink-0 object-cover rounded-full lg:w-[90px] lg:h-[90px]"
-              alt="User avatar"
+              className="shrink-0 w-[75px] h-[75px] lg:w-[90px] lg:h-[90px] rounded-full "
+              alt={`${userFirstName} ${userLastName}'s avatar`}
+              width={75}
+              height={75}
             />
           ) : (
             <FaUserCircle className="text-black text-[75px] lg:text-[90px]" />
           )}
 
-          {/** Avatar edit button */}
-          <div className="absolute -right-1 bottom-1 w-max p-1 bg-black rounded-[4px] flex items-center justify-center cursor-pointer">
-            <FaRegEdit className="text-[12px] text-white" />
-          </div>
+          {/** Change avatar */}
+          {!isUploadingAvatar && (
+            <section className="absolute -right-1 bottom-1 w-max">
+              {/** Avatar edit button */}
+              <div
+                className="p-1 bg-black rounded-[4px] flex items-center justify-center cursor-pointer"
+                onClick={handleAvatarEditButtonClick}
+              >
+                <FaRegEdit className="text-[12px] text-white" />
+              </div>
+
+              {/** File input */}
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                className="hidden" // Hide the input element
+                onChange={handleFileChange}
+              />
+            </section>
+          )}
+
+          {/** Loader if uploading avatar */}
+          {isUploadingAvatar && (
+            <div className="absolute top-0 left-0 w-full h-full bg-[rgba(184,178,178,0.3)] rounded-full flex items-center justify-center z-20">
+              <CircularProgress color="inherit" size={25} />
+            </div>
+          )}
         </div>
 
         {/** Edit profile button */}
         <EditProfileButton
-          className="hidden !w-[180px] !ml-auto lg:block"
+          className="!hidden !w-[180px] !ml-auto lg:!flex"
           loading={isUpdatingProfile}
           disabled={isUpdatingProfile}
           isEditingProfile={isEditingProfile}

@@ -49,7 +49,9 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
             <Image
               src={userAvatar}
               className="w-[40px] h-[40px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
-              alt="User avatar"
+              width={40}
+              height={40}
+              alt={`${firstName} ${lastName}'s avatar`}
             />
           ) : (
             <Link href="/account" className="block">

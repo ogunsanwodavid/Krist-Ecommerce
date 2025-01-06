@@ -40,8 +40,10 @@ export default function AccountNav() {
         {userAvatar ? (
           <Image
             src={userAvatar}
+            height={45}
+            width={45}
             className="w-[45px] h-[45px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
-            alt="User avatar"
+            alt={`${firstName} ${lastName}'s avatar`}
           />
         ) : (
           <FaUserCircle className="text-black text-[45px]" />

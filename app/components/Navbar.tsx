@@ -87,6 +87,7 @@ export default function Navbar() {
 
   //User credentials
   const firstName = user?.firstName;
+  const lastName = user?.lastName;
   const userAvatar = user?.avatar;
 
   return (
@@ -179,7 +180,9 @@ export default function Navbar() {
             <Image
               src={userAvatar}
               className="h-[40px] w-[40px] object-cover rounded-full border-[1.5px] border-grey"
-              alt="Default profile picture"
+              width={40}
+              height={40}
+              alt={`${firstName} ${lastName}'s avatar`}
             />
           ) : (
             <Link href="/account" className="block">
