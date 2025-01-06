@@ -42,31 +42,33 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
       }}
     >
       {/** User profile info */}
-      <section className="grid grid-cols-[43px_auto] items-center p-4 gap-x-3">
-        {/*** User avatar */}
-        {userAvatar ? (
-          <Image
-            src={userAvatar}
-            className="w-[43px] h-[43px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
-            alt="User avatar"
-          />
-        ) : (
-          <Link href="/account" className="block">
-            <FaUserCircle className="text-black text-[40px]" />
-          </Link>
-        )}
+      {isAuthenticated && (
+        <section className="grid grid-cols-[43px_auto] items-center p-4 gap-x-3">
+          {/*** User avatar */}
+          {userAvatar ? (
+            <Image
+              src={userAvatar}
+              className="w-[43px] h-[43px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
+              alt="User avatar"
+            />
+          ) : (
+            <Link href="/account" className="block">
+              <FaUserCircle className="text-black text-[40px]" />
+            </Link>
+          )}
 
-        {/*** User name */}
-        <div className="h-max my-auto space-y-1 font-medium">
-          <h3 className="text-lg leading-[1.3rem]">{firstName}</h3>
-          <h4 className="w-full text-base line-clamp-1 text-ellipsis overflow-hidden leading-[1rem]">
-            {lastName}
-          </h4>
-        </div>
-      </section>
+          {/*** User name */}
+          <div className="h-max my-auto space-y-1 font-medium">
+            <h3 className="text-lg leading-[1.3rem]">{firstName}</h3>
+            <h4 className="w-full text-base line-clamp-1 text-ellipsis overflow-hidden leading-[1rem]">
+              {lastName}
+            </h4>
+          </div>
+        </section>
+      )}
 
       {/*** Navigation */}
-      <nav className="w-full space-y-6 bg-gray-50 p-4 font-medium">
+      <nav className="w-full space-y-7 bg-gray-50 p-4 font-medium">
         {/*** Home */}
         <Link href="/" className="flex items-center gap-x-4">
           <HiMiniHome className="text-black text-xl" />

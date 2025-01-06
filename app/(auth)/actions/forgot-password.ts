@@ -2,6 +2,9 @@ import { ForgotPasswordFormSchema } from "@/app/(auth)/lib/definitions";
 
 import { supabase } from "@/app/lib/supabase";
 
+//Base URL
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 //Request password reset function
 export async function requestPasswordReset(formData: FormData) {
   const email = String(formData.get("email"));
@@ -19,7 +22,12 @@ export async function requestPasswordReset(formData: FormData) {
   }
 
   //Request for password reset
-  const { error: authError } = await supabase.auth.resetPasswordForEmail(email);
+  const { error: authError } = await supabase.auth.resetPasswordForEmail(
+    email,
+    {
+      redirectTo: `${baseUrl}/reset-password`,
+    }
+  );
 
   //Return any error
   if (authError) {

@@ -63,6 +63,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     if (userSession) {
       setUserId(userSession.user?.id);
       setUserEmail(String(userSession.user?.email));
+      setIsAuthenticated(true);
     }
   }, [userSession]);
 
@@ -105,11 +106,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         if (session) {
+          setUserSession(session);
           setUserId(session.user?.id);
-          setUserEmail(String(session.user?.email));
+          setUserEmail(session.user?.email || "");
+          setIsAuthenticated(true);
         } else {
+          setUserSession(null);
+          setUserId("");
+          setUserEmail("");
           setUser(null);
-          setIsAuthenticated(false); // Clear user data on logout
+          setIsAuthenticated(false);
         }
       }
     );

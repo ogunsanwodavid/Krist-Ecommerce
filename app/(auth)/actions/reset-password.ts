@@ -1,16 +1,16 @@
-import { LoginFormSchema } from "@/app/(auth)/lib/definitions";
+import { ResetPasswordFormSchema } from "@/app/(auth)/lib/definitions";
 
 import { supabase } from "@/app/lib/supabase";
 
 //Login function
-export async function login(formData: FormData) {
-  const email = String(formData.get("email"));
+export async function resetPassword(formData: FormData) {
   const password = String(formData.get("password"));
+  const confirmPassword = String(formData.get("confirmPassword"));
 
   // Validate form fields
-  const validatedFields = LoginFormSchema.safeParse({
-    email,
+  const validatedFields = ResetPasswordFormSchema.safeParse({
     password,
+    confirmPassword,
   });
 
   // If any form fields are invalid, return early
@@ -21,12 +21,11 @@ export async function login(formData: FormData) {
   }
 
   //Login user
-  const { error: authError } = await supabase.auth.signInWithPassword({
-    email,
+  const { error: authError } = await supabase.auth.updateUser({
     password,
   });
 
-  //Return any login error
+  //Return any error
   if (authError) {
     return { error: authError.message };
   }

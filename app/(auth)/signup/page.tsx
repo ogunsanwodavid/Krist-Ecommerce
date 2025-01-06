@@ -92,7 +92,7 @@ export default function SignUp() {
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
 
-    // Call the login function
+    // Call the signup function
     const result = await signup(formData);
 
     //Set errors is it exists else set to null
