@@ -2,8 +2,11 @@ import { SignupFormSchema } from "@/app/(auth)/lib/definitions/signup";
 
 import { supabase } from "@/app/lib/supabase";
 
-//Base URL
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+//Site URL
+const siteUrl =
+  process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+  process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+  "http://localhost:3000/";
 
 //Signup function
 export async function signup(formData: FormData) {
@@ -35,7 +38,7 @@ export async function signup(formData: FormData) {
     password,
     options: {
       //Redirect to login page after email confirmation
-      emailRedirectTo: `${baseUrl}/login`,
+      emailRedirectTo: `${siteUrl}/login`,
     },
   });
 

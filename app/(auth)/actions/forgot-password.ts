@@ -2,8 +2,11 @@ import { ForgotPasswordFormSchema } from "@/app/(auth)/lib/definitions/forgot-pa
 
 import { supabase } from "@/app/lib/supabase";
 
-//Base URL
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+//Site URL
+const siteUrl =
+  process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+  process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+  "http://localhost:3000/";
 
 //Request password reset function
 export async function requestPasswordReset(formData: FormData) {
@@ -25,7 +28,7 @@ export async function requestPasswordReset(formData: FormData) {
   const { error: authError } = await supabase.auth.resetPasswordForEmail(
     email,
     {
-      redirectTo: `${baseUrl}/reset-password`,
+      redirectTo: `${siteUrl}/reset-password`,
     }
   );
 
@@ -36,5 +39,5 @@ export async function requestPasswordReset(formData: FormData) {
 
   return { success: true };
 
-  console.log(baseUrl);
+  console.log(siteUrl);
 }
