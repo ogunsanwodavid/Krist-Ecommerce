@@ -35,4 +35,6 @@ export async function requestPasswordReset(formData: FormData) {
   }
 
   return { success: true };
+
+  console.log(baseUrl);
 }
