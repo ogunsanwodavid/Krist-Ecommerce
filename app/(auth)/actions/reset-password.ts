@@ -1,4 +1,4 @@
-import { ResetPasswordFormSchema } from "@/app/(auth)/lib/definitions";
+import { ResetPasswordFormSchema } from "@/app/(auth)/lib/definitions/reset-password";
 
 import { supabase } from "@/app/lib/supabase";
 

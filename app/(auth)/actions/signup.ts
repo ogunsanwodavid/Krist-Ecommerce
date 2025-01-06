@@ -1,4 +1,4 @@
-import { SignupFormSchema } from "@/app/(auth)/lib/definitions";
+import { SignupFormSchema } from "@/app/(auth)/lib/definitions/signup";
 
 import { supabase } from "@/app/lib/supabase";
 

@@ -1,4 +1,4 @@
-import { ForgotPasswordFormSchema } from "@/app/(auth)/lib/definitions";
+import { ForgotPasswordFormSchema } from "@/app/(auth)/lib/definitions/forgot-password";
 
 import { supabase } from "@/app/lib/supabase";
 
