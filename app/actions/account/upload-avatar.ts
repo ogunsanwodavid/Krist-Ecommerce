@@ -15,8 +15,6 @@ export function useUploadAvatar() {
       const customFileName = `avatar-${userId}-${timestamp}.${fileExtension}`; // Custom file name
       const filePath = `${customFileName}`; // File path in the bucket
 
-      console.log(customFileName);
-
       // 2. Upload the image to the bucket
       const { error: storageError } = await supabase.storage
         .from("avatars")

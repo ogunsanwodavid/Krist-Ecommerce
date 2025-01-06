@@ -63,7 +63,6 @@ export default function AccountPersonalInfo() {
 
   //Loading states
   const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
-  //const [isUploadingAvatar, setIsUploadingAvatar] = useState<boolean>(false);
 
   //Function to edit profile
   const handleEditProfile = async (e: React.FormEvent) => {
@@ -128,6 +127,7 @@ export default function AccountPersonalInfo() {
   //Upload avatar function
   const uploadAvatar = useUploadAvatar();
 
+  //Handle file input
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -166,7 +166,7 @@ export default function AccountPersonalInfo() {
           {userAvatar ? (
             <Image
               src={userAvatar}
-              className="shrink-0 w-[75px] h-[75px] lg:w-[90px] lg:h-[90px] rounded-full "
+              className="shrink-0 w-[75px] h-[75px] lg:w-[90px] lg:h-[90px] object-cover rounded-full "
               alt={`${userFirstName} ${userLastName}'s avatar`}
               width={75}
               height={75}

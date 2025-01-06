@@ -52,7 +52,7 @@ export default function AccountNav() {
         {/** User names */}
         <div className="capitalize text-black">
           <p className="text-[16px] font-medium">Hello👋</p>
-          <p className="text-[17px] font-semibold">
+          <p className="text-[17px] font-semibold line-clamp-1 overflow-hidden text-ellipsis">
             {firstName} {lastName}
           </p>
         </div>
