@@ -108,70 +108,83 @@ export default function AccountPersonalInfo() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 lg:space-y-5">
       {/** Header */}
-      <header className="flex flex-col items-center justify-center">
+      <header className="lg:flex lg:items-center lg:justify-between">
         {/** Change avatar */}
         <div className="relative w-max">
           {/** Avatar */}
           {userAvatar ? (
             <Image
               src={userAvatar}
-              className="w-[75px] h-[75px] shrink-0 object-cover rounded-full "
+              className="w-[75px] h-[75px] shrink-0 object-cover rounded-full lg:w-[90px] lg:h-[90px]"
               alt="User avatar"
             />
           ) : (
-            <FaUserCircle className="text-black text-[75px]" />
+            <FaUserCircle className="text-black text-[75px] lg:text-[90px]" />
           )}
 
           {/** Avatar edit button */}
-          <div className="absolute -right-1 bottom-1 w-max p-1 bg-black rounded-[4px] flex items-center justify-center">
+          <div className="absolute -right-1 bottom-1 w-max p-1 bg-black rounded-[4px] flex items-center justify-center cursor-pointer">
             <FaRegEdit className="text-[12px] text-white" />
           </div>
         </div>
+
+        {/** Edit profile button */}
+        <EditProfileButton
+          className="hidden !w-[180px] !ml-auto lg:block"
+          loading={isUpdatingProfile}
+          disabled={isUpdatingProfile}
+          isEditingProfile={isEditingProfile}
+          handleEditProfile={handleEditProfile}
+          handleUpdateProfile={handleUpdateProfile}
+        />
       </header>
 
       {/** Form */}
-      <form className="w-full flex flex-col gap-y-2">
-        {/**** First Name input */}
-        <FormInput label="First Name" error={firstNameInputError}>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            autoComplete="off"
-            value={firstName}
-            disabled={!isEditingProfile}
-            onChange={(e) => {
-              const value = e.target.value;
-              const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
-              setFirstName(filteredValue);
-            }}
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
-              firstNameInputError && "!border-errorRed"
-            }`}
-          />
-        </FormInput>
+      <form className="w-full flex flex-col gap-y-2 lg:gap-y-5">
+        {/** Name inputs */}
+        <section className="space-y-2 lg:space-y-0 lg:flex lg:gap-x-[30px]">
+          {/**** First Name input */}
+          <FormInput label="First Name" error={firstNameInputError}>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              autoComplete="off"
+              value={firstName}
+              disabled={!isEditingProfile}
+              onChange={(e) => {
+                const value = e.target.value;
+                const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
+                setFirstName(filteredValue);
+              }}
+              className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                firstNameInputError && "!border-errorRed"
+              }`}
+            />
+          </FormInput>
 
-        {/**** Last Name input */}
-        <FormInput label="Last Name" error={lastNameInputError}>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            autoComplete="off"
-            value={lastName}
-            disabled={!isEditingProfile}
-            onChange={(e) => {
-              const value = e.target.value;
-              const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
-              setLastName(filteredValue);
-            }}
-            className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
-              lastNameInputError && "!border-errorRed"
-            }`}
-          />
-        </FormInput>
+          {/**** Last Name input */}
+          <FormInput label="Last Name" error={lastNameInputError}>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              autoComplete="off"
+              value={lastName}
+              disabled={!isEditingProfile}
+              onChange={(e) => {
+                const value = e.target.value;
+                const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
+                setLastName(filteredValue);
+              }}
+              className={`w-full h-[44px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                lastNameInputError && "!border-errorRed"
+              }`}
+            />
+          </FormInput>
+        </section>
 
         {/**** Email Address input */}
         <FormInput label="Email Address" error={emailInputError}>
@@ -191,7 +204,7 @@ export default function AccountPersonalInfo() {
 
       {/** Edit profile button */}
       <EditProfileButton
-        className="!ml-auto"
+        className="lg:!hidden"
         loading={isUpdatingProfile}
         disabled={isUpdatingProfile}
         isEditingProfile={isEditingProfile}

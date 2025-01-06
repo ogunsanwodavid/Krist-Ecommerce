@@ -55,7 +55,7 @@ export default function AccountLayout({
           <AccountNav />
 
           {/** Children */}
-          <div className="h-max">{children}</div>
+          <div className="w-full h-max">{children}</div>
         </div>
       </div>
     </div>

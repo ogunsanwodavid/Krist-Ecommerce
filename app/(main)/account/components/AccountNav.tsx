@@ -33,7 +33,7 @@ export default function AccountNav() {
   const isSavedCardsActive = pathname === "/account/cards";
 
   return (
-    <div className="sticky top-[66px] w-full max-w-[600px] h-max bg-white shadow-2xl border-[1.5px] border-gray-100 rounded-lg z-20 px-3 py-1 lg:static lg:px-0 lg:py-0 lg:top-0 lg:w-[250px]">
+    <div className="sticky top-[66px] w-full max-w-[600px] h-max bg-white shadow-2xl border-[1.5px] border-gray-100 rounded-lg z-20 px-3 py-1 shrink-0 lg:static lg:px-0 lg:py-0 lg:top-0 lg:w-[250px]">
       {/** User details */}
       <section className="hidden p-4 grid-cols-[45px_auto] gap-x-4 items-center border-b-[1.5px] border-b-gray-200 lg:grid">
         {/** User avatar */}
