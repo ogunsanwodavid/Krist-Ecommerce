@@ -43,12 +43,12 @@ export default function MobileNav({ isOpen }: MobileNavProps) {
     >
       {/** User profile info */}
       {isAuthenticated && (
-        <section className="grid grid-cols-[43px_auto] items-center p-4 gap-x-3">
+        <section className="grid grid-cols-[40px_auto] items-center p-4 gap-x-3">
           {/*** User avatar */}
           {userAvatar ? (
             <Image
               src={userAvatar}
-              className="w-[43px] h-[43px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
+              className="w-[40px] h-[40px] shrink-0 object-cover border-[1.5px] border-grey rounded-full "
               alt="User avatar"
             />
           ) : (

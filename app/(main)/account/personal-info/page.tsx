@@ -1,3 +1,3 @@
-export default function ProfilePersonalInfo() {
-  return <div>Profile Personal Info</div>;
+export default function AccountPersonalInfo() {
+  return <div>Account Personal Info</div>;
 }

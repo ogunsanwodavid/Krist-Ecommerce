@@ -1,3 +1,3 @@
-export default function ProfileAddresses() {
-  return <div>Profile Addresses</div>;
+export default function AccountAddresses() {
+  return <div>Account Addresses</div>;
 }

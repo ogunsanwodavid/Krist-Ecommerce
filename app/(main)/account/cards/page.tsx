@@ -1,3 +1,3 @@
-export default function ProfileSavedCards() {
-  return <div>Profile Cards</div>;
+export default function AccountSavedCards() {
+  return <div>Account Cards</div>;
 }

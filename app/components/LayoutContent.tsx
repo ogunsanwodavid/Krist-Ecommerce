@@ -4,8 +4,6 @@ import React from "react";
 
 import { usePathname } from "next/navigation";
 
-//import ToastProvider from "./ToastProvider";
-
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 

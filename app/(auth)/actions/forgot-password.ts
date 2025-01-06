@@ -10,8 +10,6 @@ const siteUrl =
 
 //Request password reset function
 export async function requestPasswordReset(formData: FormData) {
-  console.log(siteUrl);
-
   const email = String(formData.get("email"));
 
   // Validate form fields

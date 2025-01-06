@@ -1,3 +1,3 @@
-export default function ProfileOrders() {
-  return <div>Profile Orders</div>;
+export default function AccountOrders() {
+  return <div>Account Orders</div>;
 }
