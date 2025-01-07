@@ -10,6 +10,7 @@ import QueryProvider from "./providers/QueryProvider";
 import AuthProvider from "@/contexts/AuthContext";
 
 import { ItemVariationModalProvider } from "./(main)/contexts/ItemVariationModalContext";
+import { NewAddressModalProvider } from "./(main)/contexts/NewAddressModalContext";
 
 import LayoutContent from "./components/LayoutContent";
 import ToastProvider from "./components/ToastProvider";
@@ -47,7 +48,9 @@ export default function RootLayout({
             <QueryProvider>
               <ToastProvider>
                 <ItemVariationModalProvider>
-                  <LayoutContent>{children}</LayoutContent>
+                  <NewAddressModalProvider>
+                    <LayoutContent>{children}</LayoutContent>
+                  </NewAddressModalProvider>
                 </ItemVariationModalProvider>
               </ToastProvider>
             </QueryProvider>

@@ -2,7 +2,7 @@ import React from "react";
 
 interface FormInputProps {
   label: string | undefined;
-  error: string | undefined;
+  error?: string | undefined;
   children: React.ReactNode;
 }
 

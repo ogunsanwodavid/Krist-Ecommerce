@@ -30,8 +30,6 @@ export const ItemVariationModalProvider: React.FC<
 > = ({ children }) => {
   const [isVariationModalOpen, setIsVariationModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
-  //const [size, setSize] = useState<string | undefined>(undefined);
-  //const [color, setColor] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState(1);
 
   const openVariationModal = (item: ShopItem, quantity: number) => {
@@ -43,8 +41,6 @@ export const ItemVariationModalProvider: React.FC<
   const closeVariationModal = () => {
     setIsVariationModalOpen(false);
     setSelectedItem(null);
-    //setSize(undefined);
-    // setColor(undefined);
     setQuantity(1);
   };
 

@@ -15,7 +15,7 @@ import { CircularProgress } from "@mui/material";
 
 import FormInput from "@/app/components/ui/FormInput";
 
-import EditProfileButton from "../components/EditProfileButton";
+import EditProfileButton from "./components/EditProfileButton";
 
 import { FaRegEdit, FaUserCircle } from "react-icons/fa";
 
