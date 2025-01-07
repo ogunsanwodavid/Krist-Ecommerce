@@ -27,6 +27,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import failedToLoadImg from "@/public/failedToLoad.svg";
 
 export default function Cart() {
+  //Search parameters
   const searchParams = useSearchParams();
 
   //Cart Products from redux state

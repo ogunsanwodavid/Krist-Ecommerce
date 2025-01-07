@@ -114,7 +114,7 @@ export default function ItemVariationModal() {
   return (
     <div className="fixed top-0 left-0 min-h-screen w-screen bg-[rgba(0,0,0,0.4)] z-[300] flex items-center justify-center p-3">
       {/* Modal Content */}
-      <main className="w-full max-w-[500px] mx-auto bg-white rounded-xl p-4 text-black space-y-1 md:space-y-3 md:p-7">
+      <main className="w-full max-w-[500px] max-h-[calc(100vh_-_24px)] overflow-y-auto mx-auto bg-white rounded-xl p-4 text-black space-y-1 md:space-y-3 md:p-7">
         {/** Close icon */}
         <CgClose
           className="text-lg ml-auto md:text-xl"

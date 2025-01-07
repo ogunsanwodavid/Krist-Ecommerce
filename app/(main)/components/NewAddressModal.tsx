@@ -2,7 +2,9 @@ import { useState } from "react";
 
 import { useNewAddressModal } from "../contexts/NewAddressModalContext";
 
-import FormInput from "@/app/components/ui/FormInput";
+import { useAppDispatch } from "@/app/hooks/redux";
+
+import { addAddress } from "@/app/redux/addressesSlice";
 
 import {
   nigerianStatesAndLGAs,
@@ -15,9 +17,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputBase from "@mui/material/InputBase";
 
+import FormInput from "@/app/components/ui/FormInput";
+
 import { CgClose } from "react-icons/cg";
 
 import { FaCheck } from "react-icons/fa6";
+import { Address } from "@/app/models/addresses";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -50,8 +55,38 @@ export default function NewAddressModal() {
   const [zipCode, setZipCode] = useState<string>("");
   const [defaultAddress, setDefaultAddress] = useState<boolean>(false);
 
+  // Current LGA options in the select input
+  const currentLGAOptions: string[] = state
+    ? statesAndLGAs.find((stateObj) => stateObj.state === state)?.lgas || []
+    : [];
+
   //Check if user can add address
-  const canUserAddAddress = name && mobileNumber && state && LGA && houseNumber;
+  const canUserAddAddress =
+    name && mobileNumber && state && LGA && houseNumber && zipCode;
+
+  //Address object
+  const newAddress: Address = {
+    id: Date.now().toString(),
+    name,
+    mobileNumber,
+    state,
+    lga: LGA,
+    houseNumber,
+    zipCode,
+    default: defaultAddress,
+  };
+
+  //Dispatch function
+  const dispatch = useAppDispatch();
+
+  //Handle adding new address
+  function handleAddAddress() {
+    //Add adress to redux state
+    dispatch(addAddress(newAddress));
+
+    //Close modal
+    closeNewAddressModal();
+  }
 
   return (
     <div className="fixed top-0 left-0 min-h-screen w-screen bg-[rgba(0,0,0,0.4)] z-[300] flex items-center justify-center p-3">
@@ -71,7 +106,7 @@ export default function NewAddressModal() {
         {/** Form */}
         <form className="w-full space-y-1 lg:space-y-3">
           {/**** Name input */}
-          <FormInput label="Name">
+          <FormInput label="Full Name">
             <input
               type="text"
               name="name"
@@ -97,7 +132,7 @@ export default function NewAddressModal() {
               value={mobileNumber}
               onChange={(e) => {
                 const value = e.target.value;
-                const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
+                const filteredValue = value.replace(/[^+\d\s]/g, ""); // Allows only digits, +, and spaces
                 setMobileNumber(filteredValue);
               }}
               className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
@@ -142,19 +177,57 @@ export default function NewAddressModal() {
             </FormControl>
           </section>
 
+          {/** LGA Input */}
+          <section className="space-y-1 !mb-2">
+            <span className={`text-black text-base md:text-[18px]`}>
+              Local Government Area
+            </span>
+
+            <FormControl
+              className="w-full h-[36px] rounded-[10px] py-1 px-2 border-[1.5px] border-black"
+              variant="standard"
+            >
+              <Select
+                value={LGA ?? ""}
+                onChange={(e) => setLGA(e.target.value)}
+                input={<BootstrapInput />}
+                className="h-[36px] rounded-[8px] py-1 px-2 border-[1.5px] border-black"
+                displayEmpty
+                disabled={currentLGAOptions.length === 0}
+              >
+                <MenuItem
+                  value=""
+                  className="!hidden !font-jost !text-base md:!text-lg"
+                  disabled
+                >
+                  Select an LGA
+                </MenuItem>
+
+                {currentLGAOptions.length > 0 &&
+                  currentLGAOptions
+                    .sort((a, b) => a.localeCompare(b)) // Sort alphabetically by state key
+                    .map((lga) => (
+                      <MenuItem
+                        value={lga}
+                        className="!font-jost !text-base md:!text-lg"
+                        key={lga}
+                      >
+                        {lga}
+                      </MenuItem>
+                    ))}
+              </Select>
+            </FormControl>
+          </section>
+
           {/**** House number input */}
-          <FormInput label="Flat, House no., Building, Apartment">
+          <FormInput label="Flat, House no., Street, Building">
             <input
               type="text"
               name="houseNumber"
               id="houseNumber"
               autoComplete="off"
               value={houseNumber}
-              onChange={(e) => {
-                const value = e.target.value;
-                const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
-                setHouseNumber(filteredValue);
-              }}
+              onChange={(e) => setHouseNumber(e.target.value)}
               className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
             />
           </FormInput>
@@ -218,6 +291,7 @@ export default function NewAddressModal() {
               !canUserAddAddress && "opacity-50 cursor-not-allowed"
             }`}
             disabled={!canUserAddAddress}
+            onClick={handleAddAddress}
           >
             Add address
           </button>
