@@ -45,7 +45,7 @@ export default function NewAddressModal() {
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState<string>("");
   const [state, setState] = useState<string>("");
-  //const [LGA, setLGA] = useState<string>("");
+  const [LGA, setLGA] = useState<string>("");
   const [houseNumber, setHouseNumber] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
   const [defaultAddress, setDefaultAddress] = useState<boolean>(false);
@@ -88,7 +88,7 @@ export default function NewAddressModal() {
           </FormInput>
 
           {/**** Mobile number input */}
-          <FormInput label="Flat, House no., Building, Company, Apartment">
+          <FormInput label="Mobile Number">
             <input
               type="text"
               name="mobileNumber"
@@ -105,7 +105,7 @@ export default function NewAddressModal() {
           </FormInput>
 
           {/**** State input */}
-          <section className="space-y-1">
+          <section className="space-y-1 !mb-2">
             <span className={`text-black text-base md:text-[18px]`}>State</span>
 
             <FormControl
@@ -117,9 +117,19 @@ export default function NewAddressModal() {
                 onChange={(e) => setState(e.target.value)}
                 input={<BootstrapInput />}
                 className="h-[36px] rounded-[8px] py-1 px-2 border-[1.5px] border-black"
+                displayEmpty
               >
-                {statesAndLGAs.map((stateObj) => {
-                  return (
+                <MenuItem
+                  value=""
+                  className="!hidden !font-jost !text-base md:!text-lg"
+                  disabled
+                >
+                  Select a State
+                </MenuItem>
+
+                {statesAndLGAs
+                  .sort((a, b) => a.state.localeCompare(b.state)) // Sort alphabetically by state key
+                  .map((stateObj) => (
                     <MenuItem
                       value={stateObj.state}
                       className="!font-jost !text-base md:!text-lg"
@@ -127,14 +137,13 @@ export default function NewAddressModal() {
                     >
                       {stateObj.state}
                     </MenuItem>
-                  );
-                })}
+                  ))}
               </Select>
             </FormControl>
           </section>
 
           {/**** House number input */}
-          <FormInput label="House Number">
+          <FormInput label="Flat, House no., Building, Apartment">
             <input
               type="text"
               name="houseNumber"
