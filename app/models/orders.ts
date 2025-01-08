@@ -1,7 +1,8 @@
 import { CartProduct } from "./cart";
 
 export interface Order {
-  deliveryTime: Date;
+  id: string;
+  deliveryDate: string;
   product: CartProduct;
 }
 

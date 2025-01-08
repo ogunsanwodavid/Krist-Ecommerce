@@ -13,7 +13,9 @@ import { ReduxStoreState } from "@/app/redux/store";
 
 import { useAuth } from "@/contexts/AuthContext";
 
-import CheckoutProvider from "./contexts/CheckoutContext";
+import { useCheckout } from "../contexts/CheckoutContext";
+
+import usePlaceOrder from "./actions/usePlaceOrder";
 
 import { CircularProgress } from "@mui/material";
 
@@ -34,9 +36,9 @@ export default function CheckoutLayout({
   const pathname = usePathname();
 
   //Check current active page
-  const isAddressPage = pathname === "/checkout/address";
-  const isPaymentPage = pathname === "/checkout/payment";
-  const isReviewPage = pathname === "/checkout/review";
+  const isAddressPage = pathname.startsWith("/checkout/address");
+  const isPaymentPage = pathname.startsWith("/checkout/payment");
+  const isReviewPage = pathname.startsWith("/checkout/review");
 
   //Auth context variables
   const { isAuthenticated, isGettingUser } = useAuth();
@@ -45,6 +47,12 @@ export default function CheckoutLayout({
   const cartProducts = useAppSelector(
     (state: ReduxStoreState) => state.cart.cart
   );
+
+  //Checkout context variables
+  const { openOrderCompletedModal } = useCheckout();
+
+  //Place order function
+  const placeOrder = usePlaceOrder();
 
   //Show error if there is no cart product to checkout
   if (!cartProducts || cartProducts.length === 0) {
@@ -105,52 +113,60 @@ export default function CheckoutLayout({
     );
   }
 
+  //Handle place order
+  function handlePlaceOrder() {
+    //Open order completed modal
+    openOrderCompletedModal();
+
+    //Place order
+    placeOrder();
+  }
+
   return (
-    <CheckoutProvider>
-      <div className="relative w-full max-w-[1200px] mx-auto px-3 py-8 md:px-6 md:py-10 space-y-3 lg:px-0 lg:space-y-5">
-        {/** Inner container */}
-        <div className="space-y-3 max-w-[600px] mx-auto pb-10 md:space-y-5 lg:pb-16 lg:max-w-none">
-          {/**
-           *Header
-           *Content depends on the current page
-           */}
-          <header>
-            <h2 className="text-black text-[23px] md:text-3xl">
-              {isAddressPage
-                ? "Shipping Address"
-                : isPaymentPage
-                ? "Payment Method"
-                : "Review Your Order"}
-            </h2>
-          </header>
+    <div className="relative w-full max-w-[1200px] mx-auto px-3 py-8 md:px-6 md:py-10 space-y-3 lg:px-0 lg:space-y-5">
+      {/** Inner container */}
+      <div className="space-y-3 max-w-[600px] mx-auto pb-10 md:space-y-5 lg:pb-16 lg:max-w-none">
+        {/**
+         *Header
+         *Content depends on the current page
+         */}
+        <header>
+          <h2 className="text-black text-[23px] md:text-3xl">
+            {isAddressPage
+              ? "Shipping Address"
+              : isPaymentPage
+              ? "Payment Method"
+              : "Review Your Order"}
+          </h2>
+        </header>
 
-          {/** Main section */}
-          <main className="lg:flex lg:flex-row-reverse lg:gap-x-[60px]">
-            {/** Cart Summary */}
-            <CartSummary>
-              {/** Place Order button */}
-              <div
-                className={`hidden px-3 pt-1 pb-3 ${
-                  isReviewPage ? "lg:block" : "lg:hidden"
-                }`}
-              >
-                <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[15px] lg:text-base">
-                  Place Order
-                </button>
-              </div>
-            </CartSummary>
+        {/** Main section */}
+        <main className="lg:flex lg:flex-row-reverse lg:gap-x-[60px]">
+          {/** Cart Summary */}
+          <CartSummary>
+            {/** Place Order button */}
+            <div
+              className={`hidden px-3 pt-1 pb-3 ${
+                isReviewPage ? "lg:block" : "lg:hidden"
+              }`}
+              onClick={handlePlaceOrder}
+            >
+              <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[15px] lg:text-base">
+                Place Order
+              </button>
+            </div>
+          </CartSummary>
 
-            {/** Content */}
-            <section className="w-full h-max mt-5 space-y-4 lg:mt-0 lg:space-y-7">
-              {/** Checkout progress */}
-              <CheckoutProgress />
+          {/** Content */}
+          <section className="w-full h-max mt-5 space-y-4 lg:mt-0 lg:space-y-7">
+            {/** Checkout progress */}
+            <CheckoutProgress />
 
-              {/** Children */}
-              <div>{children}</div>
-            </section>
-          </main>
-        </div>
+            {/** Children */}
+            <div>{children}</div>
+          </section>
+        </main>
       </div>
-    </CheckoutProvider>
+    </div>
   );
 }

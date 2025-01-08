@@ -15,7 +15,7 @@ import { removeCard } from "@/app/redux/cardsSlice";
 
 import { useNewCardModal } from "../../contexts/NewCardModalContext";
 
-import { useCheckout } from "../contexts/CheckoutContext";
+import { useCheckout } from "../../contexts/CheckoutContext";
 
 import { formatCardNumber } from "@/app/utils/helpers";
 

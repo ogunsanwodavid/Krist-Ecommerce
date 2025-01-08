@@ -15,7 +15,7 @@ import { removeAddress } from "@/app/redux/addressesSlice";
 
 import { useNewAddressModal } from "../../contexts/NewAddressModalContext";
 
-import { useCheckout } from "../contexts/CheckoutContext";
+import { useCheckout } from "../../contexts/CheckoutContext";
 
 import MainButton from "@/app/components/ui/MainButton";
 
@@ -139,6 +139,7 @@ export default function CheckoutAddress() {
                         id={address.id}
                         checked={selectedAddressId === address.id}
                         className="hidden peer"
+                        readOnly
                       />
 
                       {/** Address name */}

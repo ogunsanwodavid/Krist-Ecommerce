@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 
+import CheckoutProvider from "./contexts/CheckoutContext";
+
 import { CircularProgress } from "@mui/material";
 
 export default function MainAppLayout({
@@ -15,7 +17,9 @@ export default function MainAppLayout({
         </div>
       }
     >
-      <div className="h-full flex-grow flex flex-col">{children}</div>
+      <div className="h-full flex-grow flex flex-col">
+        <CheckoutProvider>{children}</CheckoutProvider>
+      </div>
     </Suspense>
   );
 }

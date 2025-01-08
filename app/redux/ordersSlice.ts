@@ -13,8 +13,15 @@ const ordersSlice = createSlice({
     setOrders(state, action) {
       state.orders = action.payload;
     },
+    addOrder: (state, action) => {
+      state.orders.push(action.payload);
+    },
+    cancelOrder(state, action) {
+      const orderId = action.payload;
+      state.orders = state.orders.filter((order) => order.id !== orderId);
+    },
   },
 });
 
-export const { setOrders } = ordersSlice.actions;
+export const { setOrders, addOrder, cancelOrder } = ordersSlice.actions;
 export default ordersSlice.reducer;
