@@ -66,7 +66,10 @@ export default function AccountSavedCards() {
             const cardType = card.type;
 
             return (
-              <section className="grid grid-cols-[auto_16px] items-center gap-x-2 py-4 border-b-[1.5px] border-b-gray-200 lg:flex lg:items-center lg:justify-between">
+              <section
+                className="grid grid-cols-[auto_16px] items-center gap-x-2 py-4 border-b-[1.5px] border-b-gray-200 lg:flex lg:items-center lg:justify-between"
+                key={card.id}
+              >
                 {/** Card details */}
                 <main className="flex items-center gap-x-3">
                   {/** Card type image */}
