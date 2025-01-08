@@ -61,6 +61,8 @@ export default function CheckoutAddress() {
 
     if (selectedAddress) {
       setDeliveryAddress(selectedAddress);
+    } else {
+      setDeliveryAddress(null);
     }
   }, [selectedAddressId, addresses, setDeliveryAddress]);
 

@@ -7,11 +7,11 @@ import { Card } from "@/app/models/cards";
 
 interface CheckoutContextType {
   deliveryAddress: Address | null;
-  setDeliveryAddress: (arg: Address) => void;
+  setDeliveryAddress: (arg: Address | null) => void;
   paymentMethod: string;
   setPaymentMethod: (arg: string) => void;
   paymentCard: Card | null;
-  setPaymentCard: (arg: Card) => void;
+  setPaymentCard: (arg: Card | null) => void;
 }
 
 interface CheckoutProviderProps {
