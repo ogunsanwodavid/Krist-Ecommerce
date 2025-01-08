@@ -11,7 +11,7 @@ export default function OnboardingLoader() {
         className="!w-auto !h-auto"
       />
       <p className="text-white text-center font-medium md:text-lg">
-        Onboarding...
+        Loading...
       </p>
     </div>
   );
