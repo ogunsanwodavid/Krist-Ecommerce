@@ -72,7 +72,7 @@ export default function AccountAddresses() {
                 <p className="text-[16px] md:text-[18px]">
                   {address.houseNumber}, {address.lga}, {address.state} state.
                 </p>
-                <p className="inline-flex items-center space-x-2">
+                <p className="inline-flex items-center gap-x-2">
                   <FiPhoneCall className="text-black text-sm md:text-base" />
                   <span className="text-[15px] md:text-[17px]">
                     {address.mobileNumber}

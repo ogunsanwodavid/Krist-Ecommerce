@@ -18,8 +18,8 @@ import MiniWishlist from "./MiniWishlist";
 import MainButton from "./ui/MainButton";
 
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
+
 import { PiHeart, PiShoppingCartSimple } from "react-icons/pi";
-import { FaUserCircle } from "react-icons/fa";
 
 import darkLogo from "@/public/dark-logo.svg";
 
@@ -180,7 +180,7 @@ export default function Navbar() {
           {isAuthenticated && <p className="text-lg">Hi, {firstName}</p>}
 
           {/*** User avatar */}
-          {userAvatar ? (
+          {userAvatar && (
             <Image
               src={userAvatar}
               className="h-[40px] w-[40px] object-cover rounded-full border-[1.5px] border-grey"
@@ -188,10 +188,6 @@ export default function Navbar() {
               height={40}
               alt={`${firstName} ${lastName}'s avatar`}
             />
-          ) : (
-            <Link href="/account" className="block">
-              <FaUserCircle className="text-black text-[40px]" />
-            </Link>
           )}
 
           {!isAuthenticated ? (
