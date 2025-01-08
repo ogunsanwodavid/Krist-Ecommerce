@@ -2,7 +2,12 @@
 
 import { createContext, useState, useContext } from "react";
 
+import { setCart } from "@/app/redux/cartSlice";
+
+import { useAppDispatch } from "@/app/hooks/redux";
+
 import { Address } from "@/app/models/addresses";
+
 import { Card } from "@/app/models/cards";
 
 import OrderCompletedModal from "../checkout/components/OrderCompletedModal";
@@ -27,6 +32,9 @@ const CheckoutContext = createContext<CheckoutContextType | undefined>(
 );
 
 export default function CheckoutProvider({ children }: CheckoutProviderProps) {
+  //Redux dispatch function
+  const dispatch = useAppDispatch();
+
   const [deliveryAddress, setDeliveryAddress] = useState<Address | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [paymentCard, setPaymentCard] = useState<Card | null>(null);
@@ -44,6 +52,9 @@ export default function CheckoutProvider({ children }: CheckoutProviderProps) {
     setDeliveryAddress(null);
     setPaymentMethod("");
     setPaymentCard(null);
+
+    //Empty cart
+    dispatch(setCart([]));
   }
 
   return (

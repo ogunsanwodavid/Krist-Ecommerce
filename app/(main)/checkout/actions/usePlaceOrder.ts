@@ -4,8 +4,6 @@ import { ReduxStoreState } from "@/app/redux/store";
 
 import { addOrder } from "@/app/redux/ordersSlice";
 
-import { setCart } from "@/app/redux/cartSlice";
-
 import { Order } from "@/app/models/orders";
 
 export default function usePlaceOrder() {
@@ -35,9 +33,6 @@ export default function usePlaceOrder() {
     orders.forEach((order) => {
       dispatch(addOrder(order));
     });
-
-    //Empty cart
-    dispatch(setCart([]));
   }
 
   return placeOrder;
