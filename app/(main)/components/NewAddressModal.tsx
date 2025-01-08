@@ -46,7 +46,7 @@ export default function NewAddressModal() {
   //States and LGAs
   const statesAndLGAs: StateObject[] = nigerianStatesAndLGAs;
 
-  //Form input and errors states
+  //Form inputs states
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState<string>("");
   const [state, setState] = useState<string>("");
@@ -129,6 +129,7 @@ export default function NewAddressModal() {
               name="mobileNumber"
               id="mobileNumber"
               autoComplete="off"
+              inputMode="numeric"
               value={mobileNumber}
               onChange={(e) => {
                 const value = e.target.value;
@@ -252,12 +253,15 @@ export default function NewAddressModal() {
 
           {/*** Default address checkbox */}
           <section className="flex items-center justify-between !mt-1">
-            <label className="flex items-center gap-x-2" htmlFor="agreeToTerms">
+            <label
+              className="flex items-center gap-x-2"
+              htmlFor="defaultAddress"
+            >
               {/*** Hidden input */}
               <input
                 type="checkbox"
-                name="agreeToTerms"
-                id="agreeToTerms"
+                name="defaultAddress"
+                id="defaultAddress"
                 checked={defaultAddress}
                 onChange={(e) => setDefaultAddress(e.target.checked)}
                 className="hidden peer"

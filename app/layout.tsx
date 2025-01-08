@@ -11,6 +11,7 @@ import AuthProvider from "@/contexts/AuthContext";
 
 import { ItemVariationModalProvider } from "./(main)/contexts/ItemVariationModalContext";
 import { NewAddressModalProvider } from "./(main)/contexts/NewAddressModalContext";
+import { NewCardModalProvider } from "./(main)/contexts/NewCardModalContext";
 
 import LayoutContent from "./components/LayoutContent";
 import ToastProvider from "./components/ToastProvider";
@@ -49,7 +50,9 @@ export default function RootLayout({
               <ToastProvider>
                 <ItemVariationModalProvider>
                   <NewAddressModalProvider>
-                    <LayoutContent>{children}</LayoutContent>
+                    <NewCardModalProvider>
+                      <LayoutContent>{children}</LayoutContent>
+                    </NewCardModalProvider>
                   </NewAddressModalProvider>
                 </ItemVariationModalProvider>
               </ToastProvider>

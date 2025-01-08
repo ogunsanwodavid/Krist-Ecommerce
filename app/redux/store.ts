@@ -8,17 +8,20 @@ import shopReducer from "./shopSlice";
 import cartReducer from "./cartSlice";
 import wishlistReducer from "./wishlistSlice";
 import addressesReducer from "./addressesSlice";
+import cardsReducer from "./cardsSlice";
 
 import { ShopState } from "@/app/models/shop";
 import { CartState } from "@/app/models/cart";
 import { WishlistState } from "../models/wishlist";
 import { AddressesState } from "../models/addresses";
+import { CardsState } from "../models/cards";
 
 export interface ReduxStoreState {
   shop: ShopState;
   cart: CartState;
   wishlist: WishlistState;
   addresses: AddressesState;
+  cards: CardsState;
 }
 
 // Persist configuration for the shop slice
@@ -34,15 +37,21 @@ const cartPersistConfig = {
   storage: storageEngine,
 };
 
-//Persist configuration for the wishlist slicee
+//Persist configuration for the wishlist slice
 const wishlistPersistConfig = {
   key: "wishlist",
   storage: storageEngine,
 };
 
-//Persist configuration for the addresses slicee
+//Persist configuration for the addresses slice
 const addressesPersistConfig = {
   key: "addresses",
+  storage: storageEngine,
+};
+
+//Persist configuration for the cards slice
+const cardsPersistConfig = {
+  key: "cards",
   storage: storageEngine,
 };
 
@@ -57,6 +66,7 @@ const persistedAddressesReducer = persistReducer(
   addressesPersistConfig,
   addressesReducer
 );
+const persistedCardsReducer = persistReducer(cardsPersistConfig, cardsReducer);
 
 // Configure the store with the persisted reducer
 const store = configureStore({
@@ -65,6 +75,7 @@ const store = configureStore({
     cart: persistedCartReducer,
     wishlist: persistedWishlistReducer,
     addresses: persistedAddressesReducer,
+    cards: persistedCardsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

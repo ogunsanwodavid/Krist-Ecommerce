@@ -62,3 +62,32 @@ export function formatDate(dateInput: string | Date): string {
 
   return date.toLocaleDateString("en-US", options); // Format the date based on the specified options
 }
+
+//Function to format card number
+export function formatCardNumber(cardNumber: string): string {
+  // Remove any non-digit characters
+  const cleanedNumber = cardNumber.replace(/\D/g, "");
+
+  // Limit the input to 16 digits
+  const truncatedNumber = cleanedNumber.slice(0, 16);
+
+  // Randomly select 3 unique positions to mask with 'X'
+  const randomPositions = new Set();
+  while (
+    randomPositions.size < 3 &&
+    randomPositions.size < truncatedNumber.length
+  ) {
+    randomPositions.add(Math.floor(Math.random() * truncatedNumber.length));
+  }
+
+  // Format the number and replace selected characters with 'X'
+  let formattedNumber = "";
+  for (let i = 0; i < truncatedNumber.length; i++) {
+    if (i > 0 && i % 4 === 0) {
+      formattedNumber += " "; // Add space after every 4 digits
+    }
+    formattedNumber += randomPositions.has(i) ? "X" : truncatedNumber[i];
+  }
+
+  return formattedNumber;
+}

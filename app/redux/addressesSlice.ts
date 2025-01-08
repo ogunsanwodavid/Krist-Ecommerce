@@ -16,8 +16,6 @@ const addressesSlice = createSlice({
     addAddress(state, action) {
       const newAddress = action.payload;
 
-      console.log(newAddress);
-
       // Check if `default` key is true in the new address
       if (newAddress.default) {
         // Set `default` to false for all existing addresses
