@@ -159,7 +159,14 @@ export default function AccountPersonalInfo() {
   return (
     <div className="space-y-3 lg:space-y-5">
       {/** Header */}
-      <header className="lg:flex lg:items-center lg:justify-between">
+      <header>
+        <h3 className="text-black text-[20px] lg:hidden">
+          Personal Information
+        </h3>
+      </header>
+
+      {/** Avatar section */}
+      <section className="lg:flex lg:items-center lg:justify-between">
         {/** Change avatar */}
         <div className="relative w-max mx-auto lg:mx-0">
           {/** Avatar */}
@@ -214,7 +221,7 @@ export default function AccountPersonalInfo() {
           handleEditProfile={handleEditProfile}
           handleUpdateProfile={handleUpdateProfile}
         />
-      </header>
+      </section>
 
       {/** Form */}
       <form className="w-full flex flex-col gap-y-2 lg:gap-y-5">

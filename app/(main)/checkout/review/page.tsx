@@ -131,7 +131,7 @@ export default function CheckoutReview() {
 
           return (
             <main
-              className="py-3 space-y-2 border-b-[2px] border-b-gray-200 grid grid-cols-[90px_auto] gap-3 lg:gap-5"
+              className="py-3 border-b-[2px] border-b-gray-200 grid grid-cols-[90px_auto] gap-3 lg:gap-5"
               key={index}
             >
               {/** Image */}

@@ -40,6 +40,11 @@ export default function AccountSavedCards() {
 
   return (
     <div className="space-y-4">
+      {/** Header */}
+      <header>
+        <h3 className="text-black text-[20px] lg:hidden">Saved Cards</h3>
+      </header>
+
       {/** Add new address button */}
       <MainButton
         className="!w-full !max-w-[280px]"

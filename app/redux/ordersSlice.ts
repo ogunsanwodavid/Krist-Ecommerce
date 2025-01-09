@@ -14,7 +14,7 @@ const ordersSlice = createSlice({
       state.orders = action.payload;
     },
     addOrder: (state, action) => {
-      state.orders.push(action.payload);
+      state.orders.unshift(action.payload);
     },
     cancelOrder(state, action) {
       const orderId = action.payload;

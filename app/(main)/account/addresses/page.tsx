@@ -37,6 +37,11 @@ export default function AccountAddresses() {
 
   return (
     <div className="space-y-4">
+      {/** Header */}
+      <header>
+        <h3 className="text-black text-[20px] lg:hidden">Manage Addresses</h3>
+      </header>
+
       {/** Add new address button */}
       <MainButton
         className="!w-full !max-w-[280px]"
