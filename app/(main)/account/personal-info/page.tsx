@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import { useRouter } from "next/navigation";
+
 import { useAuth } from "@/contexts/AuthContext";
+
+import { logout } from "@/app/(auth)/actions/logout";
 
 import { useUpdateProfile } from "@/app/actions/account/update-profile";
 import { useUploadAvatar } from "@/app/actions/account/upload-avatar";
@@ -14,10 +18,13 @@ import { toast } from "react-toastify";
 import { CircularProgress } from "@mui/material";
 
 import FormInput from "@/app/components/ui/FormInput";
+import FormButton from "@/app/components/ui/FormButton";
 
 import EditProfileButton from "./components/EditProfileButton";
 
 import { FaRegEdit, FaUserCircle } from "react-icons/fa";
+
+import { FiLogOut } from "react-icons/fi";
 
 export default function AccountPersonalInfo() {
   //Variables from Auth context
@@ -156,6 +163,23 @@ export default function AccountPersonalInfo() {
     setIsUploadingAvatar(false);
   };
 
+  //Router function
+  const router = useRouter();
+
+  //Logging out state
+  const [isLoggingout, setIsLoggingOut] = useState<boolean>(false);
+
+  //Handle logout action
+  async function handleLogout() {
+    setIsLoggingOut(true);
+
+    await logout();
+
+    router.push("/");
+
+    setIsLoggingOut(false);
+  }
+
   return (
     <div className="space-y-3 lg:space-y-5">
       {/** Header */}
@@ -293,6 +317,21 @@ export default function AccountPersonalInfo() {
         handleEditProfile={handleEditProfile}
         handleUpdateProfile={handleUpdateProfile}
       />
+
+      {/** Other buttons */}
+      <section className="py-10 border-t-[2px] border-t-gray-200">
+        {/** Logout button */}
+        <FormButton
+          className="!w-full !bg-errorRed !h-[44px] !flex !items-center !gap-x-2 !px-5 !py-2 lg:!w-[180px] lg:!ml-auto"
+          onClick={handleLogout}
+          loading={isLoggingout}
+          disabled={isLoggingout}
+        >
+          <FiLogOut className="text-[14px] text-white" />
+
+          <p className="leading-[16px]">Logout</p>
+        </FormButton>
+      </section>
     </div>
   );
 }
