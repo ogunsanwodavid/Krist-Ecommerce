@@ -35,6 +35,7 @@ export default function CheckoutProvider({ children }: CheckoutProviderProps) {
   //Redux dispatch function
   const dispatch = useAppDispatch();
 
+  //Checkout variables
   const [deliveryAddress, setDeliveryAddress] = useState<Address | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [paymentCard, setPaymentCard] = useState<Card | null>(null);

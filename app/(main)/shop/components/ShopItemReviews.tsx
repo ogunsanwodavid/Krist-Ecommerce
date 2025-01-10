@@ -11,6 +11,8 @@ import {
   ShopItem as ShopItemModel,
 } from "@/app/models/shop";
 
+import { Order as OrderModel } from "@/app/models/orders";
+
 import { useAuth } from "@/contexts/AuthContext";
 
 import { formatDate, shuffleArray } from "@/app/utils/helpers";
@@ -24,6 +26,7 @@ import { FaUserCircle } from "react-icons/fa";
 import reviewAvatar1 from "@/public/reviewAvatar1.jpeg";
 import reviewAvatar2 from "@/public/reviewAvatar2.jpeg";
 import reviewAvatar3 from "@/public/reviewAvatar3.jpeg";
+import { isAfter, parseISO } from "date-fns";
 
 interface ShopItemReviewsProps {
   shopItem: ShopItemModel;
@@ -134,8 +137,31 @@ export default function ShopItemReviews({
     setNumberOfItemReviews(Number(allReviews.length));
   }, [allReviews, setItemAverageRating, setNumberOfItemReviews]);
 
-  //Check if item has been purchased and delivered to user
-  const isItemDeliveredToUser = false;
+  //Orders from the redux state
+  const orders: OrderModel[] = useAppSelector(
+    (state: ReduxStoreState) => state.orders.orders
+  );
+
+  //Order for item
+  const itemOrder =
+    orders[orders.findIndex((order) => order.product.item.id === itemId)];
+
+  //Function check delivery status
+  function checkIfDelivered(deliveryDateISO: string): boolean {
+    // Convert ISO string to Date object
+    const deliveryDate = parseISO(deliveryDateISO);
+
+    // Get the current date and time
+    const currentDate = new Date();
+
+    // Check if the current date is after the delivery date
+    return isAfter(currentDate, deliveryDate);
+  }
+
+  //Check if item has been purchased / ordered and delivered to user
+  const isItemDeliveredToUser =
+    orders.some((order) => order.product.item.id === itemId) &&
+    checkIfDelivered(itemOrder.deliveryDate);
 
   //Check if user has already reviewed the product
   const hasUserReviewedItem =
@@ -197,7 +223,7 @@ export default function ShopItemReviews({
       {
         //Only displays when user is authenticated, item has been purchased and delivered to user and user has not reviewed item
       }
-      {isAuthenticated && !hasUserReviewedItem && !isItemDeliveredToUser && (
+      {isAuthenticated && !hasUserReviewedItem && isItemDeliveredToUser && (
         <AddYourReviewForm
           itemId={itemId}
           key={isFormSubmitted ? "remount" : "original"}
