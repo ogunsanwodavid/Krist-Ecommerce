@@ -173,9 +173,9 @@ export default function AccountPersonalInfo() {
   async function handleLogout() {
     setIsLoggingOut(true);
 
-    await logout();
+    const { error: authError } = await logout();
 
-    router.push("/");
+    if (!authError) router.push("/");
 
     setIsLoggingOut(false);
   }

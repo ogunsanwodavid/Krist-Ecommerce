@@ -8,7 +8,9 @@ export async function logout() {
 
   if (error) {
     toast.error("Failed to log out!");
+    return { error: error.message };
   } else {
     toast.success("Successfully logged out!");
+    return { success: true };
   }
 }
