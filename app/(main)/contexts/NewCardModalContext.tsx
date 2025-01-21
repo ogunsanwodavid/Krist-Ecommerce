@@ -9,6 +9,8 @@ interface NewCardModalContextType {
   isNewCardModalOpen: boolean;
   openNewCardModal: () => void;
   closeNewCardModal: () => void;
+  isAddingNewCard: boolean;
+  setIsAddingNewCard: (arg: boolean) => void;
 }
 
 // New Card Modal context
@@ -24,7 +26,9 @@ interface NewCardModalProviderProps {
 export const NewCardModalProvider: React.FC<NewCardModalProviderProps> = ({
   children,
 }) => {
-  const [isNewCardModalOpen, setIsNewCardModalOpen] = useState(false);
+  //Modal variables
+  const [isNewCardModalOpen, setIsNewCardModalOpen] = useState<boolean>(false);
+  const [isAddingNewCard, setIsAddingNewCard] = useState<boolean>(false);
 
   const openNewCardModal = () => {
     setIsNewCardModalOpen(true);
@@ -40,6 +44,8 @@ export const NewCardModalProvider: React.FC<NewCardModalProviderProps> = ({
         isNewCardModalOpen,
         openNewCardModal,
         closeNewCardModal,
+        isAddingNewCard,
+        setIsAddingNewCard,
       }}
     >
       {children}

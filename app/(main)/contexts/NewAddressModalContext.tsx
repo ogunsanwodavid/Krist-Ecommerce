@@ -9,6 +9,8 @@ interface NewAddressModalContextType {
   isNewAddressModalOpen: boolean;
   openNewAddressModal: () => void;
   closeNewAddressModal: () => void;
+  isAddingNewAddress: boolean;
+  setIsAddingNewAddress: (arg: boolean) => void;
 }
 
 // New Address Modal context
@@ -24,7 +26,10 @@ interface NewAddressModalProviderProps {
 export const NewAddressModalProvider: React.FC<
   NewAddressModalProviderProps
 > = ({ children }) => {
-  const [isNewAddressModalOpen, setIsNewAddressModalOpen] = useState(false);
+  //Modal variables
+  const [isNewAddressModalOpen, setIsNewAddressModalOpen] =
+    useState<boolean>(false);
+  const [isAddingNewAddress, setIsAddingNewAddress] = useState<boolean>(false);
 
   const openNewAddressModal = () => {
     setIsNewAddressModalOpen(true);
@@ -40,6 +45,8 @@ export const NewAddressModalProvider: React.FC<
         isNewAddressModalOpen,
         openNewAddressModal,
         closeNewAddressModal,
+        isAddingNewAddress,
+        setIsAddingNewAddress,
       }}
     >
       {children}

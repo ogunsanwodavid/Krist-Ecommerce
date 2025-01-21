@@ -19,6 +19,8 @@ import { useCheckout } from "../../contexts/CheckoutContext";
 
 import usePlaceOrder from "../actions/usePlaceOrder";
 
+import { CircularProgress } from "@mui/material";
+
 import { FiEdit } from "react-icons/fi";
 
 export default function CheckoutReview() {
@@ -28,6 +30,8 @@ export default function CheckoutReview() {
     paymentMethod,
     paymentCard,
     openOrderCompletedModal,
+    isPlacingOrder,
+    setIsPlacingOrder,
   } = useCheckout();
 
   //Router function
@@ -90,13 +94,22 @@ export default function CheckoutReview() {
   //Place order function
   const placeOrder = usePlaceOrder();
 
-  //Handle place order
+  //Handle place holder
   function handlePlaceOrder() {
-    //Open order completed modal
-    openOrderCompletedModal();
+    // Set isPlacingOrder to true
+    setIsPlacingOrder(true);
 
-    //Place order
-    placeOrder();
+    // Wait for 2 seconds
+    setTimeout(() => {
+      // Open order completed modal
+      openOrderCompletedModal();
+
+      // Place order
+      placeOrder();
+
+      // Reset isPlacingOrder to false
+      setIsPlacingOrder(false);
+    }, 2000);
   }
 
   return (
@@ -240,7 +253,11 @@ export default function CheckoutReview() {
         onClick={handlePlaceOrder}
       >
         <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[17px]">
-          Place Order
+          {isPlacingOrder ? (
+            <CircularProgress color="inherit" size={17} />
+          ) : (
+            "Place Order"
+          )}
         </button>
       </div>
     </div>

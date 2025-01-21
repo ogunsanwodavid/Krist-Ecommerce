@@ -10,13 +10,16 @@ import { useNewCardModal } from "../contexts/NewCardModalContext";
 
 import FormInput from "@/app/components/ui/FormInput";
 
+import { CircularProgress } from "@mui/material";
+
 import { CgClose } from "react-icons/cg";
 
 import { FaCheck } from "react-icons/fa6";
 
 export default function NewCardModal() {
   //New card modal variables
-  const { closeNewCardModal } = useNewCardModal();
+  const { closeNewCardModal, isAddingNewCard, setIsAddingNewCard } =
+    useNewCardModal();
 
   //Card types
   const cardTypes = ["visa", "mastercard", "amex"];
@@ -52,11 +55,20 @@ export default function NewCardModal() {
 
   //Handle adding new card
   function handleAddCard() {
-    //Add card to redux state
-    dispatch(addCard(newCard));
+    //Set isAddingNewCard true
+    setIsAddingNewCard(true);
 
-    //Close modal
-    closeNewCardModal();
+    // Wait for 2 seconds
+    setTimeout(() => {
+      //Add card to redux state
+      dispatch(addCard(newCard));
+
+      //Close modal
+      closeNewCardModal();
+
+      //Set isAddingNewCard false
+      setIsAddingNewCard(false);
+    }, 2000);
   }
 
   return (
@@ -71,7 +83,7 @@ export default function NewCardModal() {
 
         {/** Header */}
         <h4 className="font-medium text-[17px] md:text-[19px]">
-          Add a New Payment Card
+          Add a New Payment Card (dummy)
         </h4>
 
         {/** Form */}
@@ -208,7 +220,7 @@ export default function NewCardModal() {
         <section className="!mt-5 md:flex md:items-center md:gap-3">
           {/** Cancel */}
           <button
-            className="hidden w-full h-max px-4 py-2 text-black border-[2px] border-gray-200 bg-gray-200 items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg md:flex"
+            className="hidden w-full h-max px-4 py-2 text-black border-[2px] border-gray-200 bg-gray-200 items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg md:flex"
             onClick={() => closeNewCardModal()}
           >
             Cancel
@@ -216,13 +228,17 @@ export default function NewCardModal() {
 
           {/** Add address */}
           <button
-            className={`w-full h-max px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg ${
+            className={`w-full h-[43px] px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg ${
               !canUserAddCard && "opacity-50 cursor-not-allowed"
             }`}
-            disabled={!canUserAddCard}
+            disabled={!canUserAddCard || isAddingNewCard}
             onClick={handleAddCard}
           >
-            Add card
+            {isAddingNewCard ? (
+              <CircularProgress color="inherit" size={17} />
+            ) : (
+              "Add Card"
+            )}
           </button>
         </section>
       </main>

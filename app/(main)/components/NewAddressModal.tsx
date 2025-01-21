@@ -19,6 +19,8 @@ import InputBase from "@mui/material/InputBase";
 
 import FormInput from "@/app/components/ui/FormInput";
 
+import { CircularProgress } from "@mui/material";
+
 import { CgClose } from "react-icons/cg";
 
 import { FaCheck } from "react-icons/fa6";
@@ -41,7 +43,8 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 export default function NewAddressModal() {
   //New address modal variables
-  const { closeNewAddressModal } = useNewAddressModal();
+  const { closeNewAddressModal, isAddingNewAddress, setIsAddingNewAddress } =
+    useNewAddressModal();
 
   //States and LGAs
   const statesAndLGAs: StateObject[] = nigerianStatesAndLGAs;
@@ -81,11 +84,20 @@ export default function NewAddressModal() {
 
   //Handle adding new address
   function handleAddAddress() {
-    //Add adress to redux state
-    dispatch(addAddress(newAddress));
+    //Set isAddingAddress true
+    setIsAddingNewAddress(true);
 
-    //Close modal
-    closeNewAddressModal();
+    // Wait for 2 seconds
+    setTimeout(() => {
+      //Add address to redux state
+      dispatch(addAddress(newAddress));
+
+      //Close modal
+      closeNewAddressModal();
+
+      //Set isAddingAddress false
+      setIsAddingNewAddress(false);
+    }, 2000);
   }
 
   return (
@@ -283,7 +295,7 @@ export default function NewAddressModal() {
         <section className="!mt-5 md:flex md:items-center md:gap-3">
           {/** Cancel */}
           <button
-            className="hidden w-full h-max px-4 py-2 text-black border-[2px] border-gray-200 bg-gray-200 items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg md:flex"
+            className="hidden w-full h-max px-4 py-2 text-black border-[2px] border-gray-200 bg-gray-200 items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg md:flex"
             onClick={() => closeNewAddressModal()}
           >
             Cancel
@@ -291,13 +303,17 @@ export default function NewAddressModal() {
 
           {/** Add address */}
           <button
-            className={`w-full h-max px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:text-lg ${
+            className={`w-full h-[43px] px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg ${
               !canUserAddAddress && "opacity-50 cursor-not-allowed"
             }`}
-            disabled={!canUserAddAddress}
+            disabled={!canUserAddAddress || isAddingNewAddress}
             onClick={handleAddAddress}
           >
-            Add address
+            {isAddingNewAddress ? (
+              <CircularProgress color="inherit" size={17} />
+            ) : (
+              "Add Address"
+            )}
           </button>
         </section>
       </main>

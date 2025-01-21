@@ -21,6 +21,8 @@ interface CheckoutContextType {
   setPaymentCard: (arg: Card | null) => void;
   openOrderCompletedModal: () => void;
   closeOrderCompletedModal: () => void;
+  isPlacingOrder: boolean;
+  setIsPlacingOrder: (arg: boolean) => void;
 }
 
 interface CheckoutProviderProps {
@@ -41,11 +43,14 @@ export default function CheckoutProvider({ children }: CheckoutProviderProps) {
   const [paymentCard, setPaymentCard] = useState<Card | null>(null);
   const [isOrderCompletedModalOpen, setIsOrderCompletedModalOpen] =
     useState<boolean>(false);
+  const [isPlacingOrder, setIsPlacingOrder] = useState<boolean>(false);
 
+  //Function to open order completed modal
   function openOrderCompletedModal() {
     setIsOrderCompletedModalOpen(true);
   }
 
+  //Function to close order completed modal
   function closeOrderCompletedModal() {
     setIsOrderCompletedModalOpen(false);
 
@@ -69,6 +74,8 @@ export default function CheckoutProvider({ children }: CheckoutProviderProps) {
         setPaymentCard,
         openOrderCompletedModal,
         closeOrderCompletedModal,
+        isPlacingOrder,
+        setIsPlacingOrder,
       }}
     >
       {children}

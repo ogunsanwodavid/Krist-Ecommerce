@@ -49,7 +49,8 @@ export default function CheckoutLayout({
   );
 
   //Checkout context variables
-  const { openOrderCompletedModal } = useCheckout();
+  const { openOrderCompletedModal, isPlacingOrder, setIsPlacingOrder } =
+    useCheckout();
 
   //Place order function
   const placeOrder = usePlaceOrder();
@@ -113,13 +114,22 @@ export default function CheckoutLayout({
     );
   }
 
-  //Handle place order
+  //Handle place holder
   function handlePlaceOrder() {
-    //Open order completed modal
-    openOrderCompletedModal();
+    // Set isPlacingOrder to true
+    setIsPlacingOrder(true);
 
-    //Place order
-    placeOrder();
+    // Wait for 2 seconds
+    setTimeout(() => {
+      // Open order completed modal
+      openOrderCompletedModal();
+
+      // Place order
+      placeOrder();
+
+      // Reset isPlacingOrder to false
+      setIsPlacingOrder(false);
+    }, 2000);
   }
 
   return (
@@ -152,7 +162,11 @@ export default function CheckoutLayout({
               onClick={handlePlaceOrder}
             >
               <button className="w-full h-max px-3 py-2 text-white border-[2px] border-black bg-black items-center justify-center rounded-[7px] z-10 text-[15px] lg:text-base">
-                Place Order
+                {isPlacingOrder ? (
+                  <CircularProgress color="inherit" size={17} />
+                ) : (
+                  "Place Order"
+                )}
               </button>
             </div>
           </CartSummary>
