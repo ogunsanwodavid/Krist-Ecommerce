@@ -13,7 +13,7 @@ const blogSlice = createSlice({
   reducers: {
     setBlogPosts(state, action) {
       // Sort blog posts in descending order of date
-      const sortedPosts = action.payload.reverse();
+      const sortedPosts = [...action.payload].reverse();
 
       state.blogPosts = sortedPosts;
     },

@@ -20,7 +20,7 @@ export default function FirstBlogPost({ firstPost }: FirstBlogPostProps) {
       className="block h-[350px] md:h-[460px] lg:h-[500px]"
     >
       <main className="relative">
-        {/** Image*/}
+        {/** Thumbnail */}
         <div className="w-full h-[290px] md:h-[400px] lg:h-[440px]">
           <Image
             src={firstPost.thumbnail}
@@ -32,7 +32,7 @@ export default function FirstBlogPost({ firstPost }: FirstBlogPostProps) {
         </div>
 
         {/** Details */}
-        <div className="absolute bottom-0 left-5 w-[calc(100%_-_40px)] h-[196px] max-w-[350px] translate-y-[20%] rounded-lg shadow-2xl bg-white p-5 space-y-2 md:h-[227px] md:max-w-[450px] md:left-9 md:p-7 lg:space-y-[10px]">
+        <div className="absolute bottom-0 left-5 w-[calc(100%_-_40px)] max-h-[196px] max-w-[350px] translate-y-[20%] rounded-lg shadow-xl bg-white p-4 space-y-2 md:max-h-[227px] md:max-w-[450px] md:left-9 md:p-6 lg:space-y-[10px]">
           {/** Category */}
           <div className="w-max bg-blue-primary  text-white rounded-[5px] px-2 py-1">
             <span className="text-[13px] leading-[13px] md:text-[15px] md:leading-[15px]">
@@ -50,7 +50,7 @@ export default function FirstBlogPost({ firstPost }: FirstBlogPostProps) {
             {firstPost.content[0]?.content}
           </p>
 
-          <div className="flex justify-between items-center text-gray-500">
+          <div className="flex justify-between items-center  text-gray-500">
             {/** Date of creation */}
             <p className="text-[14px] md:text-[16px]">
               {formatDate(firstPost.createdAt)}

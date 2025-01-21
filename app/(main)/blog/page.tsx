@@ -11,6 +11,7 @@ import useFetchBlogPosts from "@/app/actions/blog/useFetchBlogPosts";
 import { CircularProgress } from "@mui/material";
 
 import FirstBlogPost from "./components/FirstBlogPost";
+import BlogPost from "./components/BlogPost";
 
 import noBlogPostImg from "@/public/noBlogPost.svg";
 
@@ -25,8 +26,6 @@ export default function Blog() {
 
   //Destructure the first item and the rest of the items
   const [firstPost, ...otherPosts] = blogPosts;
-
-  console.log(otherPosts);
 
   //Show loading spinner if fetching blog posts
   if (isFetchingBlogPosts)
@@ -52,9 +51,24 @@ export default function Blog() {
     );
 
   return (
-    <div className="space-y-7">
+    <div className="pb-12 lg:pb-16">
       {/** First post */}
       <FirstBlogPost firstPost={firstPost} />
+
+      {/** Other posts */}
+      <main className="space-y-5 mt-7 lg:mt-12">
+        {/** Heading */}
+        <h4 className="w-max mx-auto text-2xl lg:mx-0 lg:text-[28px]">
+          Latest Posts
+        </h4>
+
+        {/** Blogs list */}
+        <section className="flex justify-center flex-wrap gap-[30px] gap-y-[50px]">
+          {otherPosts.map((post) => (
+            <BlogPost blogPost={post} key={post.id} />
+          ))}
+        </section>
+      </main>
     </div>
   );
 }

@@ -146,7 +146,7 @@ export default function ShopItem({ shopItem }: ShopItemProps) {
     >
       {/**** Item box */}
       <section
-        className="relative w-full h-[350px] bg-gray-200  p-3 flex flex-col overflow-hidden"
+        className="relative w-full h-[350px] bg-gray-200 p-3 flex flex-col overflow-hidden"
         ref={shopItemRef}
         style={{
           boxShadow:
