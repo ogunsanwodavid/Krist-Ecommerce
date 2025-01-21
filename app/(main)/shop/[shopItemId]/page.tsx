@@ -165,7 +165,7 @@ export default function ShopItemPage() {
     );
 
   //Shoe error if there is no shop item to display
-  if (!isFetchingCurrentItem && !currentShopItem) {
+  if (!currentShopItem) {
     return (
       <div className="w-full flex flex-col items-center justify-center gap-3 py-3 text-black lg:py-6">
         <Image

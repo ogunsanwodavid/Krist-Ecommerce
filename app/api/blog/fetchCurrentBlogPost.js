@@ -2,17 +2,17 @@ import { toast } from "react-toastify";
 
 import { supabase } from "../../lib/supabase";
 
-export default async function fetchCurrentShopItem(id) {
+export default async function fetchCurrentBlogPost(id) {
   let { data, error } = await supabase
-    .from("shop")
+    .from("blogs")
     .select("*") // Select all columns or specify the ones you need
     .eq("id", id); // Filter by the `id` column;
 
-  const shopItem = data.at(0);
+  const blogPost = data.at(0);
 
   if (error) {
-    toast.error("Failed to fetch shop item");
+    toast.error("Failed to fetch blog post");
   }
 
-  return shopItem;
+  return blogPost;
 }

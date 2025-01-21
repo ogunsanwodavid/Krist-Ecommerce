@@ -2,30 +2,37 @@
 
 import Image from "next/image";
 
+import { useParams } from "next/navigation";
+
 import { useAppSelector } from "@/app/hooks/redux";
 
 import { ReduxStoreState } from "@/app/redux/store";
 
-import useFetchBlogPosts from "@/app/actions/blog/useFetchBlogPosts";
+import useFetchCurrentBlogPost from "@/app/actions/blog/useFetchCurrentBlogPost";
 
 import { CircularProgress } from "@mui/material";
 
 import noBlogPostImg from "@/public/noBlogPost.svg";
 
-export default function Blog() {
-  //Fetch blog posts
-  const { isLoading: isFetchingBlogPosts } = useFetchBlogPosts();
+export default function BlogPost() {
+  //Route parameters
+  const params = useParams();
 
-  //Blog posts from redux state
-  const blogPosts = useAppSelector(
-    (state: ReduxStoreState) => state.blog.blogPosts
+  //Blog post id
+  const blogPostId = params.blogPostId!;
+
+  //Fetch current blog post
+  const { isLoading: isFetchingBlogPost } = useFetchCurrentBlogPost(
+    String(blogPostId)
   );
 
-  // Destructure the first item and the rest of the items
-  //const [firstPost, ...otherPosts] = blogPosts;
+  //Current blog post from redux state
+  const currentBlogPost = useAppSelector(
+    (state: ReduxStoreState) => state.blog.currentBlogPost
+  )!;
 
-  //Show loading spinner if fetching blog posts
-  if (isFetchingBlogPosts)
+  //Show loading spinner if fetching shop items
+  if (isFetchingBlogPost)
     return (
       <div className="w-full h-full flex-grow flex items-center justify-center py-6 text-black lg:py-12">
         <CircularProgress color="inherit" size={40} />
@@ -33,7 +40,7 @@ export default function Blog() {
     );
 
   //Show error if there's no blog post
-  if (!blogPosts.length)
+  if (!currentBlogPost)
     return (
       <div className="w-full flex flex-col items-center justify-center gap-5 py-3 text-black lg:py-6">
         <Image
@@ -42,10 +49,10 @@ export default function Blog() {
           alt="Failed to load error image"
         />
         <p className="text-base text-center md:text-lg">
-          Failed to load blog posts.
+          Failed to load blog post.
         </p>
       </div>
     );
 
-  return <div>Blog</div>;
+  return <div></div>;
 }
