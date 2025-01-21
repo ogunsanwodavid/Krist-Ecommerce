@@ -12,6 +12,7 @@ export interface BlogPost {
   category: string;
   content: BlogContentBlock[];
   thumbnail: StaticImageData | string;
+  likes: number;
   views: number;
 }
 

@@ -21,6 +21,7 @@ export default {
         black: "#131118",
         grey: "#A4A1AA",
         errorRed: "#E54D51",
+        "blue-primary": "#4B6BFB",
       },
     },
   },

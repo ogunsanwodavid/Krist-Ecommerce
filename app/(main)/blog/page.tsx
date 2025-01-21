@@ -10,6 +10,8 @@ import useFetchBlogPosts from "@/app/actions/blog/useFetchBlogPosts";
 
 import { CircularProgress } from "@mui/material";
 
+import FirstBlogPost from "./components/FirstBlogPost";
+
 import noBlogPostImg from "@/public/noBlogPost.svg";
 
 export default function Blog() {
@@ -21,8 +23,10 @@ export default function Blog() {
     (state: ReduxStoreState) => state.blog.blogPosts
   );
 
-  // Destructure the first item and the rest of the items
-  //const [firstPost, ...otherPosts] = blogPosts;
+  //Destructure the first item and the rest of the items
+  const [firstPost, ...otherPosts] = blogPosts;
+
+  console.log(otherPosts);
 
   //Show loading spinner if fetching blog posts
   if (isFetchingBlogPosts)
@@ -47,5 +51,10 @@ export default function Blog() {
       </div>
     );
 
-  return <div>Blog</div>;
+  return (
+    <div className="space-y-7">
+      {/** First post */}
+      <FirstBlogPost firstPost={firstPost} />
+    </div>
+  );
 }
