@@ -13,6 +13,7 @@ import mastercardLogo from "@/public/mastercard-logo.svg";
 import googlePayLogo from "@/public/googlepay-logo.svg";
 import amexLogo from "@/public/amex-logo.svg";
 import paypalLogo from "@/public/paypal-logo.svg";
+
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {

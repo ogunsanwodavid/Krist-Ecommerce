@@ -4,6 +4,7 @@
 @import "./styles/item-variation-modal.css";
 @import "./styles/mini-box-scroll.css";
 @import "./styles/checkout-progress.css";
+@import "./styles/map-leaflet.css";
 
 @tailwind base;
 @tailwind components;

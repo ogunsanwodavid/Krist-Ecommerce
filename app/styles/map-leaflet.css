@@ -1,0 +1,31 @@
+.leaflet-popup .leaflet-popup-content-wrapper {
+  background-color: hsl(0, 0%, 17%);
+  color: white;
+  border-radius: 5px;
+  padding-right: 0.6rem;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.leaflet-popup .leaflet-popup-content span:first-child {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.leaflet-popup .leaflet-popup-tip {
+  background-color: hsl(0, 0%, 17%);
+}
+
+.leaflet-popup-content-wrapper {
+  border-left: 5px solid #5c7be5;
+}
+
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+  display: none;
+}
