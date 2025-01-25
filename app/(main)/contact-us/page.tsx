@@ -92,8 +92,21 @@ export default function ContactUs() {
 
   return (
     <div>
+      {/** Header */}
+      <header className="flex items-center justify-center gap-x-4">
+        {/** Left white line */}
+        <div className="hidden w-full h-[1px] bg-white lg:block"></div>
+
+        <h2 className="shrink-0 text-white text-center text-2xl lg:text-4xl">
+          Contact Information
+        </h2>
+
+        {/** Right white line */}
+        <div className="hidden w-full h-[1px] bg-white lg:block"></div>
+      </header>
+
       {/** Contact Details */}
-      <section className="flex items-center justify-center gap-[20px] flex-wrap">
+      <section className="flex items-center justify-center gap-[20px] flex-wrap mt-4 lg:mt-10">
         {/** Main Office */}
         <div className="w-full h-[165px] max-w-[250px] bg-white rounded-lg flex flex-col items-center gap-y-3 p-5 text-black lg:h-[205px]">
           <FaLocationDot className="text-black text-3xl lg:text-4xl" />

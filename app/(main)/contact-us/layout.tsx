@@ -14,7 +14,7 @@ export default function ContactUsLayout({
       <div className="absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.7)]"></div>
 
       {/** Inner container */}
-      <div className="relative space-y-3 max-w-[600px] mx-auto pb-10 z-10 md:space-y-5 lg:pb-16 lg:max-w-[1060px] md:pt-14 lg:pt-36">
+      <div className="relative space-y-3 max-w-[600px] mx-auto pb-10 z-10 md:space-y-5 lg:pb-16 lg:max-w-[1060px] md:pt-14 lg:pt-24">
         {children}
       </div>
     </div>
