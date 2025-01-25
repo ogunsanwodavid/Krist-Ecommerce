@@ -25,7 +25,7 @@ import {
 import { TbMailFilled } from "react-icons/tb";
 
 export default function ContactUs() {
-  //Type of the error state of the contact us form
+  //Type of the error state for the contact us form
   type ContactUsFormErrors = {
     email?: string[];
     name?: string[];
