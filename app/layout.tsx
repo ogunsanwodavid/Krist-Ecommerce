@@ -33,6 +33,8 @@ export const metadata: Metadata = {
     title: "Krist",
     description:
       "Discover Krist, your ultimate destination for stylish and affordable men’s, women’s, and kids' wear. Explore a wide range of trendy outfits designed for every occasion and elevate your wardrobe with our premium-quality apparel. Shop now and experience fashion redefined!",
+    images:
+      "https://res.cloudinary.com/ddcjuf3hq/image/upload/v1737908712/krist-og-image_rlbpuo.jpg",
   },
 };
 
