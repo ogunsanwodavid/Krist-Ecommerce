@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 import { signup } from "../actions/signup";
 
@@ -23,6 +23,13 @@ import signupImage from "@/public/signup.png";
 export default function SignUp() {
   //Router function
   const router = useRouter();
+
+  //Search parameters
+  const searchParams = useSearchParams();
+
+  //Page redirection route
+  //Or home for default
+  const pageRedirect = searchParams.get("redirect") || "/";
 
   //Variables from auth context
   const { isAuthenticated } = useAuth();
@@ -93,7 +100,8 @@ export default function SignUp() {
     formData.append("confirmPassword", confirmPassword);
 
     // Call the signup function
-    const result = await signup(formData);
+    // Redirect too
+    const result = await signup(formData, pageRedirect);
 
     //Set errors is it exists else set to null
     if (result?.errors) {
@@ -114,7 +122,7 @@ export default function SignUp() {
       toast.success("User successfully created");
 
       //Redirect to login page
-      redirect("/login");
+      redirect(`/login?redirect=${pageRedirect}`);
     }
 
     //Set Loading state false

@@ -5,7 +5,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import { useAppSelector } from "@/app/hooks/redux";
 
@@ -34,6 +34,14 @@ export default function CheckoutLayout({
 }) {
   //Pathname function
   const pathname = usePathname();
+
+  //Search parameters
+  const searchParams = useSearchParams();
+
+  //Combine pathname and searchParams into a single string
+  const currentRoute = `${pathname}${
+    searchParams.toString() ? `?${searchParams.toString()}` : ""
+  }`;
 
   //Check current active page
   const isAddressPage = pathname.startsWith("/checkout/address");
@@ -99,14 +107,22 @@ export default function CheckoutLayout({
         {/** Buttons */}
         <section className="flex items-center justify-center flex-wrap gap-2">
           {/** Login */}
-          <Link href="/login">
+          <Link
+            href={`/login${
+              currentRoute && `?redirect=${encodeURIComponent(currentRoute)}`
+            }`}
+          >
             <MainButton className="!bg-white !text-black border-[1.5px] border-black !px-7 lg:!px-12">
               Login
             </MainButton>
           </Link>
 
           {/** Signup */}
-          <Link href="/signup">
+          <Link
+            href={`/signup${
+              currentRoute && `?redirect=${encodeURIComponent(currentRoute)}`
+            }`}
+          >
             <MainButton className="!px-7 lg:!px-12">Signup</MainButton>
           </Link>
         </section>

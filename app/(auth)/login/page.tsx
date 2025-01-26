@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import { redirect, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { login } from "../actions/login";
 
@@ -25,15 +25,22 @@ export default function Login() {
   //Router function
   const router = useRouter();
 
+  //Search parameters
+  const searchParams = useSearchParams();
+
+  //Page redirection route
+  //Or home for default
+  const pageRedirect = decodeURIComponent(searchParams.get("redirect") || "/");
+
   //Variables from auth context
   const { isAuthenticated } = useAuth();
 
-  //Redirect user to home page when authenticated
+  //Redirect user to page redicrection route when authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/");
+      router.push(pageRedirect);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, pageRedirect]);
 
   //State of display password input content
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -95,9 +102,6 @@ export default function Login() {
     if (result.success) {
       //Toast success
       toast.success("Login successful!");
-
-      //Redirect to home page
-      redirect("/");
     }
 
     //Set Loading state false

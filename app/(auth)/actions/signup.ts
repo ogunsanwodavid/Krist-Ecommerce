@@ -9,7 +9,7 @@ const siteUrl =
   "http://localhost:3000/";
 
 //Signup function
-export async function signup(formData: FormData) {
+export async function signup(formData: FormData, pageRedirect: string) {
   const firstName = String(formData.get("firstName"));
   const lastName = String(formData.get("lastName"));
   const email = String(formData.get("email"));
@@ -37,8 +37,8 @@ export async function signup(formData: FormData) {
     email,
     password,
     options: {
-      //Redirect to login page after email confirmation
-      emailRedirectTo: `${siteUrl}/login`,
+      //Redirect after email confirmation
+      emailRedirectTo: `${siteUrl}/login?redirect=${pageRedirect}`,
     },
   });
 
