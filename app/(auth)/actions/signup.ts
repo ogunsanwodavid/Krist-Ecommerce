@@ -9,10 +9,7 @@ const siteUrl =
   "http://localhost:3000/";
 
 //Signup function
-export async function signup(
-  formData: FormData
-  //pageRedirect: string
-) {
+export async function signup(formData: FormData, pageRedirect: string) {
   const firstName = String(formData.get("firstName"));
   const lastName = String(formData.get("lastName"));
   const email = String(formData.get("email"));
@@ -36,6 +33,7 @@ export async function signup(
   }
 
   console.log(siteUrl);
+  console.log(pageRedirect);
 
   /* // Step 1: Sign up the user
   const { data: authData, error: authError } = await supabase.auth.signUp({
