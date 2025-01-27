@@ -1,6 +1,6 @@
 import { SignupFormSchema } from "@/app/(auth)/lib/definitions/signup";
 
-import { supabase } from "@/app/lib/supabase";
+//import { supabase } from "@/app/lib/supabase";
 
 //Site URL
 const siteUrl =
@@ -9,7 +9,10 @@ const siteUrl =
   "http://localhost:3000/";
 
 //Signup function
-export async function signup(formData: FormData, pageRedirect: string) {
+export async function signup(
+  formData: FormData
+  //pageRedirect: string
+) {
   const firstName = String(formData.get("firstName"));
   const lastName = String(formData.get("lastName"));
   const email = String(formData.get("email"));
