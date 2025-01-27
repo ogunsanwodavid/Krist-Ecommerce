@@ -32,7 +32,9 @@ export async function signup(formData: FormData, pageRedirect: string) {
     };
   }
 
-  // Step 1: Sign up the user
+  console.log(siteUrl);
+
+  /* // Step 1: Sign up the user
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
@@ -65,5 +67,5 @@ export async function signup(formData: FormData, pageRedirect: string) {
     return { error: profileError.message };
   }
 
-  return { success: true };
+  return { success: true }; */
 }
