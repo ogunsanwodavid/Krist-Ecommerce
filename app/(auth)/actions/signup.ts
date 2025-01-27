@@ -25,8 +25,6 @@ export async function signup(formData: FormData, pageRedirect: string) {
     confirmPassword,
   });
 
-  console.log(siteUrl);
-
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
