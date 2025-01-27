@@ -1,6 +1,6 @@
 import { SignupFormSchema } from "@/app/(auth)/lib/definitions/signup";
 
-//import { supabase } from "@/app/lib/supabase";
+import { supabase } from "@/app/lib/supabase";
 
 //Site URL
 const siteUrl =
@@ -25,6 +25,8 @@ export async function signup(formData: FormData, pageRedirect: string) {
     confirmPassword,
   });
 
+  console.log(siteUrl);
+
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
@@ -32,10 +34,7 @@ export async function signup(formData: FormData, pageRedirect: string) {
     };
   }
 
-  console.log(siteUrl);
-  console.log(pageRedirect);
-
-  /* // Step 1: Sign up the user
+  // Step 1: Sign up the user
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
@@ -68,5 +67,5 @@ export async function signup(formData: FormData, pageRedirect: string) {
     return { error: profileError.message };
   }
 
-  return { success: true }; */
+  return { success: true };
 }
