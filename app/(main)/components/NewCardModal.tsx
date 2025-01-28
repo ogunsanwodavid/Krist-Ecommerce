@@ -27,17 +27,24 @@ export default function NewCardModal() {
   //Randomly pick a card type
   const type = cardTypes[Math.floor(Math.random() * cardTypes.length)];
 
-  //Form inputs states
+  //Form inputs and error states
   const [name, setName] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [formattedNumber, setFormattedNumber] = useState<string>("");
   const [expiryDate, setExpiryDate] = useState<string>("");
   const [cvv, setCvv] = useState<string>("");
   const [defaultCard, setDefaultCard] = useState<boolean>(false);
+  const [isFormError, setIsFormError] = useState<boolean>(false);
+
+  //Regex patterns
+  const expiryDateRegex = /^\d{2}\/\d{2}$/;
 
   //Check if user can add card
   const canUserAddCard =
-    name && number.length === 16 && expiryDate.length === 5 && cvv.length === 3;
+    name &&
+    number.length === 16 &&
+    expiryDate.match(expiryDateRegex) &&
+    cvv.length === 3;
 
   //New card object
   const newCard: Card = {
@@ -55,6 +62,15 @@ export default function NewCardModal() {
 
   //Handle adding new card
   function handleAddCard() {
+    //Set form error state true if there is a missing field
+    //else, false
+    if (!canUserAddCard) {
+      setIsFormError(true);
+      return;
+    } else {
+      setIsFormError(false);
+    }
+
     //Set isAddingNewCard true
     setIsAddingNewCard(true);
 
@@ -102,7 +118,9 @@ export default function NewCardModal() {
                 const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
                 setName(filteredValue);
               }}
-              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                isFormError && !name && "!border-errorRed"
+              }`}
             />
           </FormInput>
 
@@ -145,7 +163,9 @@ export default function NewCardModal() {
                 // Update the actual number with the cleaned value (digits only)
                 setNumber(value);
               }}
-              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                isFormError && !(number.length === 16) && "!border-errorRed"
+              }`}
             />
           </FormInput>
 
@@ -166,7 +186,11 @@ export default function NewCardModal() {
                   const filteredValue = value.replace(/[^0-9/]/g, ""); // Allow only digits and "/"
                   setExpiryDate(filteredValue);
                 }}
-                className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+                className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                  isFormError &&
+                  !expiryDate.match(expiryDateRegex) &&
+                  "!border-errorRed"
+                }`}
               />
             </FormInput>
 
@@ -186,7 +210,9 @@ export default function NewCardModal() {
                   const filteredValue = value.replace(/\D/g, ""); // Removes non-digit characters
                   setCvv(filteredValue);
                 }}
-                className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+                className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                  isFormError && !(cvv.length === 3) && "!border-errorRed"
+                }`}
               />
             </FormInput>
           </section>
@@ -228,10 +254,8 @@ export default function NewCardModal() {
 
           {/** Add address */}
           <button
-            className={`w-full h-[43px] px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg ${
-              !canUserAddCard && "opacity-50 cursor-not-allowed"
-            }`}
-            disabled={!canUserAddCard || isAddingNewCard}
+            className={`w-full h-[43px] px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg`}
+            disabled={isAddingNewCard}
             onClick={handleAddCard}
           >
             {isAddingNewCard ? (

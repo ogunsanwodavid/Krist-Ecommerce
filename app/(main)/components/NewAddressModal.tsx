@@ -49,7 +49,7 @@ export default function NewAddressModal() {
   //States and LGAs
   const statesAndLGAs: StateObject[] = nigerianStatesAndLGAs;
 
-  //Form inputs states
+  //Form inputs and error states
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState<string>("");
   const [state, setState] = useState<string>("");
@@ -57,6 +57,7 @@ export default function NewAddressModal() {
   const [houseNumber, setHouseNumber] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
   const [defaultAddress, setDefaultAddress] = useState<boolean>(false);
+  const [isFormError, setIsFormError] = useState<boolean>(false);
 
   // Current LGA options in the select input
   const currentLGAOptions: string[] = state
@@ -84,6 +85,15 @@ export default function NewAddressModal() {
 
   //Handle adding new address
   function handleAddAddress() {
+    //Set form error state true if there is a missing field
+    //else, false
+    if (!canUserAddAddress) {
+      setIsFormError(true);
+      return;
+    } else {
+      setIsFormError(false);
+    }
+
     //Set isAddingAddress true
     setIsAddingNewAddress(true);
 
@@ -130,7 +140,9 @@ export default function NewAddressModal() {
                 const filteredValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic and non-space characters
                 setName(filteredValue);
               }}
-              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                isFormError && !name && "!border-errorRed"
+              }`}
             />
           </FormInput>
 
@@ -148,7 +160,9 @@ export default function NewAddressModal() {
                 const filteredValue = value.replace(/[^+\d\s]/g, ""); // Allows only digits, +, and spaces
                 setMobileNumber(filteredValue);
               }}
-              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                isFormError && !mobileNumber && "!border-errorRed"
+              }`}
             />
           </FormInput>
 
@@ -157,14 +171,19 @@ export default function NewAddressModal() {
             <span className={`text-black text-base md:text-[18px]`}>State</span>
 
             <FormControl
-              className="w-full h-[36px] rounded-[10px] py-1 px-2 border-[1.5px] border-black"
+              className={`w-full h-[36px] rounded-[10px] py-1 px-2 border-[1.5px] border-black `}
               variant="standard"
             >
               <Select
                 value={state ?? ""}
-                onChange={(e) => setState(e.target.value)}
+                onChange={(e) => {
+                  setState(e.target.value);
+                  setLGA("");
+                }}
                 input={<BootstrapInput />}
-                className="h-[36px] rounded-[8px] py-1 px-2 border-[1.5px] border-black"
+                className={`h-[36px] rounded-[8px] py-1 px-2 border-[1.5px] border-black ${
+                  isFormError && !state && "!border-errorRed"
+                }`}
                 displayEmpty
               >
                 <MenuItem
@@ -204,7 +223,9 @@ export default function NewAddressModal() {
                 value={LGA ?? ""}
                 onChange={(e) => setLGA(e.target.value)}
                 input={<BootstrapInput />}
-                className="h-[36px] rounded-[8px] py-1 px-2 border-[1.5px] border-black"
+                className={`h-[36px] rounded-[8px] py-1 px-2 border-[1.5px] border-black ${
+                  isFormError && !LGA && "!border-errorRed"
+                }`}
                 displayEmpty
                 disabled={currentLGAOptions.length === 0}
               >
@@ -241,7 +262,9 @@ export default function NewAddressModal() {
               autoComplete="off"
               value={houseNumber}
               onChange={(e) => setHouseNumber(e.target.value)}
-              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                isFormError && !houseNumber && "!border-errorRed"
+              }`}
             />
           </FormInput>
 
@@ -259,7 +282,9 @@ export default function NewAddressModal() {
                 const filteredValue = value.replace(/\D/g, ""); // Removes non-digit characters
                 setZipCode(filteredValue);
               }}
-              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey`}
+              className={`w-full h-[36px] rounded-[10px] outline-none border-black border-[1.5px] p-2 text-base text-black placeholder:text-base placeholder:text-grey ${
+                isFormError && !zipCode && "!border-errorRed"
+              }`}
             />
           </FormInput>
 
@@ -303,10 +328,9 @@ export default function NewAddressModal() {
 
           {/** Add address */}
           <button
-            className={`w-full h-[43px] px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg ${
-              !canUserAddAddress && "opacity-50 cursor-not-allowed"
-            }`}
-            disabled={!canUserAddAddress || isAddingNewAddress}
+            className={`w-full h-[43px] px-4 py-2 text-white bg-black  border-[2px] border-black flex items-center justify-center rounded-[7px] z-10 md:w-1/2 md:h-[47px] md:text-lg              
+            `}
+            disabled={isAddingNewAddress}
             onClick={handleAddAddress}
           >
             {isAddingNewAddress ? (
