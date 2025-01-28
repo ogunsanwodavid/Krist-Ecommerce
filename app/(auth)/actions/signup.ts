@@ -6,7 +6,7 @@ import { supabase } from "@/app/lib/supabase";
 const siteUrl =
   process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
   process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
-  "http://localhost:3000/";
+  "http://localhost:3000/"; //Or resort to localhost in development
 
 //Signup function
 export async function signup(formData: FormData, pageRedirect: string) {
